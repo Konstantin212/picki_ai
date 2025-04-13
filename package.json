@@ -13,8 +13,10 @@
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
-      "tsc-files --noEmit"
+      "prettier --write"
+    ],
+    "**/*.{ts,tsx}": [
+      "bash -c 'pnpm type-check'"
     ]
   },
   "dependencies": {
@@ -82,7 +84,6 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4",
     "tailwindcss-animate": "^1.0.7",
-    "tsc-files": "^1.1.4",
     "typescript": "^5"
   }
 }

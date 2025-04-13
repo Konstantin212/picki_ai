@@ -35,8 +35,8 @@ export async function GET() {
           if (match) {
             return {
               file: match[1],
-              line: parseInt(match[2]),
-              character: parseInt(match[3]),
+              line: parseInt(match[2] ?? "0"),
+              character: parseInt(match[3] ?? "0"),
               message: match[4],
             };
           }

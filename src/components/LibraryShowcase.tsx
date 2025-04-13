@@ -28,7 +28,7 @@ export function LibraryShowcase() {
   });
 
   // React Query example
-  const { data: queryData, isLoading } = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["test"],
     queryFn: () => api.get("/api/test").then((res) => res.data),
     enabled: false, // Don't run automatically
@@ -48,18 +48,22 @@ export function LibraryShowcase() {
   // Supabase connection test
   const testSupabaseConnection = async () => {
     try {
-      const { data, error } = await supabase.from("test").select("*").limit(1);
-      if (error) throw error;
+      const { error } = await supabase.from("test").select("*").limit(1);
+      if (error) {
+        setIsSupabaseConnected(false);
+        throw error;
+      }
       setIsSupabaseConnected(true);
       toast({
         title: "Supabase Connected",
         description: "Successfully connected to Supabase",
       });
-    } catch (error) {
+    } catch (err) {
       setIsSupabaseConnected(false);
       toast({
         title: "Supabase Error",
-        description: "Failed to connect to Supabase",
+        description:
+          err instanceof Error ? err.message : "Failed to connect to Supabase",
         variant: "destructive",
       });
     }
@@ -104,9 +108,8 @@ export function LibraryShowcase() {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">React Query</h2>
         <div className="space-y-4">
-          <Button onClick={() => queryData}>Test Query</Button>
+          <Button>Test Query</Button>
           {isLoading && <p>Loading...</p>}
-          {queryData && <p>Query successful!</p>}
         </div>
       </div>
 
@@ -124,7 +127,7 @@ export function LibraryShowcase() {
       </div>
 
       {/* shadcn/ui Button variants */}
-      <div className="space-y-2">
+      <div>
         <h2 className="text-xl font-semibold">shadcn/ui Buttons</h2>
         <div className="flex gap-4">
           <Button>Default</Button>
