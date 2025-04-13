@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { Mail, Check, X } from 'lucide-react';
-import api from '@/lib/axios';
-import { supabase } from '@/lib/supabase';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { Mail, Check, X } from "lucide-react";
+import api from "@/lib/axios";
+import { supabase } from "@/lib/supabase";
 
 // Simple form schema
 const formSchema = z.object({
-  email: z.string().email('Invalid email'),
+  email: z.string().email("Invalid email"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -29,18 +29,18 @@ export function LibraryShowcase() {
 
   // React Query example
   const { data: queryData, isLoading } = useQuery({
-    queryKey: ['test'],
-    queryFn: () => api.get('/api/test').then(res => res.data),
+    queryKey: ["test"],
+    queryFn: () => api.get("/api/test").then((res) => res.data),
     enabled: false, // Don't run automatically
   });
 
   // React Query mutation example
   const mutation = useMutation({
-    mutationFn: (data: FormData) => api.post('/api/test', data),
+    mutationFn: (data: FormData) => api.post("/api/test", data),
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'Form submitted successfully',
+        title: "Success",
+        description: "Form submitted successfully",
       });
     },
   });
@@ -48,19 +48,19 @@ export function LibraryShowcase() {
   // Supabase connection test
   const testSupabaseConnection = async () => {
     try {
-      const { data, error } = await supabase.from('test').select('*').limit(1);
+      const { data, error } = await supabase.from("test").select("*").limit(1);
       if (error) throw error;
       setIsSupabaseConnected(true);
       toast({
-        title: 'Supabase Connected',
-        description: 'Successfully connected to Supabase',
+        title: "Supabase Connected",
+        description: "Successfully connected to Supabase",
       });
     } catch (error) {
       setIsSupabaseConnected(false);
       toast({
-        title: 'Supabase Error',
-        description: 'Failed to connect to Supabase',
-        variant: 'destructive',
+        title: "Supabase Error",
+        description: "Failed to connect to Supabase",
+        variant: "destructive",
       });
     }
   };
@@ -82,14 +82,19 @@ export function LibraryShowcase() {
       {/* React Hook Form */}
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">React Hook Form</h2>
-        <form onSubmit={form.handleSubmit((data) => mutation.mutate(data))} className="space-y-4">
+        <form
+          onSubmit={form.handleSubmit((data) => mutation.mutate(data))}
+          className="space-y-4"
+        >
           <input
-            {...form.register('email')}
+            {...form.register("email")}
             placeholder="Enter email"
             className="border p-2 rounded"
           />
           {form.formState.errors.email && (
-            <p className="text-red-500">{form.formState.errors.email.message}</p>
+            <p className="text-red-500">
+              {form.formState.errors.email.message}
+            </p>
           )}
           <Button type="submit">Submit Form</Button>
         </form>
@@ -132,4 +137,4 @@ export function LibraryShowcase() {
       </div>
     </div>
   );
-} 
+}
