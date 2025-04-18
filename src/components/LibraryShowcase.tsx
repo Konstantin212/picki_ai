@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Check, X } from "lucide-react";
 import api from "@/lib/axios";
-import { supabase } from "@/lib/supabase";
 
 // Simple form schema
 const formSchema = z.object({
@@ -20,7 +18,6 @@ type FormData = z.infer<typeof formSchema>;
 
 export function LibraryShowcase() {
   const { toast } = useToast();
-  const [isSupabaseConnected, setIsSupabaseConnected] = useState(false);
 
   // React Hook Form example
   const form = useForm<FormData>({
@@ -44,30 +41,6 @@ export function LibraryShowcase() {
       });
     },
   });
-
-  // Supabase connection test
-  const testSupabaseConnection = async () => {
-    try {
-      const { error } = await supabase.from("test").select("*").limit(1);
-      if (error) {
-        setIsSupabaseConnected(false);
-        throw error;
-      }
-      setIsSupabaseConnected(true);
-      toast({
-        title: "Supabase Connected",
-        description: "Successfully connected to Supabase",
-      });
-    } catch (err) {
-      setIsSupabaseConnected(false);
-      toast({
-        title: "Supabase Error",
-        description:
-          err instanceof Error ? err.message : "Failed to connect to Supabase",
-        variant: "destructive",
-      });
-    }
-  };
 
   return (
     <div className="p-8 space-y-8">
@@ -111,19 +84,6 @@ export function LibraryShowcase() {
           <Button>Test Query</Button>
           {isLoading && <p>Loading...</p>}
         </div>
-      </div>
-
-      {/* Supabase */}
-      <div className="space-y-2">
-        <h2 className="text-xl font-semibold">Supabase</h2>
-        <Button onClick={testSupabaseConnection}>
-          Test Supabase Connection
-        </Button>
-        {isSupabaseConnected ? (
-          <p className="text-green-500">Connected to Supabase</p>
-        ) : (
-          <p className="text-red-500">Not connected to Supabase</p>
-        )}
       </div>
 
       {/* shadcn/ui Button variants */}
