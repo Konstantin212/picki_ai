@@ -96,11 +96,13 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       right: "text-right",
     };
 
-    return React.createElement(
-      Component,
-      {
-        ref: ref as any,
-        className: cn(
+    // Use a div as fallback if Component is undefined
+    const Element = Component || "div";
+
+    return (
+      <Element
+        ref={ref as any}
+        className={cn(
           baseStyles,
           variants[variant],
           colors[color],
@@ -109,10 +111,11 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
           truncate && "truncate",
           noWrap && "whitespace-nowrap",
           className
-        ),
-        ...props,
-      },
-      children
+        )}
+        {...props}
+      >
+        {children}
+      </Element>
     );
   }
 );
