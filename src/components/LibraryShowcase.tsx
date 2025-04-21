@@ -91,7 +91,7 @@ export function LibraryShowcase() {
         <h2 className="text-xl font-semibold">shadcn/ui Buttons</h2>
         <div className="flex gap-4">
           <Button>Default</Button>
-          <Button variant="destructive">Destructive</Button>
+          <Button variant="primary">Primary</Button>
           <Button variant="outline">Outline</Button>
           <Button variant="secondary">Secondary</Button>
           <Button variant="ghost">Ghost</Button>
