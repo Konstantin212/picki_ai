@@ -7,6 +7,7 @@ export interface ButtonProps
   size?: "sm" | "md" | "lg";
   isLoading?: boolean;
   fullWidth?: boolean;
+  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -17,6 +18,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = "md",
       isLoading = false,
       fullWidth = false,
+      asChild = false,
       children,
       disabled,
       ...props
@@ -43,8 +45,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "h-12 px-6 text-base",
     };
 
+    const Comp = asChild ? React.Fragment : "button";
+
     return (
-      <button
+      <Comp
         className={cn(
           baseStyles,
           variants[variant],
@@ -61,7 +65,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
         ) : null}
         {children}
-      </button>
+      </Comp>
     );
   }
 );
