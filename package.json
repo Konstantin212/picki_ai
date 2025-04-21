@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "^15.3.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/node-fetch": "^2.6.12",
@@ -79,6 +80,7 @@
     "concurrently": "^8.2.2",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
