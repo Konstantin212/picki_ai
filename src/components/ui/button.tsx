@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 import { cn } from "@/lib/utils";
 
 export interface ButtonProps
@@ -23,7 +24,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const baseStyles =
       "inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2";
@@ -45,29 +46,29 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "h-12 px-6 text-base",
     };
 
-    const Comp = asChild ? React.Fragment : "button";
+    const Component = asChild ? Slot : "button";
 
     return (
-      <Comp
+      <Component
         className={cn(
           baseStyles,
           variants[variant],
           sizes[size],
           fullWidth && "w-full",
           disabled && "opacity-50 cursor-not-allowed",
-          className
+          className,
         )}
         ref={ref}
-        disabled={disabled || isLoading}
+        disabled={!asChild ? disabled || isLoading : undefined}
         {...props}
       >
         {isLoading ? (
           <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
         ) : null}
         {children}
-      </Comp>
+      </Component>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

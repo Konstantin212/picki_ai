@@ -39,12 +39,17 @@ export default async function HomePage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Link href="/profile">
-              <Button variant="ghost" size="sm" className="rounded-full p-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="rounded-full p-2"
+              asChild
+            >
+              <Link href="/profile">
                 <User className="h-5 w-5" />
                 <span className="sr-only">Profile</span>
-              </Button>
-            </Link>
+              </Link>
+            </Button>
 
             <form action="/auth/sign-out" method="post">
               <Button
