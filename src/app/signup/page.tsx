@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase';
 import { redirect } from 'next/navigation';
 import { login, signup } from '@/app/login/actions';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+// import { Button } from '@/components/ui/button';
 import { Typography } from '@/components/ui/typography';
 
 export default async function SignUpPage({ searchParams }: { searchParams: { error?: string } }) {
@@ -53,17 +53,25 @@ export default async function SignUpPage({ searchParams }: { searchParams: { err
           )}
 
           <div>
-            <Button formAction={signup} fullWidth type="submit">
+            <button
+              formAction={signup}
+              className="inline-flex h-10 w-full items-center justify-center rounded-md bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              type="submit"
+            >
               Sign up
-            </Button>
+            </button>
           </div>
 
           <div className="text-center text-sm">
             <Typography variant="body2" align="center">
               Already have an account?{' '}
-              <Button formAction={login} variant="link" type="submit">
+              <button
+                formAction={login}
+                className="text-indigo-600 underline hover:text-indigo-500"
+                type="submit"
+              >
                 Sign in
-              </Button>
+              </button>
             </Typography>
           </div>
         </form>

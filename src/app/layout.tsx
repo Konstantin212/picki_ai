@@ -5,8 +5,9 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Picki AI',
-  description: 'A modern web application',
+  title: 'Picki AI - Compare and Make Better Decisions',
+  description:
+    'Picki AI helps you compare products, services, and options to make better-informed decisions with data-driven insights and personalized recommendations.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
