@@ -24,4 +24,4 @@ export function useApiMutation<TData = unknown, TVariables = void, TError = Muta
 //       queryClient.invalidateQueries(['users']);
 //     },
 //   }
-// ); 
+// );

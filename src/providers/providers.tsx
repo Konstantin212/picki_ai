@@ -34,4 +34,4 @@ export function Providers({ children }: ProvidersProps) {
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
-} 
+}

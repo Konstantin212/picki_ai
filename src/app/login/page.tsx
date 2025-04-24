@@ -1,10 +1,10 @@
-import * as React from "react";
-import { createClient } from "@/lib/supabase";
-import { redirect } from "next/navigation";
-import { login, signup } from "@/app/login/actions";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Typography } from "@/components/ui/typography";
+import * as React from 'react';
+import { createClient } from '@/lib/supabase';
+import { redirect } from 'next/navigation';
+import { login, signup } from '@/app/login/actions';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/typography';
 
 export default async function LoginPage({
   searchParams,
@@ -19,7 +19,7 @@ export default async function LoginPage({
   } = await supabase.auth.getSession();
 
   if (session) {
-    redirect(params.redirectedFrom || "/");
+    redirect(params.redirectedFrom || '/');
   }
 
   return (
@@ -70,9 +70,9 @@ export default async function LoginPage({
             </Button>
           </div>
 
-          <div className="text-sm text-center">
+          <div className="text-center text-sm">
             <Typography variant="body2" align="center">
-              Don&apos;t have an account?{" "}
+              Don&apos;t have an account?{' '}
               <Button formAction={signup} variant="link" type="submit">
                 Sign up
               </Button>
