@@ -3,10 +3,36 @@ import { Button } from '@/components/ui/button';
 import { User, LogOut, LogIn } from 'lucide-react';
 import { Session } from '@supabase/supabase-js';
 import { MouseEventHandler } from 'react';
+import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 type NavItemProps = {
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
+};
+
+// LanguageSwitcher component
+const LanguageSwitcher = ({ isMobile = false }: { isMobile?: boolean }) => {
+  const { i18n } = useTranslation();
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    i18n.changeLanguage(e.target.value);
+  };
+  return (
+    <select
+      value={i18n.language}
+      onChange={handleChange}
+      className={
+        isMobile
+          ? 'mb-2 rounded-md bg-gray-800 px-2 py-1 text-white'
+          : 'mr-2 rounded-md bg-gray-800 px-2 py-1 text-white'
+      }
+      aria-label="Select language"
+    >
+      <option value="de">Deutsch</option>
+      <option value="en">English</option>
+      <option value="uk">Українська</option>
+    </select>
+  );
 };
 
 export const ProfileNavItem = ({ isMobile, onItemClick }: NavItemProps) => {
@@ -99,6 +125,7 @@ export const NavItems = ({
 }) => {
   return (
     <>
+      <LanguageSwitcher isMobile={isMobile} />
       {session ? (
         <>
           <ProfileNavItem isMobile={isMobile} onItemClick={onItemClick} />

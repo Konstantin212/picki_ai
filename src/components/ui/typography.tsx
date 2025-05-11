@@ -1,5 +1,7 @@
+'use client';
 import * as React from 'react';
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption' | 'overline';
@@ -9,6 +11,7 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   weight?: 'normal' | 'medium' | 'semibold' | 'bold';
   truncate?: boolean;
   noWrap?: boolean;
+  tKey?: string;
 }
 
 const Typography = React.forwardRef<HTMLElement, TypographyProps>(
@@ -23,10 +26,12 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
       truncate = false,
       noWrap = false,
       children,
+      tKey,
       ...props
     },
     ref
   ) => {
+    const { t } = useTranslation();
     // Map variants to appropriate HTML elements
     const componentMap: Record<string, React.ElementType> = {
       h1: 'h1',
@@ -104,7 +109,7 @@ const Typography = React.forwardRef<HTMLElement, TypographyProps>(
         )}
         {...props}
       >
-        {children}
+        {tKey ? t(tKey) : children}
       </Element>
     );
   }
