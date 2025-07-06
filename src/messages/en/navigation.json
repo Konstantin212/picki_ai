@@ -1,0 +1,10 @@
+{
+  "loginSignup": "Login / Signup",
+  "profile": "Profile",
+  "logout": "Logout",
+  "settings": "Settings",
+  "dashboard": "Dashboard",
+  "menu": "Menu",
+  "closeMenu": "Close Menu",
+  "openMenu": "Open Menu"
+} 

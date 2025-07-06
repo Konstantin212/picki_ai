@@ -1,0 +1,18 @@
+{
+  "title": "Профіль користувача",
+  "backToHome": "Повернутися на головну",
+  "personalInfo": "Особиста інформація",
+  "preferences": "Налаштування користувача",
+  "recentComparisons": "Останні порівняння",
+  "displaySettings": "Налаштування відображення",
+  "notificationSettings": "Налаштування сповіщень",
+  "itemsPerPage": "Елементів на сторінці",
+  "darkMode": "Темний режим",
+  "emailNotifications": "Сповіщення по електронній пошті",
+  "pushNotifications": "Push-сповіщення",
+  "memberSince": "Учасник з",
+  "comparison": "Порівняння",
+  "date": "Дата",
+  "on": "Увімкнено",
+  "off": "Вимкнено"
+} 

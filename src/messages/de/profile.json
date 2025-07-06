@@ -1,0 +1,18 @@
+{
+  "title": "Benutzerprofil",
+  "backToHome": "Zurück zur Startseite",
+  "personalInfo": "Persönliche Informationen",
+  "preferences": "Benutzereinstellungen",
+  "recentComparisons": "Letzte Vergleiche",
+  "displaySettings": "Anzeigeeinstellungen",
+  "notificationSettings": "Benachrichtigungseinstellungen",
+  "itemsPerPage": "Elemente pro Seite",
+  "darkMode": "Dunkler Modus",
+  "emailNotifications": "E-Mail-Benachrichtigungen",
+  "pushNotifications": "Push-Benachrichtigungen",
+  "memberSince": "Mitglied seit",
+  "comparison": "Vergleich",
+  "date": "Datum",
+  "on": "An",
+  "off": "Aus"
+} 

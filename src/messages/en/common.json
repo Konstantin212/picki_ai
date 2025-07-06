@@ -1,31 +1,22 @@
 {
-  "home": {
-    "heroTitle": "Make Better Decisions with Picki AI",
-    "heroDescription": "Compare products, services, and options with our advanced AI-powered comparison engine. Get insights, analysis, and recommendations tailored to your needs.",
-    "getStarted": "Get Started",
-    "learnMore": "Learn More",
-    "featuresTitle": "Why Choose Picki AI",
-    "featuresDescription": "Our platform offers powerful tools to help you make informed decisions by comparing options across multiple parameters.",
-    "feature1Title": "Detailed Comparisons",
-    "feature1Description": "Compare products side-by-side with detailed specifications, features, and user reviews.",
-    "feature2Title": "Data-Driven Insights",
-    "feature2Description": "Get objective analysis backed by data to help you understand the pros and cons of each option.",
-    "feature3Title": "Personalized Recommendations",
-    "feature3Description": "Get tailored suggestions based on your specific needs, preferences, and priorities.",
-    "ctaTitle": "Ready to make better decisions?",
-    "ctaDescription": "Join thousands of users who use Picki AI to make confident, informed choices.",
-    "ctaButton": "Get Started Now"
-  },
-  "nav": {
-    "loginSignup": "Login / Signup",
-    "profile": "Profile"
-  },
-  "notFound": {
-    "title": "Page Not Found",
-    "message": "The page you're looking for doesn't exist.",
-    "returnHome": "Return to Home"
-  },
-  "profile": {
-    "backToHome": "Back to Home"
-  }
+  "loading": "Loading...",
+  "error": "Error",
+  "success": "Success",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "close": "Close",
+  "submit": "Submit",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "search": "Search",
+  "filter": "Filter",
+  "sort": "Sort",
+  "refresh": "Refresh",
+  "retry": "Retry",
+  "confirm": "Confirm",
+  "yes": "Yes",
+  "no": "No"
 }

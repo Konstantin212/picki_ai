@@ -1,0 +1,22 @@
+{
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you're looking for doesn't exist.",
+    "returnHome": "Return to Home"
+  },
+  "serverError": {
+    "title": "Server Error",
+    "message": "Something went wrong on our end. Please try again later.",
+    "retry": "Try Again"
+  },
+  "unauthorized": {
+    "title": "Unauthorized",
+    "message": "You don't have permission to access this resource.",
+    "login": "Sign In"
+  },
+  "forbidden": {
+    "title": "Forbidden",
+    "message": "Access to this resource is forbidden.",
+    "goBack": "Go Back"
+  }
+} 

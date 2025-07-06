@@ -53,9 +53,7 @@ export default async function ProfilePage() {
             <Typography component="span" tKey="profile.backToHome" />
           </Button>
         </Link>
-        <Typography variant="h2" className="mb-6">
-          User Profile
-        </Typography>
+        <Typography variant="h2" className="mb-6" tKey="profile.title" />
       </div>
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -79,30 +77,26 @@ export default async function ProfilePage() {
               {userData.role}
             </div>
             <Typography variant="body2" color="muted" className="mt-4">
-              Member since {userData.joinedDate}
+              {userData.joinedDate}
             </Typography>
           </div>
         </div>
 
         <div className="rounded-lg bg-gray-800 p-6 shadow-md md:col-span-2">
-          <Typography variant="h4" className="mb-6">
-            User Preferences
-          </Typography>
+          <Typography variant="h4" className="mb-6" tKey="profile.preferences" />
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <Typography variant="h6" className="mb-2">
-                Display Settings
-              </Typography>
+              <Typography variant="h6" className="mb-2" tKey="profile.displaySettings" />
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <Typography variant="body2">Items per page</Typography>
+                  <Typography variant="body2" tKey="profile.itemsPerPage" />
                   <Typography variant="body2" color="primary">
                     {userData.preferences.itemsPerPage}
                   </Typography>
                 </div>
                 <div className="flex justify-between">
-                  <Typography variant="body2">Dark mode</Typography>
+                  <Typography variant="body2" tKey="profile.darkMode" />
                   <Typography variant="body2" color="primary">
                     {userData.preferences.darkMode ? 'On' : 'Off'}
                   </Typography>
@@ -111,18 +105,16 @@ export default async function ProfilePage() {
             </div>
 
             <div>
-              <Typography variant="h6" className="mb-2">
-                Notification Settings
-              </Typography>
+              <Typography variant="h6" className="mb-2" tKey="profile.notificationSettings" />
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <Typography variant="body2">Email notifications</Typography>
+                  <Typography variant="body2" tKey="profile.emailNotifications" />
                   <Typography variant="body2" color="primary">
                     {userData.preferences.notifications.email ? 'On' : 'Off'}
                   </Typography>
                 </div>
                 <div className="flex justify-between">
-                  <Typography variant="body2">Push notifications</Typography>
+                  <Typography variant="body2" tKey="profile.pushNotifications" />
                   <Typography variant="body2" color="primary">
                     {userData.preferences.notifications.push ? 'On' : 'Off'}
                   </Typography>
@@ -133,19 +125,17 @@ export default async function ProfilePage() {
         </div>
 
         <div className="rounded-lg bg-gray-800 p-6 shadow-md md:col-span-3">
-          <Typography variant="h4" className="mb-6">
-            Recent Comparisons
-          </Typography>
+          <Typography variant="h4" className="mb-6" tKey="profile.recentComparisons" />
 
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-700">
               <thead>
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                    Comparison
+                    <Typography component="span" tKey="profile.comparison" />
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">
-                    Date
+                    <Typography component="span" tKey="profile.date" />
                   </th>
                 </tr>
               </thead>

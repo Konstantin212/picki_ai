@@ -1,0 +1,18 @@
+{
+  "title": "User Profile",
+  "backToHome": "Back to Home",
+  "personalInfo": "Personal Information",
+  "preferences": "User Preferences",
+  "recentComparisons": "Recent Comparisons",
+  "displaySettings": "Display Settings",
+  "notificationSettings": "Notification Settings",
+  "itemsPerPage": "Items per page",
+  "darkMode": "Dark mode",
+  "emailNotifications": "Email notifications",
+  "pushNotifications": "Push notifications",
+  "memberSince": "Member since",
+  "comparison": "Comparison",
+  "date": "Date",
+  "on": "On",
+  "off": "Off"
+} 

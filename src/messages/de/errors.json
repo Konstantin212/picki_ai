@@ -1,0 +1,22 @@
+{
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "message": "Die gesuchte Seite existiert nicht.",
+    "returnHome": "Zurück zur Startseite"
+  },
+  "serverError": {
+    "title": "Serverfehler",
+    "message": "Auf unserer Seite ist etwas schiefgelaufen. Bitte versuchen Sie es später erneut.",
+    "retry": "Erneut versuchen"
+  },
+  "unauthorized": {
+    "title": "Nicht autorisiert",
+    "message": "Sie haben keine Berechtigung, auf diese Ressource zuzugreifen.",
+    "login": "Anmelden"
+  },
+  "forbidden": {
+    "title": "Verboten",
+    "message": "Der Zugriff auf diese Ressource ist verboten.",
+    "goBack": "Zurück"
+  }
+} 
