@@ -1,27 +1,21 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm as useHookForm } from 'react-hook-form';
+import { useForm as useHookForm, UseFormReturn } from 'react-hook-form';
 import { z } from 'zod';
 
-export function useForm<T extends z.ZodType>(schema: T) {
+/**
+ * Custom hook that wraps react-hook-form with Zod validation
+ *
+ * @param schema - Zod schema for form validation
+ * @returns Form instance with validation and error handling
+ *
+ * @example
+ * ```typescript
+ * const form = useForm(loginSchema);
+ * ```
+ */
+export const useForm = <T extends z.ZodType>(schema: T): UseFormReturn<z.infer<T>> => {
   return useHookForm<z.infer<T>>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
-}
-
-// Example form schemas
-export const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-});
-
-export const registerSchema = z
-  .object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(8, 'Password must be at least 8 characters'),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ['confirmPassword'],
-  });
+};
