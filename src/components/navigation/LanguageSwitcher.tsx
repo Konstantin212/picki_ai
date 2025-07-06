@@ -2,18 +2,30 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import classes from './LanguageSwitcher.module.scss';
 
 interface LanguageSwitcherProps {
   isMobile?: boolean;
 }
 
+const languages = [
+  { value: 'en', label: 'English' },
+  { value: 'de', label: 'Deutsch' },
+  { value: 'uk', label: 'Українська' },
+];
+
 export const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
+  const handleValueChange = (newLocale: string) => {
     const currentLocale = pathname.split('/')[1];
     const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
     router.push(newPath);
@@ -22,15 +34,20 @@ export const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) =>
   const currentLocale = pathname.split('/')[1] || 'en';
 
   return (
-    <select
-      value={currentLocale}
-      onChange={handleChange}
-      className={cn(isMobile ? classes.mobile : classes.desktop)}
-      aria-label="Select language"
-    >
-      <option value="de">Deutsch</option>
-      <option value="en">English</option>
-      <option value="uk">Українська</option>
-    </select>
+    <Select value={currentLocale} onValueChange={handleValueChange}>
+      <SelectTrigger
+        className={cn('w-[140px]', isMobile ? classes.mobile : classes.desktop)}
+        aria-label="Select language"
+      >
+        <SelectValue placeholder="Language" />
+      </SelectTrigger>
+      <SelectContent>
+        {languages.map((language) => (
+          <SelectItem key={language.value} value={language.value}>
+            {language.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 };

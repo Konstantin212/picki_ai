@@ -1,5 +1,5 @@
 // Utility functions
-export { cn, formatDate, absoluteUrl, isValidUrl } from './utils';
+export { cn } from './utils';
 
 // Supabase client
 export { createClient } from './supabase';
