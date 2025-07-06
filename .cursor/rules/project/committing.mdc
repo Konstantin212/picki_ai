@@ -1,0 +1,17 @@
+---
+description: This rule ensures that all commits follow best practices for version control. It enforces descriptive commit messages that clearly communicate what changes were made, and requires that all pre-commit checks (linting, type checking, formatting) pass before allowing a commit to be finalized. This maintains code quality and provides a clean, meaningful commit history for future development and debugging.
+
+globs: ['**/*']
+alwaysApply: true
+---
+
+# Committing Rule
+
+- Each commit must have a descriptive, short message summarizing the changes made.
+- The commit message should be clear, concise, and reflect the actual modifications (e.g., "fix: correct login validation error message" or "refactor: split Navbar into separate components").
+- If a pre-commit hook throws any errors (e.g., lint, type-check, formatting, empty files/folders, unused variables), these errors must be fixed before the commit is finalized.
+- After fixing errors, re-stage and re-commit the changes with an updated message if necessary.
+- Never bypass or disable pre-commit hooks.
+- Empty files and folders are not allowed in commits.
+- Unused variables, imports, and parameters must be removed before committing.
+- The commit history should remain clean and meaningful for future maintainers.

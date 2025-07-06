@@ -30,16 +30,20 @@ function getStagedFiles() {
 
 function checkEmptyFiles(files) {
   const emptyFiles = [];
-
+  
   for (const file of files) {
     if (!fs.existsSync(file)) continue;
-
+    
     const stats = fs.statSync(file);
-    if (stats.isFile() && stats.size === 0) {
-      emptyFiles.push(file);
+    if (stats.isFile()) {
+      const content = fs.readFileSync(file, 'utf8');
+      const trimmedContent = content.trim();
+      if (trimmedContent === '') {
+        emptyFiles.push(file);
+      }
     }
   }
-
+  
   return emptyFiles;
 }
 

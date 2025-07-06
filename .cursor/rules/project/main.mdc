@@ -49,6 +49,13 @@ The project rules are organized into focused instruction files for better readab
 - Security and performance best practices
 - Available scripts and tools
 
+### 📝 [Committing](./committing.mdc)
+
+- Commit message standards and best practices
+- Pre-commit hook requirements and error handling
+- Version control workflow guidelines
+- Clean commit history maintenance
+
 ## Quick Start
 
 1. Review the [Technology Stack](./technology-stack.mdc) for dependencies
@@ -56,6 +63,7 @@ The project rules are organized into focused instruction files for better readab
 3. Understand [Project Architecture](./architecture.mdc) for file organization
 4. Use [Custom Hooks](./hooks.mdc) for common functionality
 5. Follow [Development Workflow](./development-workflow.mdc) for best practices
+6. Adhere to [Committing](./committing.mdc) standards for version control
 
 ## Notes
 
