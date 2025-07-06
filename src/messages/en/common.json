@@ -15,5 +15,17 @@
     "ctaTitle": "Ready to make better decisions?",
     "ctaDescription": "Join thousands of users who use Picki AI to make confident, informed choices.",
     "ctaButton": "Get Started Now"
+  },
+  "nav": {
+    "loginSignup": "Login / Signup",
+    "profile": "Profile"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you're looking for doesn't exist.",
+    "returnHome": "Return to Home"
+  },
+  "profile": {
+    "backToHome": "Back to Home"
   }
 }

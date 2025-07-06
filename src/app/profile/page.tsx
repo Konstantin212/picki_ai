@@ -47,12 +47,12 @@ export default async function ProfilePage() {
   return (
     <main className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
-        <Button asChild variant="ghost" size="sm" className="mb-4">
-          <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center">
+          <Button variant="ghost" size="sm" className="mb-4">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Home
-          </Link>
-        </Button>
+            <Typography component="span" tKey="profile.backToHome" />
+          </Button>
+        </Link>
         <Typography variant="h2" className="mb-6">
           User Profile
         </Typography>

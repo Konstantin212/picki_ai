@@ -7,11 +7,11 @@ export default function NotFoundPage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6 py-24 text-center">
       <Typography variant="h2" className="mb-6" tKey="notFound.title" />
       <Typography variant="body1" color="secondary" className="mb-8" tKey="notFound.message" />
-      <Button asChild size="lg">
-        <Link href="/">
+      <Link href="/">
+        <Button size="lg">
           <Typography component="span" tKey="notFound.returnHome" />
-        </Link>
-      </Button>
+        </Button>
+      </Link>
     </main>
   );
 }

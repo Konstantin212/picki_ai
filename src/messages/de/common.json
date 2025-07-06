@@ -15,5 +15,17 @@
     "ctaTitle": "Bereit, bessere Entscheidungen zu treffen?",
     "ctaDescription": "Schließen Sie sich Tausenden von Nutzern an, die Picki AI nutzen, um selbstbewusste, informierte Entscheidungen zu treffen.",
     "ctaButton": "Jetzt loslegen"
+  },
+  "nav": {
+    "loginSignup": "Anmelden / Registrieren",
+    "profile": "Profil"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "message": "Die gesuchte Seite existiert nicht.",
+    "returnHome": "Zurück zur Startseite"
+  },
+  "profile": {
+    "backToHome": "Zurück zur Startseite"
   }
 }

@@ -28,17 +28,17 @@ export default async function HomePage() {
               tKey="home.heroDescription"
             />
             <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-              <Button asChild size="lg">
-                <Link href="/login" className="flex items-center">
+              <Link href="/login" className="flex items-center">
+                <Button size="lg">
                   <Typography component="span" tKey="home.getStarted" />
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link href="#features">
+                </Button>
+              </Link>
+              <Link href="#features">
+                <Button variant="outline" size="lg">
                   <Typography component="span" tKey="home.learnMore" />
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
@@ -109,11 +109,11 @@ export default async function HomePage() {
               className="mb-8"
               tKey="home.ctaDescription"
             />
-            <Button asChild size="lg">
-              <Link href="/login">
+            <Link href="/login">
+              <Button size="lg">
                 <Typography component="span" tKey="home.ctaButton" />
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </section>
       </main>

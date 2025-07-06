@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/utils';
 import classes from './button.module.scss';
 
@@ -8,7 +7,6 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   fullWidth?: boolean;
-  asChild?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -19,7 +17,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size = 'md',
       isLoading = false,
       fullWidth = false,
-      asChild = false,
       children,
       disabled,
       ...props
@@ -40,10 +37,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lg: classes.lg,
     };
 
-    const Component = asChild ? Slot : 'button';
-
     return (
-      <Component
+      <button
         className={cn(
           classes.baseStyles,
           variants[variant],
@@ -53,12 +48,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           className
         )}
         ref={ref}
-        disabled={!asChild ? disabled || isLoading : undefined}
+        disabled={disabled || isLoading}
         {...props}
       >
         {isLoading ? <span className={classes.loadingSpinner} /> : null}
         {children}
-      </Component>
+      </button>
     );
   }
 );

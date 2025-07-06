@@ -8,6 +8,7 @@ alwaysApply: true
 # Committing Rule
 
 - Each commit must have a descriptive, short message summarizing the changes made.
+- The character limit is 100 symbols
 - The commit message should be clear, concise, and reflect the actual modifications (e.g., "fix: correct login validation error message" or "refactor: split Navbar into separate components").
 - If a pre-commit hook throws any errors (e.g., lint, type-check, formatting, empty files/folders, unused variables), these errors must be fixed before the commit is finalized.
 - After fixing errors, re-stage and re-commit the changes with an updated message if necessary.
