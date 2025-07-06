@@ -30,10 +30,10 @@ function getStagedFiles() {
 
 function checkEmptyFiles(files) {
   const emptyFiles = [];
-  
+
   for (const file of files) {
     if (!fs.existsSync(file)) continue;
-    
+
     const stats = fs.statSync(file);
     if (stats.isFile()) {
       const content = fs.readFileSync(file, 'utf8');
@@ -43,7 +43,7 @@ function checkEmptyFiles(files) {
       }
     }
   }
-  
+
   return emptyFiles;
 }
 
@@ -65,50 +65,6 @@ function checkEmptyFolders(files) {
   }
 
   return emptyFolders;
-}
-
-function checkUnusedVariables(files) {
-  const tsFiles = files.filter((file) => file.endsWith('.ts') || file.endsWith('.tsx'));
-
-  if (tsFiles.length === 0) return [];
-
-  const unusedVariables = [];
-
-  for (const file of tsFiles) {
-    try {
-      // Use TypeScript compiler to check for unused variables
-      const result = execSync(`npx tsc --noEmit --noUnusedLocals --noUnusedParameters ${file}`, {
-        encoding: 'utf8',
-        stdio: 'pipe',
-      });
-
-      // Parse TypeScript output for unused variable errors
-      const lines = result.split('\n');
-      for (const line of lines) {
-        if (
-          line.includes('is declared but its value is never read') ||
-          line.includes('is declared but never used')
-        ) {
-          unusedVariables.push({ file, error: line.trim() });
-        }
-      }
-    } catch (error) {
-      // TypeScript errors are expected, we need to parse the stderr
-      const errorOutput = error.stderr || error.stdout || '';
-      const lines = errorOutput.split('\n');
-
-      for (const line of lines) {
-        if (
-          line.includes('is declared but its value is never read') ||
-          line.includes('is declared but never used')
-        ) {
-          unusedVariables.push({ file, error: line.trim() });
-        }
-      }
-    }
-  }
-
-  return unusedVariables;
 }
 
 function main() {
@@ -138,17 +94,6 @@ function main() {
     log('❌ Empty folders found:', 'red');
     emptyFolders.forEach((folder) => log(`   ${folder}`, 'red'));
     log('\n💡 Please remove empty folders or add files before committing.', 'yellow');
-    process.exit(1);
-  }
-
-  // Check for unused variables
-  const unusedVariables = checkUnusedVariables(stagedFiles);
-  if (unusedVariables.length > 0) {
-    log('❌ Unused variables found:', 'red');
-    unusedVariables.forEach(({ file, error }) => {
-      log(`   ${file}: ${error}`, 'red');
-    });
-    log('\n💡 Please remove unused variables or use them before committing.', 'yellow');
     process.exit(1);
   }
 

@@ -1,15 +1,8 @@
----
-description: Rules for the Picki AI project.
-globs:
-  - '**/*'
-alwaysApply: true
----
-
 # Picki AI Project Rules
 
 ## Overview
 
-This is a Next.js 15 application built with TypeScript, React 19, Tailwind CSS, and Supabase. The project uses modern development practices including ESLint, Prettier, and Husky for code quality.
+This is a Next.js 15 application built with TypeScript, React 19, Tailwind CSS, and Supabase. The project uses modern development practices including ESLint, Prettier, and Husky for code quality. The application features Next.js 15's built-in internationalization with server-side translations and locale-aware routing.
 
 ## Project Structure
 
@@ -34,6 +27,15 @@ The project rules are organized into focused instruction files for better readab
 - Page descriptions and component architecture
 - State management patterns
 - Authentication and API structure
+- **Internationalization (i18n)**: Next.js 15 locale routing and server-side translations
+
+### 🌍 [Internationalization](./internationalization.mdc)
+
+- Next.js 15 i18n implementation with locale routing
+- Server-side translation loading and usage patterns
+- Domain-based translation file organization
+- Language switching and locale detection
+- Migration from client-side i18next to server-side approach
 
 ### 🪝 [Custom Hooks](./hooks.mdc)
 
@@ -61,11 +63,117 @@ The project rules are organized into focused instruction files for better readab
 1. Review the [Technology Stack](./technology-stack.mdc) for dependencies
 2. Follow [Code Style & Conventions](./code-style.mdc) for development
 3. Understand [Project Architecture](./architecture.mdc) for file organization
-4. Use [Custom Hooks](./hooks.mdc) for common functionality
-5. Follow [Development Workflow](./development-workflow.mdc) for best practices
-6. Adhere to [Committing](./committing.mdc) standards for version control
+4. Learn [Internationalization](./internationalization.mdc) patterns for i18n
+5. Use [Custom Hooks](./hooks.mdc) for common functionality
+6. Follow [Development Workflow](./development-workflow.mdc) for best practices
+7. Adhere to [Committing](./committing.mdc) standards for version control
+
+## Key Features
+
+### Next.js 15 i18n Implementation
+
+- **Locale Routing**: `/{locale}/{page}` URL structure (e.g., `/en/profile`, `/de/login`)
+- **Server-Side Translations**: All translations loaded server-side for better performance
+- **Automatic Detection**: Browser language detection with fallback to English
+- **SEO Optimized**: Each locale has its own URL for better search engine indexing
+- **Type Safety**: Full TypeScript support for translation dictionaries
+
+### Translation Structure
+
+```
+src/messages/
+├── en/                    # English translations
+│   ├── common.json       # Shared UI elements
+│   ├── home.json         # Home page content
+│   ├── navigation.json   # Navigation labels
+│   ├── auth.json         # Authentication forms
+│   ├── profile.json      # Profile page content
+│   ├── errors.json       # Error messages
+│   ├── start.json        # Start page content
+│   ├── recommend.json    # Recommendation interface
+│   └── results.json      # Results display
+├── de/                    # German translations (same structure)
+└── uk/                    # Ukrainian translations (same structure)
+```
+
+### Usage Examples
+
+#### Server Components (Pages)
+
+```tsx
+// src/app/[lang]/page.tsx
+export default async function HomePage({
+  params
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+}) {
+  const { lang } = await params; // Next.js 15 requires awaiting params
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.home.heroTitle}</h1>
+      <p>{dict.home.heroDescription}</p>
+      <Navbar dict={dict} />
+    </div>
+  );
+}
+```
+
+#### Client Components
+
+```tsx
+// Components receive translations as props
+interface NavbarProps {
+  dict: any; // Translation dictionary
+  session?: Session | null;
+}
+
+export const Navbar = ({ dict, session }: NavbarProps) => {
+  return (
+    <nav>
+      <span>{dict.nav.home}</span>
+      <LanguageSwitcher />
+    </nav>
+  );
+};
+```
+
+#### Language Switching
+
+```tsx
+// src/components/navigation/LanguageSwitcher.tsx
+export const LanguageSwitcher = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLocale = e.target.value;
+    const currentLocale = pathname.split('/')[1];
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.push(newPath);
+  };
+
+  return (
+    <select onChange={handleChange}>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="uk">Українська</option>
+    </select>
+  );
+};
+```
 
 ## Notes
+
+- This project uses modern React patterns and Next.js 15 features
+- **Next.js 15 Params**: Always await `params` before destructuring in Next.js 15
+- **Server-Side i18n**: All translations are loaded server-side for better performance
+- **Locale Routing**: Use Next.js built-in locale routing for better SEO and performance
+- Maintain consistency with the existing codebase
+- Follow the established patterns for new features
+- Keep dependencies up to date and secure
+- Test all supported locales when adding new features
 
 - This project uses modern React patterns and Next.js 15 features
 - Maintain consistency with the existing codebase

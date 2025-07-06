@@ -1,31 +1,43 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typography';
-import { User } from 'lucide-react';
-import { MouseEventHandler } from 'react';
-import classes from './ProfileNavItem.module.scss';
+import { usePathname } from 'next/navigation';
 
 interface ProfileNavItemProps {
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
 }
 
-export const ProfileNavItem = ({ isMobile, onItemClick }: ProfileNavItemProps) => {
-  const handleClick: MouseEventHandler<HTMLAnchorElement> = () => {
-    if (onItemClick) onItemClick();
+export const ProfileNavItem = ({ dict, isMobile = false, onItemClick }: ProfileNavItemProps) => {
+  const pathname = usePathname();
+  const currentLocale = pathname.split('/')[1];
+  const profilePath = `/${currentLocale}/profile`;
+
+  const handleClick = () => {
+    if (onItemClick) {
+      onItemClick();
+    }
   };
 
-  return isMobile ? (
-    <Link href="/profile" className={classes.mobileLink} onClick={handleClick}>
-      <User className="mr-2 h-5 w-5" />
-      <Typography component="span" tKey="nav.profile" />
-    </Link>
-  ) : (
-    <Link href="/profile" className="flex items-center">
-      <Button variant="ghost" size="sm">
-        <User className="mr-2 h-4 w-4" />
-        <Typography component="span" tKey="nav.profile" />
-      </Button>
+  return (
+    <Link
+      href={profilePath}
+      onClick={handleClick}
+      className={`block px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
+        isMobile ? 'border-b border-gray-700' : ''
+      }`}
+    >
+      {dict.nav.profile}
     </Link>
   );
 };

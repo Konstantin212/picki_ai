@@ -3,18 +3,36 @@ import { NavItems } from './NavItems';
 
 interface MobileMenuProps {
   isOpen: boolean;
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
   session: Session | null;
   onToggle: () => void;
   onLogout: () => Promise<void>;
 }
 
-export const MobileMenu = ({ isOpen, session, onToggle, onLogout }: MobileMenuProps) => {
+export const MobileMenu = ({ isOpen, dict, session, onToggle, onLogout }: MobileMenuProps) => {
   if (!isOpen) return null;
 
   return (
     <div className="md:hidden">
-      <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-        <NavItems session={session} isMobile={true} onItemClick={onToggle} onLogout={onLogout} />
+      <div className="space-y-1 bg-gray-800 px-2 pb-3 pt-2">
+        <NavItems
+          dict={dict}
+          session={session}
+          isMobile={true}
+          onItemClick={onToggle}
+          onLogout={onLogout}
+        />
       </div>
     </div>
   );

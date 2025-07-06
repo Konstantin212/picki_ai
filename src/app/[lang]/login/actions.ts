@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 
-export async function login(formData: FormData) {
+export async function login(formData: FormData, lang: string) {
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -17,14 +17,14 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
-    redirect('/error');
+    redirect(`/${lang}/error`);
   }
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  redirect(`/${lang}`);
 }
 
-export async function signup(formData: FormData) {
+export async function signup(formData: FormData, lang: string) {
   const supabase = await createClient();
 
   // type-casting here for convenience
@@ -37,9 +37,9 @@ export async function signup(formData: FormData) {
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
-    redirect('/error');
+    redirect(`/${lang}/error`);
   }
 
   revalidatePath('/', 'layout');
-  redirect('/');
+  redirect(`/${lang}`);
 }

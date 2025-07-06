@@ -1,0 +1,389 @@
+# Internationalization (i18n) Rules
+
+## Overview
+
+This project uses Next.js 15's built-in internationalization with server-side translations and locale-aware routing. All translations are loaded server-side for better performance, SEO, and type safety.
+
+## Architecture
+
+### Locale Routing Structure
+
+```
+src/app/
+├── [lang]/              # Dynamic locale route
+│   ├── layout.tsx       # Root layout with locale context
+│   ├── page.tsx         # Home page
+│   ├── dictionaries.ts  # Server-side translation loader
+│   ├── login/           # Authentication pages
+│   ├── signup/          # Registration pages
+│   ├── profile/         # User profile
+│   ├── start/           # Initial setup
+│   ├── recommend/       # AI recommendations
+│   ├── results/         # Results display
+│   └── not-found.tsx    # 404 page with locale support
+├── not-found.tsx        # Global 404 redirect
+└── middleware.ts        # Locale detection and routing
+```
+
+### Translation File Organization
+
+```
+src/messages/
+├── en/                    # English translations
+│   ├── common.json       # Shared UI elements
+│   ├── home.json         # Home page content
+│   ├── navigation.json   # Navigation labels
+│   ├── auth.json         # Authentication forms
+│   ├── profile.json      # Profile page content
+│   ├── errors.json       # Error messages
+│   ├── start.json        # Start page content
+│   ├── recommend.json    # Recommendation interface
+│   └── results.json      # Results display
+├── de/                    # German translations (same structure)
+└── uk/                    # Ukrainian translations (same structure)
+```
+
+## Implementation Patterns
+
+### 1. Server Components (Pages)
+
+**Always await params in Next.js 15:**
+
+```tsx
+// src/app/[lang]/page.tsx
+export default async function HomePage({
+  params
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+}) {
+  const { lang } = await params; // Next.js 15 requires awaiting params
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.home.heroTitle}</h1>
+      <p>{dict.home.heroDescription}</p>
+      <Navbar dict={dict} />
+    </div>
+  );
+}
+```
+
+### 2. Client Components
+
+**Receive translations as props:**
+
+```tsx
+// src/components/navigation/Navbar.tsx
+interface NavbarProps {
+  dict: any; // Translation dictionary
+  session?: Session | null;
+}
+
+export const Navbar = ({ dict, session }: NavbarProps) => {
+  return (
+    <nav>
+      <span>{dict.nav.home}</span>
+      <LanguageSwitcher />
+    </nav>
+  );
+};
+```
+
+### 3. Dictionary Loader
+
+**Server-side translation loading:**
+
+```tsx
+// src/app/[lang]/dictionaries.ts
+import enCommon from '@/messages/en/common.json';
+import enHome from '@/messages/en/home.json';
+import enNavigation from '@/messages/en/navigation.json';
+// ... other imports
+
+const dictionaries = {
+  en: () => Promise.resolve({
+    ...enCommon,
+    home: enHome,
+    nav: enNavigation,
+    auth: enAuth,
+    profile: enProfile,
+    errors: enErrors,
+    start: enStart,
+    recommend: enRecommend,
+    results: enResults,
+  }),
+  de: () => Promise.resolve({
+    ...deCommon,
+    home: deHome,
+    nav: deNavigation,
+    // ... other translations
+  }),
+  uk: () => Promise.resolve({
+    ...ukCommon,
+    home: ukHome,
+    nav: ukNavigation,
+    // ... other translations
+  }),
+};
+
+export const getDictionary = async (locale: 'en' | 'de' | 'uk') => {
+  return dictionaries[locale]();
+};
+```
+
+### 4. Language Switching
+
+**Client-side locale switching:**
+
+```tsx
+// src/components/navigation/LanguageSwitcher.tsx
+'use client';
+
+import { useRouter, usePathname } from 'next/navigation';
+
+export const LanguageSwitcher = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLocale = e.target.value;
+    const currentLocale = pathname.split('/')[1];
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.push(newPath);
+  };
+
+  return (
+    <select onChange={handleChange}>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="uk">Українська</option>
+    </select>
+  );
+};
+```
+
+### 5. Middleware for Locale Detection
+
+**Automatic locale detection and routing:**
+
+```tsx
+// src/middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+
+const locales = ['en', 'de', 'uk'];
+const defaultLocale = 'en';
+
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Check if the pathname has a locale
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  if (pathnameHasLocale) return;
+
+  // Redirect to default locale
+  const locale = defaultLocale;
+  request.nextUrl.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
+}
+
+export const config = {
+  matcher: [
+    // Skip all internal paths (_next)
+    '/((?!_next|api|favicon.ico).*)',
+  ],
+};
+```
+
+## Best Practices
+
+### 1. Translation Key Naming
+
+- Use descriptive, hierarchical keys: `domain.section.element`
+- Examples: `auth.login.title`, `profile.preferences.darkMode`
+- Use camelCase for key names
+- Keep keys consistent across all languages
+
+### 2. File Organization
+
+- Group related translations in separate files by domain
+- Keep files focused on specific features/pages
+- Use consistent structure across all languages
+- Add new domain files to all language directories simultaneously
+
+### 3. Type Safety
+
+- Use TypeScript interfaces for translation dictionaries
+- Define proper types for component props
+- Use strict typing for locale parameters
+
+### 4. Performance
+
+- All translations loaded server-side
+- No client-side translation loading required
+- Leverage Next.js built-in caching
+- Use proper error boundaries for locale-specific errors
+
+### 5. SEO and Accessibility
+
+- Each locale has its own URL for better SEO
+- Proper meta tags for each locale
+- Screen reader friendly language switching
+- Semantic HTML with proper lang attributes
+
+## Adding New Translations
+
+### 1. Adding New Domain Files
+
+When adding a new feature or page:
+
+1. **Create domain files** in all language directories:
+
+   ```bash
+   src/messages/en/new-feature.json
+   src/messages/de/new-feature.json
+   src/messages/uk/new-feature.json
+   ```
+
+2. **Update dictionary loader** in `src/app/[lang]/dictionaries.ts`:
+
+   ```tsx
+   import enNewFeature from '@/messages/en/new-feature.json';
+   import deNewFeature from '@/messages/de/new-feature.json';
+   import ukNewFeature from '@/messages/uk/new-feature.json';
+
+   const dictionaries = {
+     en: () => Promise.resolve({
+       // ... existing translations
+       newFeature: enNewFeature,
+     }),
+     // ... other languages
+   };
+   ```
+
+3. **Use in components**:
+   ```tsx
+   const dict = await getDictionary(lang);
+   return <h1>{dict.newFeature.title}</h1>;
+   ```
+
+### 2. Adding New Keys to Existing Files
+
+1. **Add to all language files** simultaneously
+2. **Use consistent naming** across all languages
+3. **Test the translations** in all supported locales
+
+## Migration from Client-Side i18n
+
+### Benefits of Server-Side Approach
+
+- **Better Performance**: No client-side translation loading
+- **SEO Friendly**: Proper locale URLs and server-side rendering
+- **Simplified Setup**: No client-side i18next configuration
+- **Type Safety**: Better TypeScript integration
+- **Automatic Detection**: Built-in locale detection via middleware
+
+### Changes Required
+
+- Remove `i18next` and `react-i18next` dependencies
+- Implement server-side dictionary loading
+- Update all components to receive translations as props
+- Add locale-aware routing with middleware
+- Update all pages to use Next.js 15 params awaiting
+
+## Common Patterns
+
+### 1. Layout with Translations
+
+```tsx
+// src/app/[lang]/layout.tsx
+export default async function RootLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+}) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+
+  return (
+    <html lang={lang}>
+      <body>
+        <Navbar dict={dict} />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
+### 2. Form with Translations
+
+```tsx
+// src/app/[lang]/login/page.tsx
+export default async function LoginPage({
+  params,
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+}) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.auth.login.title}</h1>
+      <AuthForm dict={dict} />
+    </div>
+  );
+}
+```
+
+### 3. Error Handling
+
+```tsx
+// src/app/[lang]/not-found.tsx
+export default async function NotFoundPage({
+  params,
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+}) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.errors.title}</h1>
+      <p>{dict.errors.message}</p>
+      <Link href={`/${lang}`}>{dict.errors.returnHome}</Link>
+    </div>
+  );
+}
+```
+
+## Testing Locales
+
+Test the application in different locales:
+
+- **English**: [http://localhost:3000/en](http://localhost:3000/en)
+- **German**: [http://localhost:3000/de](http://localhost:3000/de)
+- **Ukrainian**: [http://localhost:3000/uk](http://localhost:3000/uk)
+
+Always test new features in all supported locales to ensure proper translation coverage.
+
+## Notes
+
+- **Next.js 15 Params**: Always await `params` before destructuring
+- **Server Components**: Use server components for data fetching and translations
+- **Client Components**: Receive translations as props, don't load translations client-side
+- **Type Safety**: Use proper TypeScript interfaces for translation dictionaries
+- **Performance**: Leverage server-side rendering for better performance
+- **SEO**: Each locale has its own URL for better search engine indexing
+  description:
+  globs:
+  alwaysApply: false
+
+---

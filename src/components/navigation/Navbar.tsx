@@ -1,47 +1,32 @@
 'use client';
 
-import { useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { Logo } from './Logo';
 import { NavItems } from './NavItems';
-import { MobileMenu } from './MobileMenu';
-import { MobileMenuButton } from './MobileMenuButton';
-import { useLogout } from '@/hooks/use-logout';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface NavbarProps {
-  session: Session | null;
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
+  session?: Session | null;
 }
 
-export const Navbar = ({ session }: NavbarProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { logout } = useLogout();
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
+export const Navbar = ({ dict, session }: NavbarProps) => {
   return (
-    <nav className="bg-gray-900 shadow-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 justify-between">
-          <div className="flex items-center">
-            <Logo />
-          </div>
-
-          {/* Desktop menu */}
-          <div className="hidden md:flex md:items-center md:space-x-4">
-            <NavItems session={session} onLogout={logout} />
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="flex items-center md:hidden">
-            <MobileMenuButton isOpen={isOpen} onToggle={toggleMenu} />
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      <MobileMenu isOpen={isOpen} session={session} onToggle={toggleMenu} onLogout={logout} />
+    <nav className="flex h-16 items-center justify-between bg-gray-900 px-6 shadow-lg">
+      <Logo />
+      <NavItems dict={dict} session={session ?? null} />
+      <LanguageSwitcher />
     </nav>
   );
 };

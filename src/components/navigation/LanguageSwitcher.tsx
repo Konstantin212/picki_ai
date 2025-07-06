@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslation } from 'react-i18next';
+import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import classes from './LanguageSwitcher.module.scss';
 
@@ -9,15 +9,21 @@ interface LanguageSwitcherProps {
 }
 
 export const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) => {
-  const { i18n } = useTranslation();
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    i18n.changeLanguage(e.target.value);
+    const newLocale = e.target.value;
+    const currentLocale = pathname.split('/')[1];
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.push(newPath);
   };
+
+  const currentLocale = pathname.split('/')[1] || 'en';
 
   return (
     <select
-      value={i18n.language}
+      value={currentLocale}
       onChange={handleChange}
       className={cn(isMobile ? classes.mobile : classes.desktop)}
       aria-label="Select language"

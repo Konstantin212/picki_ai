@@ -2,25 +2,45 @@ import { Session } from '@supabase/supabase-js';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { ProfileNavItem } from './ProfileNavItem';
 import { LogoutNavItem } from './LogoutNavItem';
-import { LoginNavItem } from './LoginNavItem';
 
 interface NavItemsProps {
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
   session: Session | null;
   isMobile?: boolean;
   onItemClick?: () => void;
-  onLogout: () => Promise<void>;
+  onLogout?: () => Promise<void>;
 }
 
-export const NavItems = ({ session, isMobile = false, onItemClick, onLogout }: NavItemsProps) => {
+export const NavItems = ({
+  dict,
+  session,
+  isMobile = false,
+  onItemClick,
+  onLogout,
+}: NavItemsProps) => {
   return (
     <>
-      <LanguageSwitcher isMobile={isMobile} />
-      <ProfileNavItem isMobile={isMobile} onItemClick={onItemClick} />
-      {session ? (
-        <LogoutNavItem isMobile={isMobile} onItemClick={onItemClick} onLogout={onLogout} />
-      ) : (
-        <LoginNavItem isMobile={isMobile} onItemClick={onItemClick} />
-      )}
+      <LanguageSwitcher />
+      <ProfileNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} />
+      {session && onLogout ? (
+        <LogoutNavItem
+          dict={dict}
+          isMobile={isMobile}
+          onItemClick={onItemClick}
+          onLogout={onLogout}
+        />
+      ) : null}
     </>
   );
 };

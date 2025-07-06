@@ -1,0 +1,27 @@
+{
+  "title": "Your Recommendations",
+  "description": "Here are your personalized AI recommendations based on your preferences and criteria.",
+  "score": "Score",
+  "price": "Price",
+  "details": "Details",
+  "select": "Select",
+  "newRecommendation": "Get New Recommendations",
+  "item1": {
+    "title": "Premium Option A",
+    "description": "High-quality recommendation with excellent features",
+    "score": "9.2/10",
+    "price": "$299"
+  },
+  "item2": {
+    "title": "Standard Option B",
+    "description": "Good value recommendation with solid features",
+    "score": "8.5/10",
+    "price": "$199"
+  },
+  "item3": {
+    "title": "Budget Option C",
+    "description": "Affordable recommendation with essential features",
+    "score": "7.8/10",
+    "price": "$99"
+  }
+} 

@@ -1,10 +1,3 @@
----
-description: Project architecture guidelines for the AI recommendation system.
-globs:
-  - '**/*'
-alwaysApply: true
----
-
 # Project Architecture
 
 ## File Organization
@@ -14,20 +7,23 @@ alwaysApply: true
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── page.tsx           # Home page - main landing page with AI recommendations
-│   ├── layout.tsx         # Root layout - wraps all pages with providers and navigation
+│   ├── [lang]/            # Locale-aware dynamic routes
+│   │   ├── layout.tsx     # Root layout with locale context
+│   │   ├── page.tsx       # Home page with server-side translations
+│   │   ├── not-found.tsx  # 404 page with locale support
+│   │   ├── dictionaries.ts # Server-side translation loader
+│   │   ├── login/         # Authentication pages
+│   │   ├── signup/        # Registration pages
+│   │   ├── profile/       # User profile management
+│   │   ├── start/         # Initial setup/onboarding
+│   │   ├── recommend/     # AI recommendation interface
+│   │   └── results/       # AI recommendation results
+│   ├── not-found.tsx      # Global 404 redirect to default locale
 │   ├── globals.css        # Global styles and CSS custom properties
 │   ├── favicon.ico        # Site favicon
-│   ├── not-found.tsx      # 404 error page
-│   ├── login/             # User authentication login page
-│   ├── signup/            # User registration page
 │   ├── auth/              # Authentication callback and sign-out routes
 │   │   ├── callback/      # OAuth callback handler for Supabase auth
 │   │   └── sign-out/      # User logout functionality
-│   ├── profile/           # User profile management page
-│   ├── start/             # Initial setup/onboarding page
-│   ├── recommend/         # AI recommendation interface page
-│   ├── results/           # Display results from AI recommendations
 │   └── api/               # API routes for backend functionality
 │       ├── recommend/     # AI recommendation API endpoints
 │       ├── test/          # Testing and development API routes
@@ -42,7 +38,20 @@ src/
 │   ├── use-mutation.ts   # TanStack Mutation wrapper for API mutations
 │   └── use-toast.ts      # Toast notification system hook
 ├── lib/                  # Utility libraries and configurations
-├── messages/             # i18n translation files
+├── messages/             # i18n translation files (domain-based)
+│   ├── en/              # English translations
+│   │   ├── common.json  # Shared UI elements
+│   │   ├── home.json    # Home page content
+│   │   ├── navigation.json # Navigation labels
+│   │   ├── auth.json    # Authentication forms
+│   │   ├── profile.json # Profile page content
+│   │   ├── errors.json  # Error messages
+│   │   ├── start.json   # Start page content
+│   │   ├── recommend.json # Recommendation interface
+│   │   └── results.json # Results display
+│   ├── de/              # German translations (same structure)
+│   └── uk/              # Ukrainian translations (same structure)
+├── middleware.ts         # Locale detection and routing middleware
 └── providers/            # React context providers
 ```
 
@@ -50,22 +59,27 @@ src/
 
 ### Main Pages
 
-- **`page.tsx`**: Main landing page that showcases the AI recommendation system, includes user onboarding and feature highlights
-- **`layout.tsx`**: Root layout component that provides global navigation, authentication context, and theme providers
+- **`[lang]/page.tsx`**: Main landing page that showcases the AI recommendation system, includes user onboarding and feature highlights with server-side translations
+- **`[lang]/layout.tsx`**: Root layout component that provides global navigation, authentication context, theme providers, and locale context
 
 ### Authentication Pages
 
-- **`login/`**: User authentication page with Supabase integration, form validation, and error handling
-- **`signup/`**: User registration page with account creation, validation, and onboarding flow
+- **`[lang]/login/`**: User authentication page with Supabase integration, form validation, error handling, and server-side translations
+- **`[lang]/signup/`**: User registration page with account creation, validation, onboarding flow, and server-side translations
 - **`auth/callback/`**: Handles OAuth authentication callbacks from Supabase providers
 - **`auth/sign-out/`**: Manages user logout and session cleanup
 
 ### User Pages
 
-- **`profile/`**: User profile management page for account settings and preferences
-- **`start/`**: Initial setup page for new users to configure their preferences
-- **`recommend/`**: Main AI recommendation interface where users input preferences and get suggestions
-- **`results/`**: Displays AI-generated recommendations with detailed information and actions
+- **`[lang]/profile/`**: User profile management page for account settings and preferences with server-side translations
+- **`[lang]/start/`**: Initial setup page for new users to configure their preferences with server-side translations
+- **`[lang]/recommend/`**: Main AI recommendation interface where users input preferences and get suggestions with server-side translations
+- **`[lang]/results/`**: Displays AI-generated recommendations with detailed information and actions with server-side translations
+
+### Error Pages
+
+- **`[lang]/not-found.tsx`**: 404 error page with locale support and server-side translations
+- **`not-found.tsx`**: Global 404 page that redirects to the default locale
 
 ### API Routes
 
@@ -81,6 +95,7 @@ src/
 - Use index files for clean imports
 - Separate business logic from UI components
 - Use proper TypeScript interfaces for all props
+- **Receive translations as props** for client components
 
 ### Component Categories
 
@@ -88,6 +103,7 @@ src/
 - **Feature Components**: Business logic specific components
 - **Layout Components**: Page structure and navigation
 - **Form Components**: Input and validation components
+- **Navigation Components**: Locale-aware navigation with language switching
 
 ## State Management Architecture
 
@@ -96,12 +112,14 @@ src/
 - Use TanStack React Query for API data
 - Implement proper caching strategies
 - Handle loading and error states consistently
+- **Server-side translations** loaded via `getDictionary` function
 
 ### Client State
 
 - Use React state for local component state
 - Use React Context sparingly for global state
 - Prefer composition over prop drilling
+- **No client-side translation loading** - all translations passed as props
 
 ### Authentication State
 
@@ -109,36 +127,162 @@ src/
 - Implement proper session handling
 - Secure API routes with authentication middleware
 
-- Use Supabase Auth for user management
-- Implement proper session handling
-- Secure API routes with authentication middleware
+## Internationalization (i18n) Architecture
 
-# Internationalization (i18n) Translation File Structure
+### Next.js 15 Locale Routing
 
-## Best Practice: Domain-Based, Per-Language JSON Files
+- **URL Structure**: `/{locale}/{page}` (e.g., `/en/profile`, `/de/login`)
+- **Server-Side Translations**: All translations loaded server-side for better performance
+- **Automatic Locale Detection**: Browser language detection with fallback to English
+- **SEO Optimized**: Each locale has its own URL for better search engine indexing
 
-- **Translations are organized by language and feature/domain.**
-- Each language has its own folder under `src/messages/` (e.g., `en/`, `de/`, `uk/`).
-- Each folder contains separate JSON files for each domain/feature:
-  - `common.json` (shared/common UI labels)
-  - `home.json` (home page)
-  - `navigation.json` (navigation components)
-  - `auth.json` (authentication pages)
-  - `profile.json` (profile page)
-  - `errors.json` (error/404 pages)
-- **Keys are hierarchical and descriptive** (e.g., `auth.login.title`, `profile.preferences.darkMode`).
-- **Keep files small and focused** to avoid merge conflicts and make it easy for translators and developers to maintain.
-- **Add new translations to all language folders** and keep the structure consistent across languages.
-- **Use translation key constants** from `src/lib/translations.ts` for type safety and maintainability.
-- See `src/messages/README.md` for full documentation, usage examples, and best practices.
+### Translation Loading
 
-**Benefits:**
+```typescript
+// src/app/[lang]/dictionaries.ts
+const dictionaries = {
+  en: () => Promise.resolve({
+    ...enCommon,
+    home: enHome,
+    nav: enNavigation,
+    auth: enAuth,
+    profile: enProfile,
+    errors: enErrors,
+    start: enStart,
+    recommend: enRecommend,
+    results: enResults,
+  }),
+  // ... other languages
+};
 
-- Scalable and maintainable as the project grows
-- Easy to add new features or languages
-- Prevents large, unmanageable translation files
-- Reduces merge conflicts and confusion
-- Makes it easier for translators to work on specific domains
+export const getDictionary = async (locale: 'en' | 'de' | 'uk') => {
+  return dictionaries[locale]();
+};
+```
+
+### Page Implementation Pattern
+
+```typescript
+// All pages follow this pattern
+export default async function PageName({
+  params
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+}) {
+  const { lang } = await params; // Next.js 15 requires awaiting params
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.pageName.title}</h1>
+      <Component dict={dict} />
+    </div>
+  );
+}
+```
+
+### Component Implementation Pattern
+
+```typescript
+// Client components receive translations as props
+interface ComponentProps {
+  dict: any; // Translation dictionary
+  // ... other props
+}
+
+export const Component = ({ dict, ...props }: ComponentProps) => {
+  return (
+    <div>
+      <span>{dict.component.label}</span>
+    </div>
+  );
+};
+```
+
+### Middleware for Locale Detection
+
+```typescript
+// src/middleware.ts
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Check if the pathname has a locale
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  );
+
+  if (pathnameHasLocale) return;
+
+  // Redirect to default locale
+  const locale = defaultLocale;
+  request.nextUrl.pathname = `/${locale}${pathname}`;
+  return NextResponse.redirect(request.nextUrl);
+}
+```
+
+## Translation File Structure
+
+### Domain-Based Organization
+
+```
+src/messages/
+├── en/                    # English translations
+│   ├── common.json       # Shared UI elements
+│   ├── home.json         # Home page content
+│   ├── navigation.json   # Navigation labels
+│   ├── auth.json         # Authentication forms
+│   ├── profile.json      # Profile page content
+│   ├── errors.json       # Error messages
+│   ├── start.json        # Start page content
+│   ├── recommend.json    # Recommendation interface
+│   └── results.json      # Results display
+├── de/                    # German translations (same structure)
+└── uk/                    # Ukrainian translations (same structure)
+```
+
+### Key Naming Convention
+
+- Use descriptive, hierarchical keys: `domain.section.element`
+- Examples: `auth.login.title`, `profile.preferences.darkMode`
+- Use camelCase for key names
+- Keep keys consistent across all languages
+
+### Benefits
+
+- **Scalable and maintainable** as the project grows
+- **Easy to add new features** or languages
+- **Prevents large, unmanageable** translation files
+- **Reduces merge conflicts** and confusion
+- **Makes it easier for translators** to work on specific domains
+- **Server-side rendering** for better performance
+- **SEO friendly** with proper locale URLs
+
+## Migration from Client-Side i18n
+
+### Changes Made
+
+- **Removed**: `i18next` and `react-i18next` dependencies
+- **Added**: Server-side dictionary loading with `getDictionary`
+- **Updated**: All components to receive translations as props
+- **Added**: Locale-aware routing with middleware
+- **Updated**: All pages to use Next.js 15 params awaiting
+
+### Benefits
+
+- **Better Performance**: Server-side rendering
+- **SEO Friendly**: Proper locale URLs
+- **Simplified Setup**: No client-side translation loading
+- **Type Safety**: Better TypeScript integration
+- **Automatic Detection**: Built-in locale detection
+
+## Notes
+
+- **Next.js 15 Params**: Always await `params` before destructuring
+- **Server Components**: Use server components for data fetching and translations
+- **Client Components**: Receive translations as props, don't load translations client-side
+- **Type Safety**: Use proper TypeScript interfaces for translation dictionaries
+- **Performance**: Leverage server-side rendering for better performance
+- **SEO**: Each locale has its own URL for better search engine indexing
 
 - Secure API routes with authentication middleware
 

@@ -1,30 +1,45 @@
-import { Button } from '@/components/ui/button';
 import { LogOut } from 'lucide-react';
-import classes from './LogoutNavItem.module.scss';
 
 interface LogoutNavItemProps {
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
   onLogout: () => Promise<void>;
 }
 
-export const LogoutNavItem = ({ isMobile, onItemClick, onLogout }: LogoutNavItemProps) => {
-  const handleClick = async () => {
-    await onLogout();
+export const LogoutNavItem = ({
+  dict,
+  isMobile = false,
+  onItemClick,
+  onLogout,
+}: LogoutNavItemProps) => {
+  const handleLogout = async () => {
     if (onItemClick) {
       onItemClick();
     }
+    await onLogout();
   };
 
-  return isMobile ? (
-    <button onClick={handleClick} className={classes.mobileButton}>
-      <LogOut className="mr-2 h-5 w-5" />
-      Logout
-    </button>
-  ) : (
-    <Button variant="outline" size="sm" onClick={onLogout} className="flex items-center">
+  return (
+    <button
+      onClick={handleLogout}
+      className={`flex w-full items-center px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
+        isMobile ? 'border-b border-gray-700' : ''
+      }`}
+    >
       <LogOut className="mr-2 h-4 w-4" />
-      Logout
-    </Button>
+      {dict.nav.logout}
+    </button>
   );
 };

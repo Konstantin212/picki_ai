@@ -1,31 +1,43 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typography';
-import { LogIn } from 'lucide-react';
-import { MouseEventHandler } from 'react';
-import classes from './LoginNavItem.module.scss';
+import { usePathname } from 'next/navigation';
 
 interface LoginNavItemProps {
+  dict: {
+    nav: {
+      loginSignup: string;
+      profile: string;
+      logout: string;
+      settings: string;
+      dashboard: string;
+      menu: string;
+      closeMenu: string;
+      openMenu: string;
+    };
+  };
   isMobile?: boolean;
-  onItemClick?: (() => void) | undefined;
+  onItemClick?: () => void;
 }
 
-export const LoginNavItem = ({ isMobile, onItemClick }: LoginNavItemProps) => {
-  const handleClick: MouseEventHandler<HTMLAnchorElement> = () => {
-    if (onItemClick) onItemClick();
+export const LoginNavItem = ({ dict, isMobile = false, onItemClick }: LoginNavItemProps) => {
+  const pathname = usePathname();
+  const currentLocale = pathname.split('/')[1];
+  const loginPath = `/${currentLocale}/login`;
+
+  const handleClick = () => {
+    if (onItemClick) {
+      onItemClick();
+    }
   };
 
-  return isMobile ? (
-    <Link href="/login" className={classes.mobileLink} onClick={handleClick}>
-      <LogIn className="mr-2 h-5 w-5" />
-      <Typography component="span" tKey="nav.loginSignup" />
-    </Link>
-  ) : (
-    <Link href="/login" className="flex items-center">
-      <Button variant="primary" size="sm">
-        <LogIn className="mr-2 h-4 w-4" />
-        <Typography component="span" tKey="nav.loginSignup" />
-      </Button>
+  return (
+    <Link
+      href={loginPath}
+      onClick={handleClick}
+      className={`block px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
+        isMobile ? 'border-b border-gray-700' : ''
+      }`}
+    >
+      {dict.nav.loginSignup}
     </Link>
   );
 };

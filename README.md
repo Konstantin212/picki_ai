@@ -10,7 +10,7 @@ A modern AI recommendation web application built with Next.js 15, React 19, Type
 - **Modern UI**: Tailwind CSS with shadcn/ui components and SCSS modules
 - **Data Management**: TanStack React Query for efficient server state management
 - **Form Handling**: React Hook Form with Zod validation schemas
-- **Internationalization**: Multi-language support (en, de, uk) with i18next
+- **Internationalization**: Multi-language support (en, de, uk) with Next.js 15 locale routing
 - **Code Quality**: ESLint, Prettier, Husky pre-commit hooks
 - **Type Safety**: Strict TypeScript configuration with comprehensive type checking
 - **Responsive Design**: Mobile-first approach with modern UI/UX
@@ -19,14 +19,14 @@ A modern AI recommendation web application built with Next.js 15, React 19, Type
 
 ### Core Technologies
 
-- **Framework**: Next.js 15.3.0 with App Router
+- **Framework**: Next.js 15.3.0 with App Router and locale routing
 - **Language**: TypeScript 5+ (strict mode enabled)
 - **UI Library**: React 19.0.0
 - **Styling**: Tailwind CSS 3.3.0 with SCSS modules
 - **Database**: Supabase (PostgreSQL)
 - **State Management**: TanStack React Query 5.73.3
 - **Forms**: React Hook Form 7.55.0 with Zod 3.24.2
-- **Internationalization**: i18next 25.1.2
+- **Internationalization**: Next.js 15 built-in i18n with server-side translations
 - **Package Manager**: pnpm
 
 ### UI & Components
@@ -48,16 +48,20 @@ A modern AI recommendation web application built with Next.js 15, React 19, Type
 ```
 src/
 ├── app/                    # Next.js App Router pages
-│   ├── page.tsx           # Home page - main landing page with AI recommendations
-│   ├── layout.tsx         # Root layout - wraps all pages with providers and navigation
+│   ├── [lang]/            # Locale-aware dynamic routes
+│   │   ├── layout.tsx     # Root layout with locale context
+│   │   ├── page.tsx       # Home page with server-side translations
+│   │   ├── not-found.tsx  # 404 page with locale support
+│   │   ├── dictionaries.ts # Server-side translation loader
+│   │   ├── login/         # Authentication pages
+│   │   ├── signup/        # Registration pages
+│   │   ├── profile/       # User profile management
+│   │   ├── start/         # Initial setup/onboarding
+│   │   ├── recommend/     # AI recommendation interface
+│   │   └── results/       # AI recommendation results
+│   ├── not-found.tsx      # Global 404 redirect to default locale
 │   ├── globals.css        # Global styles and CSS custom properties
-│   ├── login/             # User authentication login page
-│   ├── signup/            # User registration page
 │   ├── auth/              # Authentication callback and sign-out routes
-│   ├── profile/           # User profile management page
-│   ├── start/             # Initial setup/onboarding page
-│   ├── recommend/         # AI recommendation interface page
-│   ├── results/           # Display results from AI recommendations
 │   └── api/               # API routes for backend functionality
 ├── components/            # Reusable UI components
 │   ├── ui/               # Base UI components (shadcn/ui style)
@@ -75,8 +79,119 @@ src/
 │   ├── form.ts           # useForm hook for form validation
 │   ├── schemas/          # Zod validation schemas by domain
 │   └── axios.ts          # API client with interceptors
-├── messages/             # i18n translation files
+├── messages/             # i18n translation files (domain-based)
+│   ├── en/              # English translations
+│   │   ├── common.json  # Shared UI elements
+│   │   ├── home.json    # Home page content
+│   │   ├── navigation.json # Navigation labels
+│   │   ├── auth.json    # Authentication forms
+│   │   ├── profile.json # Profile page content
+│   │   ├── errors.json  # Error messages
+│   │   ├── start.json   # Start page content
+│   │   ├── recommend.json # Recommendation interface
+│   │   └── results.json # Results display
+│   ├── de/              # German translations (same structure)
+│   └── uk/              # Ukrainian translations (same structure)
+├── middleware.ts         # Locale detection and routing middleware
 └── providers/            # React context providers
+```
+
+## 🌍 Internationalization (i18n)
+
+### Next.js 15 Locale Routing
+
+This project uses Next.js 15's built-in internationalization with locale routing:
+
+- **URL Structure**: `/{locale}/{page}` (e.g., `/en/profile`, `/de/login`)
+- **Server-Side Translations**: All translations loaded server-side for better performance
+- **Automatic Locale Detection**: Browser language detection with fallback to English
+- **SEO Optimized**: Each locale has its own URL for better search engine indexing
+
+### Translation Structure
+
+Translations are organized by domain and language:
+
+```
+src/messages/
+├── en/
+│   ├── common.json      # Shared UI elements
+│   ├── home.json        # Home page content
+│   ├── navigation.json  # Navigation labels
+│   ├── auth.json        # Authentication forms
+│   ├── profile.json     # Profile page content
+│   ├── errors.json      # Error messages
+│   ├── start.json       # Start page content
+│   ├── recommend.json   # Recommendation interface
+│   └── results.json     # Results display
+├── de/                  # German translations (same structure)
+└── uk/                  # Ukrainian translations (same structure)
+```
+
+### Usage Examples
+
+#### Server Components (Pages)
+
+```tsx
+// src/app/[lang]/page.tsx
+export default async function HomePage({
+  params
+}: {
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+}) {
+  const { lang } = await params; // Next.js 15 requires awaiting params
+  const dict = await getDictionary(lang);
+
+  return (
+    <div>
+      <h1>{dict.home.heroTitle}</h1>
+      <p>{dict.home.heroDescription}</p>
+    </div>
+  );
+}
+```
+
+#### Client Components
+
+```tsx
+// Components receive translations as props
+interface NavbarProps {
+  dict: any; // Translation dictionary
+  session?: Session | null;
+}
+
+export const Navbar = ({ dict, session }: NavbarProps) => {
+  return (
+    <nav>
+      <span>{dict.nav.home}</span>
+      <LanguageSwitcher /> {/* Handles locale switching */}
+    </nav>
+  );
+};
+```
+
+#### Language Switching
+
+```tsx
+// src/components/navigation/LanguageSwitcher.tsx
+export const LanguageSwitcher = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLocale = e.target.value;
+    const currentLocale = pathname.split('/')[1];
+    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
+    router.push(newPath);
+  };
+
+  return (
+    <select onChange={handleChange}>
+      <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="uk">Українська</option>
+    </select>
+  );
+};
 ```
 
 ## 🎨 Code Style & Conventions
@@ -102,6 +217,13 @@ src/
 - Prefer server components when possible
 - Create small, isolated client components
 - Common use cases: React hooks, event handlers, browser APIs, third-party libraries
+
+### Next.js 15 Best Practices
+
+- **Params Awaiting**: Always await `params` before destructuring in Next.js 15
+- **Server Components**: Use server components for data fetching and translations
+- **Locale Routing**: Leverage Next.js built-in locale routing for better performance
+- **Error Handling**: Implement proper error boundaries for locale-specific errors
 
 ### Styling
 
@@ -163,7 +285,7 @@ NEXT_PUBLIC_API_URL=your_api_url
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the application.
+Open [http://localhost:3000](http://localhost:3000) to see the application. The middleware will automatically redirect to your preferred locale (e.g., `/en`, `/de`, `/uk`).
 
 ## 📋 Available Scripts
 
@@ -188,7 +310,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 2. Use proper ESLint and Prettier configuration
 3. Test changes in multiple browsers
 4. Check for accessibility issues
-5. Verify internationalization works
+5. Verify internationalization works across all locales
 
 ### Before Committing
 
@@ -197,67 +319,43 @@ Open [http://localhost:3000](http://localhost:3000) to see the application.
 3. Ensure all tests pass
 4. Check bundle size impact
 5. Verify responsive design
+6. Test all supported locales
 
-### Code Quality Tools
+## 🌍 Testing Locales
 
-- ESLint with Next.js and TypeScript rules
-- Prettier for code formatting
-- Husky for pre-commit hooks
-- lint-staged for staged file processing
-- Enhanced pre-commit checks for empty files/folders and unused variables
+Test the application in different locales:
 
-## 🪝 Custom Hooks
+- **English**: [http://localhost:3000/en](http://localhost:3000/en)
+- **German**: [http://localhost:3000/de](http://localhost:3000/de)
+- **Ukrainian**: [http://localhost:3000/uk](http://localhost:3000/uk)
 
-### Available Hooks
+The language switcher in the navigation allows users to change languages dynamically.
 
-- `useLogout` - Handles user logout with Supabase authentication
-- `useApiQuery` - Wrapper around TanStack Query for consistent API data fetching
-- `useApiMutation` - Wrapper around TanStack Mutation for API data mutations
-- `useToast` - Toast notification system for user feedback
+## 📝 Adding New Translations
 
-### Hook Development Guidelines
+1. **Add new translation keys** to all language files in `src/messages/{locale}/`
+2. **Update the dictionary loader** in `src/app/[lang]/dictionaries.ts`
+3. **Use in components** by passing `dict` prop and accessing the translation
 
-- Use the `use` prefix for all custom hooks
-- Implement proper TypeScript types for all parameters and return values
-- Include loading states and error handling where appropriate
-- Follow established patterns from existing hooks
+Example:
 
-## 🔐 Authentication & Security
+```json
+// src/messages/en/new-feature.json
+{
+  "title": "New Feature",
+  "description": "This is a new feature"
+}
 
-- Supabase Auth for user management
-- Proper session handling with SSR support
-- Secure API routes with authentication middleware
-- Environment variable protection
-- Input validation with Zod schemas
+// src/messages/de/new-feature.json
+{
+  "title": "Neue Funktion",
+  "description": "Das ist eine neue Funktion"
+}
+```
 
-## 🌍 Internationalization
+Then update `dictionaries.ts` and use in components:
 
-- i18next for all user-facing text
-- Support for multiple languages (en, de, uk)
-- Translation keys in format: `namespace:key`
-- Proper language detection and switching
-
-## 📝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Follow the project's code style and conventions
-4. Ensure all pre-commit checks pass
-5. Commit your changes with descriptive messages
-6. Push to the branch (`git push origin feature/amazing-feature`)
-7. Open a Pull Request
-
-### Commit Standards
-
-- Each commit must have a descriptive, short message
-- Pre-commit hooks must pass (lint, type-check, formatting)
-- Empty files and folders are not allowed
-- Unused variables, imports, and parameters must be removed
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Support
-
-For support, please open an issue in the GitHub repository or contact the development team.
+```tsx
+const dict = await getDictionary(lang);
+return <h1>{dict.newFeature.title}</h1>;
+```
