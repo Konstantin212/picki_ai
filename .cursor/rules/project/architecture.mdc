@@ -1,0 +1,114 @@
+---
+description: Project architecture guidelines for the AI recommendation system.
+globs:
+  - '**/*'
+alwaysApply: true
+---
+
+# Project Architecture
+
+## File Organization
+
+### App Directory Structure
+
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── page.tsx           # Home page - main landing page with AI recommendations
+│   ├── layout.tsx         # Root layout - wraps all pages with providers and navigation
+│   ├── globals.css        # Global styles and CSS custom properties
+│   ├── favicon.ico        # Site favicon
+│   ├── not-found.tsx      # 404 error page
+│   ├── login/             # User authentication login page
+│   ├── signup/            # User registration page
+│   ├── auth/              # Authentication callback and sign-out routes
+│   │   ├── callback/      # OAuth callback handler for Supabase auth
+│   │   └── sign-out/      # User logout functionality
+│   ├── profile/           # User profile management page
+│   ├── start/             # Initial setup/onboarding page
+│   ├── recommend/         # AI recommendation interface page
+│   ├── results/           # Display results from AI recommendations
+│   └── api/               # API routes for backend functionality
+│       ├── recommend/     # AI recommendation API endpoints
+│       ├── test/          # Testing and development API routes
+│       └── typescript-errors/ # TypeScript error reporting API
+├── components/            # Reusable UI components
+│   ├── ui/               # Base UI components (shadcn/ui style)
+│   ├── auth/             # Authentication components
+│   └── navigation/       # Navigation components
+├── hooks/                # Custom React hooks
+│   ├── useLogout.ts      # Authentication logout hook with error handling
+│   ├── use-query.ts      # TanStack Query wrapper for API calls
+│   ├── use-mutation.ts   # TanStack Mutation wrapper for API mutations
+│   └── use-toast.ts      # Toast notification system hook
+├── lib/                  # Utility libraries and configurations
+├── messages/             # i18n translation files
+└── providers/            # React context providers
+```
+
+## Page Descriptions
+
+### Main Pages
+
+- **`page.tsx`**: Main landing page that showcases the AI recommendation system, includes user onboarding and feature highlights
+- **`layout.tsx`**: Root layout component that provides global navigation, authentication context, and theme providers
+
+### Authentication Pages
+
+- **`login/`**: User authentication page with Supabase integration, form validation, and error handling
+- **`signup/`**: User registration page with account creation, validation, and onboarding flow
+- **`auth/callback/`**: Handles OAuth authentication callbacks from Supabase providers
+- **`auth/sign-out/`**: Manages user logout and session cleanup
+
+### User Pages
+
+- **`profile/`**: User profile management page for account settings and preferences
+- **`start/`**: Initial setup page for new users to configure their preferences
+- **`recommend/`**: Main AI recommendation interface where users input preferences and get suggestions
+- **`results/`**: Displays AI-generated recommendations with detailed information and actions
+
+### API Routes
+
+- **`api/recommend/`**: Backend API endpoints for processing AI recommendations and user preferences
+- **`api/test/`**: Development and testing API routes for debugging and validation
+- **`api/typescript-errors/`**: API endpoint for collecting and reporting TypeScript compilation errors
+
+## Component Architecture
+
+### Component Structure
+
+- Keep components in appropriate feature folders
+- Use index files for clean imports
+- Separate business logic from UI components
+- Use proper TypeScript interfaces for all props
+
+### Component Categories
+
+- **UI Components**: Base components from shadcn/ui
+- **Feature Components**: Business logic specific components
+- **Layout Components**: Page structure and navigation
+- **Form Components**: Input and validation components
+
+## State Management Architecture
+
+### Server State
+
+- Use TanStack React Query for API data
+- Implement proper caching strategies
+- Handle loading and error states consistently
+
+### Client State
+
+- Use React state for local component state
+- Use React Context sparingly for global state
+- Prefer composition over prop drilling
+
+### Authentication State
+
+- Use Supabase Auth for user management
+- Implement proper session handling
+- Secure API routes with authentication middleware
+
+- Use Supabase Auth for user management
+- Implement proper session handling
+- Secure API routes with authentication middleware

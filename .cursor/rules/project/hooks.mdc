@@ -1,0 +1,127 @@
+---
+description: Custom hooks for managing user authentication, API data fetching, and notifications.
+globs:
+  - '**/*'
+alwaysApply: true
+---
+
+# Custom Hooks
+
+## Available Hooks
+
+### `useLogout`
+
+- **Purpose**: Handles user logout functionality with Supabase authentication
+- **Features**:
+  - Loading state management (`isLoggingOut`)
+  - Error handling and display
+  - Automatic page refresh after successful logout
+  - Form-based logout request to `/auth/sign-out`
+- **Usage**:
+  ```typescript
+  const { logout, isLoggingOut, error } = useLogout();
+  ```
+
+### `useApiQuery`
+
+- **Purpose**: Wrapper around TanStack Query for consistent API data fetching
+- **Features**:
+  - Type-safe query operations
+  - Standardized error handling with AxiosError
+  - Simplified API for common query patterns
+  - Built-in TypeScript support
+- **Usage**:
+  ```typescript
+  const { data, isLoading, error } = useApiQuery(
+    ['users'],
+    () => api.get('/users').then((res) => res.data),
+    { staleTime: 1000 * 60 * 5 }
+  );
+  ```
+
+### `useApiMutation`
+
+- **Purpose**: Wrapper around TanStack Mutation for API data mutations
+- **Features**:
+  - Type-safe mutation operations
+  - Standardized error handling
+  - Simplified API for common mutation patterns
+  - Built-in TypeScript support
+- **Usage**:
+  ```typescript
+  const { mutate, isLoading, error } = useApiMutation(
+    (data) => api.post('/users', data).then((res) => res.data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['users']);
+      },
+    }
+  );
+  ```
+
+### `useToast`
+
+- **Purpose**: Toast notification system for user feedback
+- **Features**:
+  - Global toast state management
+  - Toast limit control (1 toast at a time)
+  - Auto-dismiss functionality
+  - Toast actions and updates
+  - Type-safe toast operations
+- **Usage**:
+
+  ```typescript
+  const { toast } = useToast();
+
+  toast({
+    title: 'Success',
+    description: 'Operation completed successfully',
+  });
+  ```
+
+## Hook Development Guidelines
+
+### Creating New Hooks
+
+- Use the `use` prefix for all custom hooks
+- Implement proper TypeScript types for all parameters and return values
+- Include loading states and error handling where appropriate
+- Follow the established patterns from existing hooks
+- Use proper React patterns (useState, useEffect, etc.)
+
+### Hook Naming Conventions
+
+- Use camelCase for hook names: `useCustomHook`
+- Use descriptive names that indicate the hook's purpose
+- Group related functionality in a single hook when appropriate
+
+### Error Handling
+
+- Always provide error states in hooks that make API calls
+- Use consistent error types across the application
+- Provide meaningful error messages for debugging
+
+### State Management
+
+- Use local state for hook-specific data
+- Leverage React Query for server state
+- Avoid prop drilling by using hooks for shared state
+
+### Performance Considerations
+
+- Use useMemo and useCallback when appropriate
+- Avoid unnecessary re-renders
+- Implement proper cleanup in useEffect hooks
+- Use React Query's built-in caching mechanisms
+
+### Testing Hooks
+
+- Test hooks in isolation using React Testing Library
+- Mock external dependencies appropriately
+- Test error states and loading states
+- Verify cleanup functions are called
+
+- Test hooks in isolation using React Testing Library
+- Mock external dependencies appropriately
+- Test error states and loading states
+- Verify cleanup functions are called

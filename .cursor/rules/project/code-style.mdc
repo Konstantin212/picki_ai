@@ -1,0 +1,129 @@
+---
+description: Project-specific code style and conventions.
+globs:
+  - '**/*.tsx'
+  - '**/*.ts'
+  - '**/*.js'
+  - '**/*.jsx'
+alwaysApply: true
+---
+
+# Code Style & Conventions
+
+## TypeScript
+
+- Use strict TypeScript configuration with all strict compiler options enabled
+- Prefer explicit types over `any`
+- Use proper type annotations for all functions and variables
+- Utilize TypeScript path aliases: `@/`, `@/components/`, `@/lib/`, etc.
+- Enable `noUncheckedIndexedAccess`, `noImplicitReturns`, `exactOptionalPropertyTypes`
+
+## React Components
+
+- Use functional components with hooks
+- Prefer default exports over named exports
+- Use proper TypeScript interfaces for props
+- Use object assignment notation for component prop typing: `({ prop }: ComponentProps)` instead of `FC<ComponentProps>`
+- Follow React 19 best practices
+- Use proper error boundaries and suspense boundaries
+- Keep components small and focused on single responsibility
+
+## Client Components & "use client" Directive
+
+- Add `'use client'` directive only to components that need client-side functionality
+- Use client components sparingly - prefer server components when possible
+- Create small, isolated client components instead of making large components client-side
+- Common use cases for client components:
+  - Components using React hooks (useState, useEffect, etc.)
+  - Event handlers and user interactions
+  - Browser APIs (localStorage, window, etc.)
+  - Third-party libraries that require client-side execution
+- Keep client components as small as possible and extract client logic into separate components
+
+## File Naming & Structure
+
+- Use camelCase for file names: `myComponent.tsx`
+- Use PascalCase for component names: `MyComponent`
+- Group related components in feature folders
+- Use index files for clean imports
+
+## Styling
+
+- Use Tailwind CSS utility classes
+- Follow the established design system with CSS custom properties
+- Use `clsx` or `tailwind-merge` for conditional classes
+- Prefer Tailwind classes over custom CSS when possible
+- Import complex UI component if it's not in the project yet, from shadcn/ui
+- Import only required components from shadcn/ui
+- shadcn/ui component after importing have to be adjusted according to the project rules
+- For long className strings, use SCSS modules with `@apply` directive to organize Tailwind classes
+- Use the pattern: `import classes from './Component.module.scss'` and `className={classes.className}`
+- This approach keeps components clean and makes styles more maintainable
+
+## Common Patterns
+
+### Component Template
+
+```typescript
+import { cn } from '@/lib/utils'
+
+interface ComponentProps {
+  className?: string
+  // Add other props
+}
+
+export const Component = ({ className, ...props }: ComponentProps) => {
+  return (
+    <div className={cn('base-classes', className)} {...props}>
+      {/* Component content */}
+    </div>
+  )
+}
+```
+
+### API Route Template
+
+```typescript
+import { type NextRequest } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+
+export async function GET(request: NextRequest) {
+  try {
+    const supabase = createRouteHandlerClient({ cookies });
+    // Implementation
+    return Response.json({ data });
+  } catch (error) {
+    return Response.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+}
+```
+
+### Form with Validation
+
+```typescript
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z.object({
+  // Define schema
+});
+
+type FormData = z.infer<typeof schema>;
+
+export const Form = () => {
+  const form = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+
+  // Implementation
+};
+```
+
+// Implementation
+};
+
+```
+
+```

@@ -1,0 +1,65 @@
+---
+description: Rules for the Picki AI project.
+globs:
+  - '**/*'
+alwaysApply: true
+---
+
+# Picki AI Project Rules
+
+## Overview
+
+This is a Next.js 15 application built with TypeScript, React 19, Tailwind CSS, and Supabase. The project uses modern development practices including ESLint, Prettier, and Husky for code quality.
+
+## Project Structure
+
+The project rules are organized into focused instruction files for better readability and usage:
+
+### 📋 [Technology Stack](./technology-stack.mdc)
+
+- Core technologies and dependencies
+- Version information and package details
+- Development tools and configurations
+
+### 🎨 [Code Style & Conventions](./code-style.mdc)
+
+- TypeScript configuration and best practices
+- React component patterns and "use client" directive
+- Styling guidelines with Tailwind CSS and SCSS modules
+- Common code patterns and templates
+
+### 🏗️ [Project Architecture](./architecture.mdc)
+
+- File organization and directory structure
+- Page descriptions and component architecture
+- State management patterns
+- Authentication and API structure
+
+### 🪝 [Custom Hooks](./hooks.mdc)
+
+- Available custom hooks documentation
+- Hook development guidelines
+- Usage examples and best practices
+- Testing and performance considerations
+
+### ⚙️ [Development Workflow](./development-workflow.mdc)
+
+- Environment setup and development process
+- Code quality and testing strategies
+- Security and performance best practices
+- Available scripts and tools
+
+## Quick Start
+
+1. Review the [Technology Stack](./technology-stack.mdc) for dependencies
+2. Follow [Code Style & Conventions](./code-style.mdc) for development
+3. Understand [Project Architecture](./architecture.mdc) for file organization
+4. Use [Custom Hooks](./hooks.mdc) for common functionality
+5. Follow [Development Workflow](./development-workflow.mdc) for best practices
+
+## Notes
+
+- This project uses modern React patterns and Next.js 15 features
+- Maintain consistency with the existing codebase
+- Follow the established patterns for new features
+- Keep dependencies up to date and secure
