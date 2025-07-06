@@ -33,18 +33,19 @@ import ukStart from '@/messages/uk/start.json';
 import ukRecommend from '@/messages/uk/recommend.json';
 import ukResults from '@/messages/uk/results.json';
 
-// Type definitions for dictionaries
-export type ProfileDict = typeof enProfile;
-export type HomeDict = typeof enHome;
-export type NavigationDict = typeof enNavigation;
-export type AuthDict = typeof enAuth;
-export type ErrorsDict = typeof enErrors;
-export type StartDict = typeof enStart;
-export type RecommendDict = typeof enRecommend;
-export type ResultsDict = typeof enResults;
+// Type definitions for dictionaries (intersection of all languages)
+export type ProfileDict = typeof enProfile & typeof deProfile & typeof ukProfile;
+export type HomeDict = typeof enHome & typeof deHome & typeof ukHome;
+export type NavigationDict = typeof enNavigation & typeof deNavigation & typeof ukNavigation;
+export type AuthDict = typeof enAuth & typeof deAuth & typeof ukAuth;
+export type ErrorsDict = typeof enErrors & typeof deErrors & typeof ukErrors;
+export type StartDict = typeof enStart & typeof deStart & typeof ukStart;
+export type RecommendDict = typeof enRecommend & typeof deRecommend & typeof ukRecommend;
+export type ResultsDict = typeof enResults & typeof deResults & typeof ukResults;
+export type CommonDict = typeof enCommon & typeof deCommon & typeof ukCommon;
 
 // Combined dictionary type
-export type Dictionary = typeof enCommon & {
+export type Dictionary = CommonDict & {
   home: HomeDict;
   nav: NavigationDict;
   auth: AuthDict;
