@@ -1,43 +1,31 @@
-import { createClient } from '@/lib/supabase';
+import { getDictionary, type StartDict } from '@/app/[lang]/dictionaries';
+import { TranslationParams, Langs } from '@/lib/translations';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
-import { redirect } from 'next/navigation';
-import { getDictionary } from '@/app/[lang]/dictionaries';
+import Link from 'next/link';
 
 export default async function StartPage({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<TranslationParams> | undefined;
 }) {
-  const { lang } = await params;
-  const supabase = await createClient();
-  const dict = await getDictionary(lang);
-
-  // Get session for auth state
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  // Redirect to login if not authenticated
-  if (!session) {
-    redirect(`/${lang}/login`);
-  }
+  const { lang } = params ? await params : { lang: Langs.en };
+  const dict = (await getDictionary(lang)).start as StartDict;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6">
       <div className="mx-auto max-w-2xl text-center">
         <Typography variant="h1" className="mb-6">
-          {dict.start.title}
+          {dict.title}
         </Typography>
         <Typography variant="body1" color="secondary" className="mb-8">
-          {dict.start.description}
+          {dict.description}
         </Typography>
-
-        <div className="space-y-4">
-          <Button size="lg" className="w-full sm:w-auto">
-            <Typography component="span">{dict.start.beginSetup}</Typography>
+        <Link href={`/${lang}/recommend`}>
+          <Button size="lg">
+            <Typography component="span">{dict.beginSetup}</Typography>
           </Button>
-        </div>
+        </Link>
       </div>
     </main>
   );

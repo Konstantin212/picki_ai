@@ -20,6 +20,21 @@
  * 5. Use interpolation for dynamic content
  */
 
+// Supported languages
+export type SupportedLang = 'en' | 'de' | 'uk';
+
+// Language constants
+export const Langs = {
+  en: 'en' as const,
+  de: 'de' as const,
+  uk: 'uk' as const,
+} as const;
+
+// Translation parameters type
+export interface TranslationParams {
+  lang: SupportedLang;
+}
+
 /**
  * Translation key constants for better maintainability
  * This helps prevent typos and provides better IDE support

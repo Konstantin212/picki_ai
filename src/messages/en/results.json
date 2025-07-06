@@ -6,6 +6,8 @@
   "details": "Details",
   "select": "Select",
   "newRecommendation": "Get New Recommendations",
+  "newComparison": "New Comparison",
+  "backToHome": "Back to Home",
   "item1": {
     "title": "Premium Option A",
     "description": "High-quality recommendation with excellent features",

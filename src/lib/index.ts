@@ -10,8 +10,5 @@ export { queryClient } from './react-query';
 // Form utilities
 export { useForm } from './form';
 
-// Form schemas
-export * from './schemas';
-
 // API client
 export { default as api } from './axios';

@@ -1,27 +1,29 @@
 {
-  "title": "Deine Empfehlungen",
-  "description": "Hier sind deine personalisierten KI-Empfehlungen basierend auf deinen Präferenzen und Kriterien.",
+  "title": "Ihre Empfehlungen",
+  "description": "Hier sind Ihre personalisierten KI-Empfehlungen basierend auf Ihren Präferenzen und Kriterien.",
   "score": "Bewertung",
   "price": "Preis",
   "details": "Details",
   "select": "Auswählen",
   "newRecommendation": "Neue Empfehlungen erhalten",
+  "newComparison": "Neuer Vergleich",
+  "backToHome": "Zurück zur Startseite",
   "item1": {
     "title": "Premium Option A",
     "description": "Hochwertige Empfehlung mit ausgezeichneten Funktionen",
-    "score": "9,2/10",
+    "score": "9.2/10",
     "price": "299€"
   },
   "item2": {
     "title": "Standard Option B",
     "description": "Gute Wertempfehlung mit soliden Funktionen",
-    "score": "8,5/10",
+    "score": "8.5/10",
     "price": "199€"
   },
   "item3": {
     "title": "Budget Option C",
     "description": "Erschwingliche Empfehlung mit wesentlichen Funktionen",
-    "score": "7,8/10",
+    "score": "7.8/10",
     "price": "99€"
   }
 } 

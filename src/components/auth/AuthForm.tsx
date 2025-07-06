@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { useToast } from '@/hooks/use-toast';
-import classes from './FormButtons.module.scss';
 
 interface AuthFormProps {
   dict: {
@@ -121,7 +120,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className={classes.input}
+            className="w-full"
           />
         </div>
 
@@ -134,7 +133,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className={classes.input}
+            className="w-full"
           />
         </div>
 
@@ -148,13 +147,13 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className={classes.input}
+              className="w-full"
             />
           </div>
         )}
       </div>
 
-      <Button type="submit" disabled={isLoading} className={classes.submitButton}>
+      <Button type="submit" disabled={isLoading} className="w-full">
         <Typography component="span">
           {isLoading ? 'Loading...' : isLogin ? authDict.signIn : dict.auth.signup.createAccount}
         </Typography>
