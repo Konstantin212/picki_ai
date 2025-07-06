@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase';
-import { Navbar } from '@/components/Navbar';
+import { Navbar } from '@/components/navigation/Navbar';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart2, Search, Check } from 'lucide-react';

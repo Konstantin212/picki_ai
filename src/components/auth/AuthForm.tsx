@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
-import { PrimaryFormButton, LinkFormButton } from './FormButtons';
+import { PrimaryFormButton, LinkFormButton } from './';
 
 export interface AuthMessage {
   type: 'error' | 'success';

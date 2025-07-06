@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Session } from '@supabase/supabase-js';
-import { Logo } from '@/components/navigation/Logo';
-import { NavItems } from '@/components/navigation/NavItems';
-import { MobileMenu, MobileMenuButton } from '@/components/navigation/MobileMenu';
+import { Logo } from './Logo';
+import { NavItems } from './NavItems';
+import { MobileMenu } from './MobileMenu';
+import { MobileMenuButton } from './MobileMenuButton';
 import { useLogout } from '@/hooks/useLogout';
 
 interface NavbarProps {

@@ -59,6 +59,8 @@ alwaysApply: true
 - For long className strings, use SCSS modules with `@apply` directive to organize Tailwind classes
 - Use the pattern: `import classes from './Component.module.scss'` and `className={classes.className}`
 - This approach keeps components clean and makes styles more maintainable
+- **SCSS Module Naming**: Style modules must be named the same as the component that uses them (e.g., `MyComponent.module.scss` for `MyComponent.tsx`)
+- **SCSS Module Scope**: Style modules should only contain styles specific to their component. Shared styles should be in separate shared modules or utility classes
 
 ## Common Patterns
 

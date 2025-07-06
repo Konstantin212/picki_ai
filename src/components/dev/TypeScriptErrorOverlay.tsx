@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import classes from './TypeScriptErrorOverlay.module.scss';
 
 interface TypeScriptError {
   file: string;
@@ -38,27 +40,22 @@ export function TypeScriptErrorOverlay() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 bg-red-50 p-4 shadow-lg transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : 'translate-y-full'
-      }`}
+      className={cn(classes.overlay, isVisible ? classes.overlayVisible : classes.overlayHidden)}
     >
-      <div className="flex items-center justify-between border-b border-red-200 pb-2">
-        <h2 className="text-lg font-semibold text-red-700">TypeScript Errors ({errors.length})</h2>
-        <div className="flex gap-2">
-          <button
-            onClick={() => setIsVisible(!isVisible)}
-            className="rounded bg-red-100 px-2 py-1 text-sm text-red-700 hover:bg-red-200"
-          >
+      <div className={classes.header}>
+        <h2 className={classes.title}>TypeScript Errors ({errors.length})</h2>
+        <div className={classes.buttonContainer}>
+          <button onClick={() => setIsVisible(!isVisible)} className={classes.toggleButton}>
             {isVisible ? 'Hide' : 'Show'}
           </button>
         </div>
       </div>
-      <div className="mt-4 max-h-[300px] overflow-auto">
+      <div className={classes.errorList}>
         {errors.map((error, index) => (
-          <div key={index} className="mb-4 rounded border border-red-200 bg-white p-4 last:mb-0">
-            <div className="font-mono text-sm text-red-600">{error.file}</div>
-            <div className="mt-1 text-red-700">{error.message}</div>
-            <div className="mt-1 text-sm text-red-500">
+          <div key={index} className={classes.errorItem}>
+            <div className={classes.errorFile}>{error.file}</div>
+            <div className={classes.errorMessage}>{error.message}</div>
+            <div className={classes.errorLocation}>
               Line {error.line}, Character {error.character}
             </div>
           </div>
