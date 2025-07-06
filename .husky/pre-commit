@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Run custom pre-commit checks for empty files/folders and unused variables
 node scripts/pre-commit-checks.js
 
