@@ -23,15 +23,6 @@ export const registerSchema = z
   });
 
 /**
- * User profile form validation schema
- */
-export const profileSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  bio: z.string().optional(),
-});
-
-/**
  * Password reset form validation schema
  */
 export const passwordResetSchema = z.object({

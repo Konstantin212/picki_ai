@@ -15,7 +15,8 @@ import { z } from 'zod';
  */
 export const useForm = <T extends z.ZodType>(schema: T): UseFormReturn<z.infer<T>> => {
   return useHookForm<z.infer<T>>({
-    resolver: zodResolver(schema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema as any),
     mode: 'onChange',
   });
 };

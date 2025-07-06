@@ -11,16 +11,7 @@ export { queryClient } from './react-query';
 export { useForm } from './form';
 
 // Form schemas
-export {
-  loginSchema,
-  registerSchema,
-  profileSchema,
-  passwordResetSchema,
-  passwordChangeSchema,
-} from './schemas';
+export * from './schemas';
 
 // API client
 export { default as api } from './axios';
-
-// Re-export types for convenience
-export type { ClassValue } from 'clsx';
