@@ -3,12 +3,18 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export const useLogout = () => {
+interface UseLogoutReturn {
+  logout: () => Promise<void>;
+  isLoggingOut: boolean;
+  error: Error | null;
+}
+
+export const useLogout = (): UseLogoutReturn => {
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     setIsLoggingOut(true);
     setError(null);
 

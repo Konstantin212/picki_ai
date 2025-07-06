@@ -6,7 +6,7 @@ import { Logo } from './Logo';
 import { NavItems } from './NavItems';
 import { MobileMenu } from './MobileMenu';
 import { MobileMenuButton } from './MobileMenuButton';
-import { useLogout } from '@/hooks/useLogout';
+import { useLogout } from '@/hooks/use-logout';
 
 interface NavbarProps {
   session: Session | null;

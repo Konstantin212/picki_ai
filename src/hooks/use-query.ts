@@ -6,6 +6,13 @@ export type QueryError = AxiosError<{
   code: string;
 }>;
 
+/**
+ * Wrapper around TanStack Query for consistent API data fetching
+ * @param key - Query key array for caching
+ * @param queryFn - Function that returns a promise with the data
+ * @param options - Additional query options
+ * @returns Query result with data, loading state, and error handling
+ */
 export function useApiQuery<TData = unknown, TError = QueryError>(
   key: string[],
   queryFn: () => Promise<TData>,
@@ -17,12 +24,3 @@ export function useApiQuery<TData = unknown, TError = QueryError>(
     ...options,
   });
 }
-
-// Example usage:
-// const { data, isLoading, error } = useApiQuery(
-//   ['users'],
-//   () => api.get('/users').then(res => res.data),
-//   {
-//     staleTime: 1000 * 60 * 5, // 5 minutes
-//   }
-// );
