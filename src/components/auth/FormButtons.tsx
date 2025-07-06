@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { cn } from '@/lib/utils';
+import classes from './FormButtons.module.scss';
 
 interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
@@ -9,15 +11,11 @@ interface AuthButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
 export const PrimaryFormButton: React.FC<AuthButtonProps> = ({
   children,
   isLoading = false,
-  className = '',
+  className,
   ...props
 }) => {
   return (
-    <button
-      className={`inline-flex h-10 w-full items-center justify-center rounded-md bg-indigo-600 px-4 text-sm font-medium text-white hover:bg-indigo-500 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${className}`}
-      disabled={isLoading}
-      {...props}
-    >
+    <button className={cn(classes.primaryButton, className)} disabled={isLoading} {...props}>
       {isLoading && (
         <svg
           className="mr-2 h-4 w-4 animate-spin"
@@ -45,13 +43,9 @@ export const PrimaryFormButton: React.FC<AuthButtonProps> = ({
   );
 };
 
-export const LinkFormButton: React.FC<AuthButtonProps> = ({
-  children,
-  className = '',
-  ...props
-}) => {
+export const LinkFormButton: React.FC<AuthButtonProps> = ({ children, className, ...props }) => {
   return (
-    <button className={`text-indigo-600 underline hover:text-indigo-500 ${className}`} {...props}>
+    <button className={cn(classes.linkButton, className)} {...props}>
       {children}
     </button>
   );

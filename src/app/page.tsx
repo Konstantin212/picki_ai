@@ -5,16 +5,13 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, BarChart2, Search, Check } from 'lucide-react';
 import Link from 'next/link';
 
-export default async function Home() {
+export default async function HomePage() {
   const supabase = await createClient();
 
   // Get session for auth state
   const {
     data: { session },
   } = await supabase.auth.getSession();
-
-  // Note: For better security, consider using getUser() in components that need authenticated user data
-  // const { data: userData } = await supabase.auth.getUser();
 
   return (
     <>
@@ -31,15 +28,13 @@ export default async function Home() {
               tKey="home.heroDescription"
             />
             <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-x-4 sm:space-y-0">
-              <Button size="lg">
+              <Button asChild size="lg">
                 <Link href="/login" className="flex items-center">
-                  <span>
-                    <Typography component="span" tKey="home.getStarted" />
-                  </span>
+                  <Typography component="span" tKey="home.getStarted" />
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg">
                 <Link href="#features">
                   <Typography component="span" tKey="home.learnMore" />
                 </Link>
@@ -114,7 +109,7 @@ export default async function Home() {
               className="mb-8"
               tKey="home.ctaDescription"
             />
-            <Button size="lg">
+            <Button asChild size="lg">
               <Link href="/login">
                 <Typography component="span" tKey="home.ctaButton" />
               </Link>

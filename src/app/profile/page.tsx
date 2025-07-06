@@ -1,7 +1,6 @@
 import { createClient } from '@/lib/supabase';
 import { redirect } from 'next/navigation';
 import { Typography } from '@/components/ui/typography';
-// import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -48,7 +47,7 @@ export default async function ProfilePage() {
   return (
     <main className="container mx-auto px-4 py-10 sm:px-6 lg:px-8">
       <div className="mb-6">
-        <Button variant="ghost" size="sm" className="mb-4">
+        <Button asChild variant="ghost" size="sm" className="mb-4">
           <Link href="/" className="flex items-center">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
