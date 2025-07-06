@@ -112,3 +112,36 @@ src/
 - Use Supabase Auth for user management
 - Implement proper session handling
 - Secure API routes with authentication middleware
+
+# Internationalization (i18n) Translation File Structure
+
+## Best Practice: Domain-Based, Per-Language JSON Files
+
+- **Translations are organized by language and feature/domain.**
+- Each language has its own folder under `src/messages/` (e.g., `en/`, `de/`, `uk/`).
+- Each folder contains separate JSON files for each domain/feature:
+  - `common.json` (shared/common UI labels)
+  - `home.json` (home page)
+  - `navigation.json` (navigation components)
+  - `auth.json` (authentication pages)
+  - `profile.json` (profile page)
+  - `errors.json` (error/404 pages)
+- **Keys are hierarchical and descriptive** (e.g., `auth.login.title`, `profile.preferences.darkMode`).
+- **Keep files small and focused** to avoid merge conflicts and make it easy for translators and developers to maintain.
+- **Add new translations to all language folders** and keep the structure consistent across languages.
+- **Use translation key constants** from `src/lib/translations.ts` for type safety and maintainability.
+- See `src/messages/README.md` for full documentation, usage examples, and best practices.
+
+**Benefits:**
+
+- Scalable and maintainable as the project grows
+- Easy to add new features or languages
+- Prevents large, unmanageable translation files
+- Reduces merge conflicts and confusion
+- Makes it easier for translators to work on specific domains
+
+- Secure API routes with authentication middleware
+
+- Use Supabase Auth for user management
+- Implement proper session handling
+- Secure API routes with authentication middleware

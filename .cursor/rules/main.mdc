@@ -1,0 +1,11 @@
+# Cursor Rule File Policy
+
+- Every new file containing Cursor rules **must** include a clear, descriptive `description` field, following Cursor documentation standards.
+- Every rule file **must** set `alwaysApply: true` to ensure rules are always enforced.
+- **Existing rule files must never be deleted or disabled.** All architectural, code style, and workflow rules should remain active and versioned for the lifetime of the project.
+- This policy ensures consistent, discoverable, and enforceable standards across the codebase.
+  description:
+  globs:
+  alwaysApply: false
+
+---
