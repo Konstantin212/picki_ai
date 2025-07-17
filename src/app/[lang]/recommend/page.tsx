@@ -1,7 +1,7 @@
 import { getDictionary, type RecommendDict } from '@/app/[lang]/dictionaries';
 import { TranslationParams, Langs } from '@/lib/translations';
-import { Typography } from '@/components/ui/typography';
-import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 export default async function RecommendPage({

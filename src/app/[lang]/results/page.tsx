@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase';
-import { Typography } from '@/components/ui/typography';
-import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 import { redirect } from 'next/navigation';
 import { Dictionary, getDictionary } from '@/app/[lang]/dictionaries';
 import { SupportedLang } from '@/lib/translations';

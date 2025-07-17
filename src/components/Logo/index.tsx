@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Typography } from '@/components/ui/typography';
+import { Typography } from '@/components/ui/Typography';
 
 type LogoProps = {
   showText?: boolean;

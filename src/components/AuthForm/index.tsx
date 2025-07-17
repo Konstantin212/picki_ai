@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Typography } from '@/components/ui/typography';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/Input';
+import { Typography } from '@/components/ui/Typography';
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { Dictionary } from '@/app/[lang]/dictionaries';

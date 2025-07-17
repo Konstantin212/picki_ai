@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/Select';
 import styles from './index.module.scss';
 import { SupportedLang } from '@/lib/translations';
 

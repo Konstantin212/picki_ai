@@ -1,7 +1,7 @@
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { Navbar } from '@/components/Navbar';
-import { Typography } from '@/components/ui/typography';
-import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { SupportedLang } from '@/lib/translations';
 

@@ -1,6 +1,6 @@
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { Typography } from '@/components/ui/typography';
-import { Button } from '@/components/ui/button';
+import { Typography } from '@/components/ui/Typography';
+import { Button } from '@/components/ui/Button';
 import { SupportedLang } from '@/lib/translations';
 
 export default async function ProfilePage({
