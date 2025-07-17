@@ -64,15 +64,25 @@ The project rules are organized into focused instruction files for better readab
 - Version control workflow guidelines
 - Clean commit history maintenance
 
+### 🎨 [Design System](./design-system.mdc)
+
+- **MANDATORY**: Design system documentation and guidelines
+- Color palette, typography, and layout patterns
+- Component design patterns and interactive elements
+- Accessibility guidelines and responsive design principles
+- Implementation patterns and best practices
+- **REQUIRED**: Follow before creating or updating any frontend functionality
+
 ## Quick Start
 
-1. Review the [Technology Stack](./technology-stack.mdc) for dependencies
-2. Follow [Code Style & Conventions](./code-style.mdc) for development
-3. Understand [Project Architecture](./architecture.mdc) for file organization
-4. Learn [Internationalization](./internationalization.mdc) patterns for i18n
-5. Use [Custom Hooks](./hooks.mdc) for common functionality
-6. Follow [Development Workflow](./development-workflow.mdc) for best practices
-7. Adhere to [Committing](./committing.mdc) standards for version control
+1. **MANDATORY**: Review the [Design System](./design-system.mdc) before any frontend work
+2. Review the [Technology Stack](./technology-stack.mdc) for dependencies
+3. Follow [Code Style & Conventions](./code-style.mdc) for development
+4. Understand [Project Architecture](./architecture.mdc) for file organization
+5. Learn [Internationalization](./internationalization.mdc) patterns for i18n
+6. Use [Custom Hooks](./hooks.mdc) for common functionality
+7. Follow [Development Workflow](./development-workflow.mdc) for best practices
+8. Adhere to [Committing](./committing.mdc) standards for version control
 
 ## Key Features
 
@@ -109,9 +119,9 @@ src/messages/
 ```tsx
 // src/app/[lang]/page.tsx
 export default async function HomePage({
-  params
+  params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
 }) {
   const { lang } = await params; // Next.js 15 requires awaiting params
   const dict = await getDictionary(lang);
@@ -170,18 +180,47 @@ export const LanguageSwitcher = () => {
 };
 ```
 
+## Frontend Development Requirements
+
+### **MANDATORY DESIGN SYSTEM COMPLIANCE**
+
+Before creating or updating any frontend functionality, you **MUST**:
+
+1. **Review Design Documentation**: Read and understand the [Design System](./design-system.mdc) documentation
+2. **Follow Color Palette**: Use the established gray-900/gray-800 dark theme with blue/purple accents
+3. **Apply Typography System**: Use proper font hierarchy and spacing (8px grid system)
+4. **Implement Layout Patterns**: Follow the established card and container patterns
+5. **Ensure Accessibility**: Implement proper focus states, ARIA labels, and contrast ratios
+6. **Test Responsiveness**: Ensure mobile-first responsive design
+7. **Use Component Patterns**: Follow established form field, button, and card patterns
+8. **Apply Animations**: Use consistent transition durations (200-300ms)
+
+### Design System Enforcement
+
+- **Color Usage**: Only use colors from the established palette (gray-900, gray-800, blue-600, purple-600, etc.)
+- **Typography**: Follow the typography hierarchy (text-2xl for titles, text-sm for labels, etc.)
+- **Spacing**: Use the 8px grid system (space-y-2, space-y-4, space-y-6, etc.)
+- **Components**: Use established patterns for forms, buttons, cards, and interactive elements
+- **Accessibility**: Implement proper semantic HTML, focus management, and ARIA attributes
+- **Performance**: Optimize for Core Web Vitals and implement proper loading states
+
+### Quick Reference
+
+For rapid development, use the [Cursor Quick Reference](./cursor-quick-reference.mdc) which contains:
+
+- Page and component templates
+- Common class combinations
+- Implementation patterns
+- Troubleshooting guides
+
 ## Notes
 
 - This project uses modern React patterns and Next.js 15 features
 - **Next.js 15 Params**: Always await `params` before destructuring in Next.js 15
 - **Server-Side i18n**: All translations are loaded server-side for better performance
 - **Locale Routing**: Use Next.js built-in locale routing for better SEO and performance
+- **Design System**: **MANDATORY** - Follow the design system for all frontend work
 - Maintain consistency with the existing codebase
 - Follow the established patterns for new features
 - Keep dependencies up to date and secure
 - Test all supported locales when adding new features
-
-- This project uses modern React patterns and Next.js 15 features
-- Maintain consistency with the existing codebase
-- Follow the established patterns for new features
-- Keep dependencies up to date and secure

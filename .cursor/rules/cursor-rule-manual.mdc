@@ -1,0 +1,28 @@
+---
+  description: Rule file to explain how to create correct rules
+  globs: **/*.mdc
+  alwaysApply: false
+---
+
+# Cursor Rule File Policy
+
+- Every rule `**/*.mdc` should start with description block that contains 3 mandatory property: description, globs, alwaysApply
+- Every rule `**/*.mdc` containing Cursor rules **must** include a clear, descriptive `description` field, following Cursor documentation standards.
+- Every rule `**/*.mdc` file can have the globs instruction reducing the scope of rule usage, eg: 
+  - `hooks.mdc` should be applied only to hooks, that are places in the hook folder so it should be added for all files from hook folder.
+  - `code-style.mdc` should be applied only when `**/*.ts` or `**/*.tsx` files in use because it contain instruction only for those type of files.
+- Every rule `**/*.mdc` file **must** set `alwaysApply: true|false` based on the logic of the file.
+
+**Example of creating description block**
+```
+---
+  description: Rule file to explain how to create correct rules
+  globs: **/*.mdc
+  alwaysApply: false
+---
+```
+
+
+- This policy ensures consistent, discoverable, and enforceable standards across the codebase.
+- Rules shouldn't conflict inside one file or from file to file.
+- Before add new rule you need to read all existed rules and place requested rule to the most appropriate instruction file.
