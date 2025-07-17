@@ -6,7 +6,7 @@ interface LogoutNavItemProps {
   dict: Dictionary;
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
-  onLogout: () => Promise<void>;
+  onLogout?: () => Promise<void>;
 }
 
 export const LogoutNavItem = ({
@@ -19,11 +19,27 @@ export const LogoutNavItem = ({
     if (onItemClick) {
       onItemClick();
     }
-    await onLogout();
+    if (onLogout) {
+      await onLogout();
+    }
   };
 
+  // If we have event handlers, render with them
+  if (onItemClick || onLogout) {
+    return (
+      <button
+        onClick={handleLogout}
+        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
+      >
+        <LogOut className="mr-2 h-4 w-4" />
+        {dict.nav.logout}
+      </button>
+    );
+  }
+
+  // Otherwise, render without onClick handler for server-side rendering
   return (
-    <button onClick={handleLogout} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
+    <button className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
       <LogOut className="mr-2 h-4 w-4" />
       {dict.nav.logout}
     </button>

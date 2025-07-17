@@ -21,18 +21,35 @@ export const NavItems = ({
   onItemClick,
   onLogout,
 }: NavItemsProps) => {
+  // If we have event handlers, we need to render client components
+  const hasEventHandlers = onItemClick || onLogout;
+
+  if (hasEventHandlers) {
+    return (
+      <>
+        <ProfileNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} />
+        {session && onLogout ? (
+          <LogoutNavItem
+            dict={dict}
+            isMobile={isMobile}
+            onItemClick={onItemClick}
+            onLogout={onLogout}
+          />
+        ) : (
+          <LoginNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} lang={lang} />
+        )}
+      </>
+    );
+  }
+
+  // Server-side rendering without event handlers
   return (
     <>
-      <ProfileNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} />
-      {session && onLogout ? (
-        <LogoutNavItem
-          dict={dict}
-          isMobile={isMobile}
-          onItemClick={onItemClick}
-          onLogout={onLogout}
-        />
+      <ProfileNavItem dict={dict} isMobile={isMobile} />
+      {session ? (
+        <LogoutNavItem dict={dict} isMobile={isMobile} />
       ) : (
-        <LoginNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} lang={lang} />
+        <LoginNavItem dict={dict} isMobile={isMobile} lang={lang} />
       )}
     </>
   );

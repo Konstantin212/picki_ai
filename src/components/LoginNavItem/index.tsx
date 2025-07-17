@@ -17,12 +17,23 @@ export const LoginNavItem = ({ dict, isMobile = false, onItemClick, lang }: Logi
     }
   };
 
+  // If we have an onClick handler, render with it
+  if (onItemClick) {
+    return (
+      <Link
+        href={`/${lang}/login`}
+        onClick={handleClick}
+        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
+      >
+        <LogIn className="mr-2 h-4 w-4" />
+        {dict.nav.loginSignup}
+      </Link>
+    );
+  }
+
+  // Otherwise, render without onClick handler for server-side rendering
   return (
-    <Link
-      href={`/${lang}/login`}
-      onClick={handleClick}
-      className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
-    >
+    <Link href={`/${lang}/login`} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
       <LogIn className="mr-2 h-4 w-4" />
       {dict.nav.loginSignup}
     </Link>

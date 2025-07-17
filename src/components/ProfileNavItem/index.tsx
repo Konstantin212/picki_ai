@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Dictionary } from '@/app/[lang]/dictionaries';
@@ -20,12 +22,22 @@ export const ProfileNavItem = ({ dict, isMobile = false, onItemClick }: ProfileN
     }
   };
 
+  // If we have an onClick handler, render with it
+  if (onItemClick) {
+    return (
+      <Link
+        href={profilePath}
+        onClick={handleClick}
+        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
+      >
+        {dict.nav.profile}
+      </Link>
+    );
+  }
+
+  // Otherwise, render without onClick handler for server-side rendering
   return (
-    <Link
-      href={profilePath}
-      onClick={handleClick}
-      className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
-    >
+    <Link href={profilePath} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
       {dict.nav.profile}
     </Link>
   );
