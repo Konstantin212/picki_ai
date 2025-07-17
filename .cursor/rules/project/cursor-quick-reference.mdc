@@ -1,7 +1,7 @@
 ---
-description: This quick reference should help you rapidly implement beautiful, consistent pages in your Picki AI application using Cursor IDE!
-globs: **/*.tsx, **/*.ts, **/*.scss
-alwaysApply: true
+description: Quick reference guide for rapid frontend development in Cursor IDE
+globs: ['src/**/*.tsx', 'src/**/*.ts', 'src/**/*.scss']
+alwaysApply: false
 ---
 
 # Cursor IDE Quick Reference - Picki AI
@@ -414,6 +414,12 @@ ring-blue-500/20  /* 20% opacity ring */
 - Check loading and error states
 
 ### 4. Optimize Performance
+
+- Use React.memo for expensive components
+- Implement proper loading states
+- Optimize images with Next.js Image component
+
+This quick reference should help you rapidly implement beautiful, consistent pages in your Picki AI application using Cursor IDE!
 
 - Use React.memo for expensive components
 - Implement proper loading states

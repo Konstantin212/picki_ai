@@ -1,68 +1,42 @@
----
-description: 'Comprehensive overview of the technology stack, core dependencies, and development tools used in the Picki AI Next.js project. This includes frameworks, libraries, state management, authentication, and tooling guidance for all contributors.'
-globs: **/*.ts, **/*.tsx, **/*.scss
-alwaysApply: false
----
-
 # Technology Stack
+
+> **Rule Chain:**
+>
+> - For file/folder structure and usage, see [architecture.mdc]
+> - For code conventions, see [code-style.mdc]
+> - For UI/UX rules, see [design-system.mdc]
+> - For workflow and scripts, see [development-workflow.mdc]
 
 ## Core Technologies
 
-- **Framework**: Next.js 15 with App Router
-- **Language**: TypeScript (strict mode enabled)
-- **UI Library**: React 19
-- **Styling**: Tailwind CSS with custom design system and shadcn/ui
-- **Database**: Supabase (PostgreSQL)
-- **State Management**: TanStack React Query
-- **Forms**: React Hook Form with Zod validation
-- **Internationalization**: i18next
-- **Package Manager**: pnpm
+- **Framework:** Next.js 15 (App Router)
+- **Language:** TypeScript (strict mode)
+- **UI Library:** React 19
+- **Styling:** Tailwind CSS, shadcn/ui, custom design system
+- **Database:** Supabase (PostgreSQL)
+- **State Management:** TanStack React Query
+- **Forms:** React Hook Form + Zod
+- **Internationalization:** Next.js 15 built-in i18n (see [internationalization.mdc])
+- **Package Manager:** pnpm
 
-## Key Dependencies
+## Key Dependencies (Purpose)
 
-### Frontend
+- **shadcn/ui, Radix UI, Lucide React:** Modern, accessible UI components and icons
+- **TanStack React Query, Axios:** Data fetching, caching, and API communication
+- **React Hook Form, Zod:** Form state and validation
+- **Supabase Auth/SSR/JS:** Authentication and database access
+- **ESLint, Prettier, Husky, lint-staged:** Code quality and automation
 
-- Next.js 15.3.0
-- React 19.0.0
-- TypeScript 5+
-- Tailwind CSS 3.3.0
+## Guidance
 
-### UI & Components
+- Use the latest stable versions unless otherwise specified in [development-workflow.mdc].
+- All tools must be used in accordance with the project’s [architecture.mdc] and [code-style.mdc].
+- For UI and accessibility, always follow [design-system.mdc].
 
-- shadcn/ui components
-- Radix UI primitives
-- Lucide React icons
-- Class Variance Authority
+---
 
-### State & Data
+**See the referenced rule files for implementation details and best practices.**
 
-- TanStack React Query 5.73.3
-- Axios 1.8.4
-- React Hook Form 7.55.0
-- Zod 3.24.2
-
-### Authentication & Database
-
-- Supabase Auth Helpers Next.js
-- Supabase SSR
-- Supabase JS
-
-### Internationalization
-
-- i18next 25.1.2
-- i18next-browser-languagedetector
-- react-i18next 15.5.1
-
-### Development Tools
-
-- ESLint 9.7.0
-- Prettier 3.5.3
-- Husky 9.1.7
-- lint-staged 15.5.1
-
-- ESLint 9.7.0
-- Prettier 3.5.3
-- Husky 9.1.7
 - lint-staged 15.5.1
 
 - Husky 9.1.7

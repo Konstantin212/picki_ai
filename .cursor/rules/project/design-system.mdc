@@ -1,10 +1,10 @@
----
-description: Describing rules and patterns for the design system
-globs:
-alwaysApply: true
----
-
 # Design System - MANDATORY FRONTEND GUIDELINES
+
+> **Rule Chain:**
+>
+> - For code conventions, see [code-style.mdc]
+> - For file/folder structure, see [architecture.mdc]
+> - For rapid templates and class combos, see [cursor-quick-reference.mdc]
 
 ## 🚨 **CRITICAL REQUIREMENT**
 
@@ -12,451 +12,66 @@ alwaysApply: true
 
 ## Design Philosophy
 
-### Core Principles
-
-- **Modern Minimalism**: Clean, uncluttered interfaces with purposeful whitespace
-- **Dark-First Approach**: Primary dark theme with strategic use of light accents
-- **Glass Morphism**: Subtle transparency and backdrop blur for depth
-- **Gradient Accents**: Strategic use of gradients for visual interest and hierarchy
-- **Consistent Spacing**: 8px grid system for harmonious proportions
+- Modern Minimalism, Dark-First, Glass Morphism, Gradient Accents, Consistent Spacing (8px grid)
 
 ## Color Palette - STRICTLY ENFORCED
 
-### Primary Colors (MANDATORY)
-
-```css
-/* Dark Theme (Primary) - USE THESE COLORS ONLY */
---gray-900: #111827 /* Main background - REQUIRED */ --gray-800: #1f2937
-  /* Secondary background - REQUIRED */ --gray-700: #374151 /* Card backgrounds */
-  --gray-600: #4b5563 /* Borders and dividers */ --gray-500: #6b7280 /* Secondary text */
-  --gray-400: #9ca3af /* Muted text */ --gray-300: #d1d5db /* Primary text */ --white: #ffffff
-  /* Pure white */;
-```
-
-### Accent Colors (MANDATORY)
-
-```css
-/* Blue Accent (Primary Actions) - USE THESE ONLY */
---blue-600: #2563eb /* Primary buttons - REQUIRED */ --blue-500: #3b82f6
-  /* Focus states - REQUIRED */ --blue-400: #60a5fa /* Hover states */
-  /* Purple Accent (Secondary Actions) - USE THESE ONLY */ --purple-600: #9333ea
-  /* Gradient end - REQUIRED */ --purple-500: #a855f7 /* Secondary buttons */;
-```
-
-### **FORBIDDEN**: Do NOT use colors outside this palette
-
-## Typography System - MANDATORY
-
-### Font Hierarchy (REQUIRED)
-
-```typescript
-// Heading 1 - Page titles
-className = 'text-2xl font-bold text-white';
-
-// Heading 2 - Section titles
-className = 'text-xl font-semibold text-white';
-
-// Heading 3 - Subsection titles
-className = 'text-lg font-medium text-white';
-
-// Body 1 - Primary content
-className = 'text-base text-gray-300';
-
-// Body 2 - Secondary content
-className = 'text-sm text-gray-400';
-
-// Caption - Small text, labels
-className = 'text-xs text-gray-500';
-```
-
-### Typography Component Usage (REQUIRED)
-
-```typescript
-import { Typography } from '@/components/ui/typography';
-
-// ALWAYS use Typography component
-<Typography variant="h1" className="mb-2 text-2xl font-bold text-white">
-  Page Title
-</Typography>
-```
-
-## Layout Patterns - MANDATORY
-
-### Page Structure Template (REQUIRED)
-
-```typescript
-export default async function PageName({
-  params,
-}: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
-}) {
-  const { lang } = await params;
-  const dict = await getDictionary(lang);
-
-  return (
-    <>
-      <Navbar dict={dict} lang={lang} />
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        {/* Background Pattern - REQUIRED */}
-        <div className="absolute inset-0 opacity-40">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(156,146,172,0.15)_1px,transparent_0)] bg-[length:20px_20px]" />
-        </div>
-
-        <div className="relative flex min-h-screen items-center justify-center px-4 py-12">
-          {/* Back Navigation - REQUIRED */}
-          <Link
-            href={`/${lang}`}
-            className="absolute left-6 top-6 flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white md:left-8 md:top-8"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Link>
-
-          {/* Main Content Container - REQUIRED */}
-          <div className="w-full max-w-md">
-            <div className="overflow-hidden rounded-2xl bg-gray-800/50 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm">
-              <div className="px-8 py-8 sm:px-10 sm:py-10">
-                {/* Page Content */}
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </>
-  );
-}
-```
+- Only use the provided gray, blue, and purple palette (see code for details)
 
-### Container Patterns (REQUIRED)
+## Typography System
 
-```typescript
-// Card container - ALWAYS use this pattern
-'overflow-hidden rounded-2xl bg-gray-800/50 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm';
+- Use the provided font hierarchy and always use the Typography component
 
-// Form container - ALWAYS use this spacing
-'space-y-6';
+## Layout Patterns
 
-// Grid layout - Use responsive grid
-'grid gap-6 md:grid-cols-2 lg:grid-cols-3';
-```
+- Use the provided page structure, card, and container patterns
 
-## Component Design - MANDATORY
+## Component Design
 
-### Form Field Pattern (REQUIRED)
+- Use the provided form field, button, and card patterns
 
-```typescript
-<div className="space-y-2">
-  <label htmlFor="fieldId" className="text-sm font-medium text-gray-300">
-    Field Label
-  </label>
-  <div className="relative">
-    <Icon className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
-    <Input
-      id="fieldId"
-      type="text"
-      className="h-12 pl-10 pr-4 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200"
-      placeholder="Enter your text"
-    />
-  </div>
-</div>
-```
+## Interactive Elements
 
-### Button Patterns (REQUIRED)
+- Use the provided hover, focus, loading, and disabled state patterns
 
-```typescript
-// Primary button (gradient) - ALWAYS use for main actions
-'h-12 w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200';
+## Animation & Transitions
 
-// Secondary button - Use for secondary actions
-'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white';
+- Use the provided transition and animation classes
 
-// Icon button - Use for icon-only buttons
-'p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700/50 rounded-lg transition-all duration-200';
-```
+## Responsive Design
 
-## Interactive Elements - MANDATORY
+- Use the provided breakpoints and responsive patterns
 
-### Hover Effects (REQUIRED)
+## Accessibility Guidelines
 
-```typescript
-// Standard hover - ALWAYS include
-className = 'transition-colors hover:text-white';
+- Use semantic HTML, ARIA attributes, and ensure color contrast
 
-// Scale hover - Use for interactive elements
-className = 'transition-all duration-200 hover:scale-105';
+## Implementation Patterns
 
-// Background hover - Use for buttons
-className = 'hover:bg-gray-700/50 transition-colors duration-200';
-```
+- For code conventions, see [code-style.mdc]
+- For templates and class combos, see [cursor-quick-reference.mdc]
 
-### Focus States (REQUIRED)
+## Spacing Scale & Breakpoints
 
-```typescript
-// Input focus - ALWAYS include
-className = 'focus:border-blue-500 focus:ring-blue-500/20 focus:ring-2';
-
-// Button focus - ALWAYS include
-className = 'focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-gray-800';
-```
-
-### Loading States (REQUIRED)
-
-```typescript
-// Loading spinner - ALWAYS use for async operations
-<div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-
-// Disabled state - ALWAYS include
-className="disabled:opacity-50 disabled:cursor-not-allowed"
-```
-
-## Animation & Transitions - MANDATORY
-
-### Transition Classes (REQUIRED)
-
-```typescript
-// Standard transitions - ALWAYS use
-className = 'transition-all duration-200';
-className = 'transition-colors duration-200';
-className = 'transition-transform duration-200';
-```
-
-### Animation Classes (REQUIRED)
-
-```typescript
-// Spinner animation - Use for loading states
-className = 'animate-spin';
-```
-
-## Responsive Design - MANDATORY
-
-### Breakpoint Strategy (REQUIRED)
-
-```typescript
-// Mobile first approach - ALWAYS use
-className = 'w-full px-4'; // Mobile
-className = 'sm:px-6'; // Small (640px+)
-className = 'md:px-8'; // Medium (768px+)
-className = 'lg:px-10'; // Large (1024px+)
-className = 'xl:px-12'; // Extra large (1280px+)
-```
-
-### Responsive Patterns (REQUIRED)
-
-```typescript
-// Responsive grid - ALWAYS use
-className = 'grid gap-4 md:grid-cols-2 lg:grid-cols-3';
-
-// Responsive text - ALWAYS use
-className = 'text-sm md:text-base lg:text-lg';
-
-// Responsive spacing - ALWAYS use
-className = 'space-y-4 md:space-y-6 lg:space-y-8';
-```
-
-## Accessibility Guidelines - MANDATORY
-
-### Semantic HTML (REQUIRED)
-
-```typescript
-// Proper form structure - ALWAYS use
-<form onSubmit={handleSubmit}>
-  <label htmlFor="email">Email</label>
-  <input id="email" type="email" required />
-</form>
-
-// Proper button structure - ALWAYS use
-<button type="button" aria-label="Toggle password visibility">
-  <Eye className="h-4 w-4" />
-</button>
-```
-
-### ARIA Attributes (REQUIRED)
-
-```typescript
-// Loading state - ALWAYS include
-<button aria-busy="true" aria-live="polite">
-  Loading...
-</button>
-
-// Error state - ALWAYS include
-<div role="alert" aria-live="assertive">
-  Error message
-</div>
-```
-
-### Color Contrast (REQUIRED)
-
-- **Text**: Minimum 4.5:1 contrast ratio
-- **Large Text**: Minimum 3:1 contrast ratio
-- **UI Elements**: Minimum 3:1 contrast ratio
-- **Focus Indicators**: High contrast (blue-500 on gray-800)
-
-## Implementation Patterns - MANDATORY
-
-### Component Structure (REQUIRED)
-
-```typescript
-'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Typography } from '@/components/ui/typography';
-import { useToast } from '@/hooks/use-toast';
-import { Icon } from 'lucide-react';
-
-interface ComponentProps {
-  dict: {
-    // Dictionary structure
-  };
-  // Other props
-}
-
-export const Component = ({ dict, ...props }: ComponentProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      // API call logic
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div className="w-full">
-      {/* Component JSX */}
-    </div>
-  );
-};
-```
-
-## Common Class Combinations - MANDATORY
-
-### Layout Classes (REQUIRED)
-
-```typescript
-// Card container - ALWAYS use
-'overflow-hidden rounded-2xl bg-gray-800/50 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm';
-
-// Form container - ALWAYS use
-'space-y-6';
-
-// Grid layout - ALWAYS use
-'grid gap-6 md:grid-cols-2 lg:grid-cols-3';
-```
-
-### Form Elements (REQUIRED)
-
-```typescript
-// Form field wrapper - ALWAYS use
-'space-y-2';
-
-// Form label - ALWAYS use
-'text-sm font-medium text-gray-300';
-
-// Form input with icon - ALWAYS use
-'h-12 pl-10 pr-4 bg-gray-700/50 border-gray-600 text-white placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20 transition-all duration-200';
-
-// Icon positioning - ALWAYS use
-'absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500';
-```
-
-### Buttons (REQUIRED)
-
-```typescript
-// Primary button (gradient) - ALWAYS use for main actions
-'h-12 w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200';
-
-// Secondary button - Use for secondary actions
-'border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white';
-
-// Icon button - Use for icon-only buttons
-'p-2 text-gray-400 hover:text-gray-300 hover:bg-gray-700/50 rounded-lg transition-all duration-200';
-```
-
-### Typography (REQUIRED)
-
-```typescript
-// Page title - ALWAYS use
-'text-2xl font-bold text-white';
-
-// Section title - ALWAYS use
-'text-xl font-semibold text-white';
-
-// Subsection title - ALWAYS use
-'text-lg font-medium text-white';
-
-// Body text - ALWAYS use
-'text-base text-gray-300';
-
-// Secondary text - ALWAYS use
-'text-sm text-gray-400';
-
-// Caption - ALWAYS use
-'text-xs text-gray-500';
-```
-
-## Spacing Scale - MANDATORY
-
-### 8px Grid System (REQUIRED)
-
-```typescript
-// 8px grid system - ALWAYS use
-'space-y-1'; // 4px
-'space-y-2'; // 8px
-'space-y-4'; // 16px
-'space-y-6'; // 24px
-'space-y-8'; // 32px
-'space-y-12'; // 48px
-```
-
-## Breakpoints - MANDATORY
-
-### Responsive Breakpoints (REQUIRED)
-
-```typescript
-sm: 640px   // Small devices
-md: 768px   // Medium devices
-lg: 1024px  // Large devices
-xl: 1280px  // Extra large devices
-2xl: 1536px // 2X large devices
-```
+- Use the 8px grid system and provided breakpoints
 
 ## 🚨 **ENFORCEMENT CHECKLIST**
 
-Before committing any frontend changes, verify:
+- Only use colors from the palette
+- Use proper font hierarchy and Typography component
+- Use 8px grid system
+- Use established card and container patterns
+- Use established form field, button, and card patterns
+- Implement proper focus states, ARIA labels, and contrast ratios
+- Test on mobile and desktop
+- Use consistent transition durations (200-300ms)
+- Implement proper loading states for async operations
+- Include proper error handling and user feedback
 
-- [ ] **Colors**: Only used colors from the established palette
-- [ ] **Typography**: Used proper font hierarchy and Typography component
-- [ ] **Spacing**: Used 8px grid system (space-y-2, space-y-4, etc.)
-- [ ] **Layout**: Used established card and container patterns
-- [ ] **Components**: Used established form field, button, and card patterns
-- [ ] **Accessibility**: Implemented proper focus states, ARIA labels, and contrast ratios
-- [ ] **Responsiveness**: Tested on mobile and desktop
-- [ ] **Animations**: Used consistent transition durations (200-300ms)
-- [ ] **Loading States**: Implemented proper loading states for async operations
-- [ ] **Error Handling**: Included proper error handling and user feedback
+---
 
-## 📚 **Quick Reference**
+**For all code, structure, and template rules, see the referenced rule files.**
 
-For rapid development, use the [Cursor Quick Reference](./cursor-quick-reference.mdc) which contains:
-
-- Page and component templates
-- Common class combinations
-- Implementation patterns
-- Troubleshooting guides
+**REMEMBER**: This design system is MANDATORY for all frontend development. Non-compliance will result in code rejection.
 
 **REMEMBER**: This design system is MANDATORY for all frontend development. Non-compliance will result in code rejection.

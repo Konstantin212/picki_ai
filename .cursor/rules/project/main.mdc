@@ -33,7 +33,6 @@ The project rules are organized into focused instruction files for better readab
 - Page descriptions and component architecture
 - State management patterns
 - Authentication and API structure
-- **Internationalization (i18n)**: Next.js 15 locale routing and server-side translations
 
 ### 🌍 [Internationalization](./internationalization.mdc)
 
@@ -41,7 +40,6 @@ The project rules are organized into focused instruction files for better readab
 - Server-side translation loading and usage patterns
 - Domain-based translation file organization
 - Language switching and locale detection
-- Migration from client-side i18next to server-side approach
 
 ### 🪝 [Custom Hooks](./hooks.mdc)
 
@@ -72,6 +70,13 @@ The project rules are organized into focused instruction files for better readab
 - Accessibility guidelines and responsive design principles
 - Implementation patterns and best practices
 - **REQUIRED**: Follow before creating or updating any frontend functionality
+
+### 🚀 [Cursor Quick Reference](./cursor-quick-reference.mdc)
+
+- Page and component templates for rapid development
+- Common class combinations and implementation patterns
+- Troubleshooting guides and solutions
+- Design principles checklist
 
 ## Quick Start
 
@@ -112,74 +117,6 @@ src/messages/
 └── uk/                    # Ukrainian translations (same structure)
 ```
 
-### Usage Examples
-
-#### Server Components (Pages)
-
-```tsx
-// src/app/[lang]/page.tsx
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
-}) {
-  const { lang } = await params; // Next.js 15 requires awaiting params
-  const dict = await getDictionary(lang);
-
-  return (
-    <div>
-      <h1>{dict.home.heroTitle}</h1>
-      <p>{dict.home.heroDescription}</p>
-      <Navbar dict={dict} />
-    </div>
-  );
-}
-```
-
-#### Client Components
-
-```tsx
-// Components receive translations as props
-interface NavbarProps {
-  dict: any; // Translation dictionary
-  session?: Session | null;
-}
-
-export const Navbar = ({ dict, session }: NavbarProps) => {
-  return (
-    <nav>
-      <span>{dict.nav.home}</span>
-      <LanguageSwitcher />
-    </nav>
-  );
-};
-```
-
-#### Language Switching
-
-```tsx
-// src/components/navigation/LanguageSwitcher.tsx
-export const LanguageSwitcher = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newLocale = e.target.value;
-    const currentLocale = pathname.split('/')[1];
-    const newPath = pathname.replace(`/${currentLocale}`, `/${newLocale}`);
-    router.push(newPath);
-  };
-
-  return (
-    <select onChange={handleChange}>
-      <option value="en">English</option>
-      <option value="de">Deutsch</option>
-      <option value="uk">Українська</option>
-    </select>
-  );
-};
-```
-
 ## Frontend Development Requirements
 
 ### **MANDATORY DESIGN SYSTEM COMPLIANCE**
@@ -204,15 +141,6 @@ Before creating or updating any frontend functionality, you **MUST**:
 - **Accessibility**: Implement proper semantic HTML, focus management, and ARIA attributes
 - **Performance**: Optimize for Core Web Vitals and implement proper loading states
 
-### Quick Reference
-
-For rapid development, use the [Cursor Quick Reference](./cursor-quick-reference.mdc) which contains:
-
-- Page and component templates
-- Common class combinations
-- Implementation patterns
-- Troubleshooting guides
-
 ## Notes
 
 - This project uses modern React patterns and Next.js 15 features
@@ -222,5 +150,7 @@ For rapid development, use the [Cursor Quick Reference](./cursor-quick-reference
 - **Design System**: **MANDATORY** - Follow the design system for all frontend work
 - Maintain consistency with the existing codebase
 - Follow the established patterns for new features
+- Keep dependencies up to date and secure
+- Test all supported locales when adding new features
 - Keep dependencies up to date and secure
 - Test all supported locales when adding new features

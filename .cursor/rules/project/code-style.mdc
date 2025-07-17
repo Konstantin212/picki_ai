@@ -1,10 +1,10 @@
----
-description: Project-specific code style and conventions.
-globs:**/*.tsx,**/*.ts
-alwaysApply: false
----
-
 # Code Style & Conventions
+
+> **Rule Chain:**
+>
+> - For file/folder structure, see [architecture.mdc]
+> - For UI/UX and visual rules, see [design-system.mdc]
+> - For custom hooks, see [hooks.mdc]
 
 ## TypeScript
 
@@ -27,7 +27,7 @@ alwaysApply: false
 ## Client Components & "use client" Directive
 
 - Add `'use client'` directive only to components that need client-side functionality
-- Use client components sparingly - prefer server components when possible
+- Use client components sparingly—prefer server components when possible
 - Create small, isolated client components instead of making large components client-side
 - Common use cases for client components:
   - Components using React hooks (useState, useEffect, etc.)
@@ -46,17 +46,13 @@ alwaysApply: false
 ## Styling
 
 - Use Tailwind CSS utility classes
-- Follow the established design system with CSS custom properties
+- For all color, spacing, and visual rules, see [design-system.mdc]
 - Use `clsx` or `tailwind-merge` for conditional classes
 - Prefer Tailwind classes over custom CSS when possible
-- Import complex UI component if it's not in the project yet, from shadcn/ui
-- Import only required components from shadcn/ui
-- shadcn/ui component after importing have to be adjusted according to the project rules
+- For complex UI, import from shadcn/ui and adjust to project rules
 - For long className strings, use SCSS modules with `@apply` directive to organize Tailwind classes
-- Use the pattern: `import classes from './Component.module.scss'` and `className={classes.className}`
-- This approach keeps components clean and makes styles more maintainable
-- **SCSS Module Naming**: Style modules must be named the same as the component that uses them (e.g., `MyComponent.module.scss` for `MyComponent.tsx`)
-- **SCSS Module Scope**: Style modules should only contain styles specific to their component. Shared styles should be in separate shared modules or utility classes
+- SCSS modules must be named after their component (e.g., `MyComponent.module.scss`)
+- SCSS modules should only contain styles specific to their component
 
 ## Common Patterns
 
@@ -124,21 +120,23 @@ export const Form = () => {
 - Organize schemas by domain/feature in separate files
 - Use the structure: `src/lib/schemas/{domain}.ts`
 - Create an index file to export all schemas: `src/lib/schemas/index.ts`
-- Follow single responsibility principle - each file handles one domain
+- Follow single responsibility principle—each file handles one domain
 - Use descriptive file names: `auth.ts`, `user.ts`, `recommendation.ts`
 
 **Example Structure:**
 
 ```
 src/lib/schemas/
-├── index.ts          # Central export point
-├── auth.ts           # Authentication schemas
-├── user.ts           # User-related schemas
-├── recommendation.ts # AI recommendation schemas
-└── settings.ts       # App settings schemas
+  index.ts          # Central export point
+  auth.ts           # Authentication schemas
+  user.ts           # User-related schemas
+  recommendation.ts # AI recommendation schemas
+  settings.ts       # App settings schemas
 ```
 
-**Benefits:**
+---
+
+**For all visual, structure, and hook rules, see the referenced rule files.**
 
 - Scalable and maintainable as project grows
 - Clear separation of concerns
