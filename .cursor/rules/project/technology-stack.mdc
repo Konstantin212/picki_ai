@@ -1,7 +1,7 @@
 ---
 description: 'Comprehensive overview of the technology stack, core dependencies, and development tools used in the Picki AI Next.js project. This includes frameworks, libraries, state management, authentication, and tooling guidance for all contributors.'
-globs: ['**/*.{ts,tsx,js,jsx}']
-alwaysApply: true
+globs: **/*.ts, **/*.tsx, **/*.scss
+alwaysApply: false
 ---
 
 # Technology Stack

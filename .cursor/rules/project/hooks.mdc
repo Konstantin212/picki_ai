@@ -1,8 +1,7 @@
 ---
 description: Custom hooks for managing user authentication, API data fetching, and notifications.
-globs:
-  - '**/*'
-alwaysApply: true
+globs: **/hooks/*.ts
+alwaysApply: false
 ---
 
 # Custom Hooks

@@ -1,3 +1,9 @@
+---
+description: Main instruction file with explanation of all modules and code principles
+globs:
+alwaysApply: true
+---
+
 # Picki AI Project Rules
 
 ## Overview

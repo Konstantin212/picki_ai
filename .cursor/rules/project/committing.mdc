@@ -1,7 +1,7 @@
 ---
 description: This rule ensures that all commits follow best practices for version control. It enforces descriptive commit messages that clearly communicate what changes were made, and requires that all pre-commit checks (linting, type checking, formatting) pass before allowing a commit to be finalized. This maintains code quality and provides a clean, meaningful commit history for future development and debugging.
 
-globs: ['**/*']
+globs:
 alwaysApply: true
 ---
 

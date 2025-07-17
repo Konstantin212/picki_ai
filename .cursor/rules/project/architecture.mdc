@@ -1,3 +1,9 @@
+---
+description: Project architecture patterns
+globs: **/*.tsx,**/*.ts
+alwaysApply: false
+---
+
 # Project Architecture
 
 ## File Organization
@@ -141,17 +147,18 @@ src/
 ```typescript
 // src/app/[lang]/dictionaries.ts
 const dictionaries = {
-  en: () => Promise.resolve({
-    ...enCommon,
-    home: enHome,
-    nav: enNavigation,
-    auth: enAuth,
-    profile: enProfile,
-    errors: enErrors,
-    start: enStart,
-    recommend: enRecommend,
-    results: enResults,
-  }),
+  en: () =>
+    Promise.resolve({
+      ...enCommon,
+      home: enHome,
+      nav: enNavigation,
+      auth: enAuth,
+      profile: enProfile,
+      errors: enErrors,
+      start: enStart,
+      recommend: enRecommend,
+      results: enResults,
+    }),
   // ... other languages
 };
 

@@ -1,3 +1,9 @@
+---
+description: Instruction for best uses the internationalization package
+globs: 
+alwaysApply: true
+---
+
 # Internationalization (i18n) Rules
 
 ## Overview

@@ -1,11 +1,7 @@
 ---
 description: Project-specific code style and conventions.
-globs:
-  - '**/*.tsx'
-  - '**/*.ts'
-  - '**/*.js'
-  - '**/*.jsx'
-alwaysApply: true
+globs:**/*.tsx,**/*.ts
+alwaysApply: false
 ---
 
 # Code Style & Conventions
@@ -148,7 +144,3 @@ src/lib/schemas/
 - Clear separation of concerns
 - Easy to find and modify specific schemas
 - Prevents large, unmanageable schema files
-
-```
-
-```
