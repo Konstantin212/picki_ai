@@ -8,6 +8,22 @@ alwaysApply: false
 
 ## 🚀 Quick Start Snippets
 
+### Component Creation Workflow
+
+1. **Create Component Folder**: Create a folder named after your component (PascalCase)
+2. **Create index.tsx**: Place component implementation in `index.tsx`
+3. **Create index.module.scss** (if needed): For component-specific styles
+4. **Component Naming**: Component name in code must match folder name
+
+**Example:**
+
+```bash
+# Create AuthForm component
+mkdir src/components/AuthForm
+touch src/components/AuthForm/index.tsx
+touch src/components/AuthForm/index.module.scss  # If needed
+```
+
 ### Page Template (Copy & Paste)
 
 ```typescript
@@ -63,7 +79,7 @@ export default async function PageName({
 ### Component Template (Copy & Paste)
 
 ```typescript
-// New component template
+// ComponentName/index.tsx
 'use client';
 
 import { useState } from 'react';
@@ -73,15 +89,16 @@ import { Input } from '@/components/ui/input';
 import { Typography } from '@/components/ui/typography';
 import { useToast } from '@/hooks/use-toast';
 import { Icon } from 'lucide-react';
+import styles from './index.module.scss'; // If using SCSS
 
-interface ComponentProps {
+interface ComponentNameProps {
   dict: {
     // Add dictionary structure
   };
   // Add other props
 }
 
-export const Component = ({ dict, ...props }: ComponentProps) => {
+export const ComponentName = ({ dict, ...props }: ComponentNameProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
@@ -109,6 +126,67 @@ export const Component = ({ dict, ...props }: ComponentProps) => {
     </div>
   );
 };
+```
+
+### Component with SCSS Template
+
+```typescript
+// ComponentName/index.tsx
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Typography } from '@/components/ui/typography';
+import { useToast } from '@/hooks/use-toast';
+import { Icon } from 'lucide-react';
+import styles from './index.module.scss';
+
+interface ComponentNameProps {
+  dict: {
+    // Add dictionary structure
+  };
+  // Add other props
+}
+
+export const ComponentName = ({ dict, ...props }: ComponentNameProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      // Your logic here
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Something went wrong',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      {/* Your JSX here */}
+    </div>
+  );
+};
+```
+
+```scss
+// ComponentName/index.module.scss
+.container {
+  @apply w-full;
+
+  // Add custom styles here
+}
 ```
 
 ## 🎨 Common Class Combinations
@@ -208,7 +286,7 @@ touch src/app/[lang]/new-page/page.tsx
 # Create new component
 mkdir -p src/components/new-component
 touch src/components/new-component/index.ts
-touch src/components/new-component/NewComponent.tsx
+touch src/components/NewComponent/index.tsx
 
 # Create new hook
 touch src/hooks/use-new-hook.ts

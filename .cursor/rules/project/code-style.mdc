@@ -38,8 +38,33 @@
 
 ## File Naming & Structure
 
-- Use camelCase for file names: `myComponent.tsx`
-- Use PascalCase for component names: `MyComponent`
+### Component Organization
+
+- **MANDATORY**: Each component must have its own folder named after the component
+- Component folder structure: `ComponentName/index.tsx` + `ComponentName/index.module.scss` (if needed)
+- Component implementation goes in `index.tsx` file
+- Component name in code should match folder name: `const ComponentName = () => {}`
+- Use PascalCase for both folder names and component names
+
+**Example Structure:**
+
+```
+src/components/
+  AuthForm/
+    index.tsx              # Component implementation
+    index.module.scss      # Component styles (if needed)
+  Navigation/
+    index.tsx              # Navigation component
+    index.module.scss      # Navigation styles
+  Button/
+    index.tsx              # Button component
+    index.module.scss      # Button styles
+```
+
+### General File Naming
+
+- Use camelCase for utility files: `myUtility.ts`
+- Use PascalCase for component folders and names: `MyComponent`
 - Group related components in feature folders
 - Use index files for clean imports
 
@@ -51,27 +76,60 @@
 - Prefer Tailwind classes over custom CSS when possible
 - For complex UI, import from shadcn/ui and adjust to project rules
 - For long className strings, use SCSS modules with `@apply` directive to organize Tailwind classes
-- SCSS modules must be named after their component (e.g., `MyComponent.module.scss`)
+- **MANDATORY**: SCSS modules must be named `index.module.scss` and placed in the component folder
 - SCSS modules should only contain styles specific to their component
+- Import SCSS modules as: `import styles from './index.module.scss'`
 
 ## Common Patterns
 
 ### Component Template
 
 ```typescript
+// ComponentName/index.tsx
 import { cn } from '@/lib/utils'
+import styles from './index.module.scss' // If using SCSS
 
-interface ComponentProps {
+interface ComponentNameProps {
   className?: string
   // Add other props
 }
 
-export const Component = ({ className, ...props }: ComponentProps) => {
+export const ComponentName = ({ className, ...props }: ComponentNameProps) => {
   return (
     <div className={cn('base-classes', className)} {...props}>
       {/* Component content */}
     </div>
   )
+}
+```
+
+### Component with SCSS Module Template
+
+```typescript
+// ComponentName/index.tsx
+import { cn } from '@/lib/utils'
+import styles from './index.module.scss'
+
+interface ComponentNameProps {
+  className?: string
+  // Add other props
+}
+
+export const ComponentName = ({ className, ...props }: ComponentNameProps) => {
+  return (
+    <div className={cn(styles.container, className)} {...props}>
+      {/* Component content */}
+    </div>
+  )
+}
+```
+
+```scss
+// ComponentName/index.module.scss
+.container {
+  @apply base-tailwind-classes;
+  
+  // Custom styles if needed
 }
 ```
 

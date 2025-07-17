@@ -36,8 +36,15 @@ src/
       typescript-errors/  # TypeScript error reporting API
   components/             # Reusable UI components
     ui/                   # Base UI components (shadcn/ui style)
-    auth/                 # Authentication components
-    navigation/           # Navigation components
+    AuthForm/             # Authentication form component
+      index.tsx           # Component implementation
+      index.module.scss   # Component styles (if needed)
+    Navigation/           # Navigation component
+      index.tsx           # Component implementation
+      index.module.scss   # Component styles (if needed)
+    Button/               # Button component
+      index.tsx           # Component implementation
+      index.module.scss   # Component styles (if needed)
   hooks/                  # Custom React hooks
   lib/                    # Utility libraries and configurations
   messages/               # i18n translation files (domain-based)
@@ -52,7 +59,8 @@ src/
 
 - Each page and component should follow the conventions in [code-style.mdc] and [design-system.mdc].
 - All translations and i18n logic must follow [internationalization.mdc].
-- Use feature folders for related components and logic.
+- **MANDATORY**: Each component must have its own folder with `index.tsx` and optional `index.module.scss`
+- Component folder name must match the component name in code
 - Use index files for clean imports.
 - Separate business logic from UI components.
 - Client components must receive translations as props.

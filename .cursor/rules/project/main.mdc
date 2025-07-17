@@ -24,12 +24,14 @@ The project rules are organized into focused instruction files for better readab
 
 - TypeScript configuration and best practices
 - React component patterns and "use client" directive
+- **MANDATORY**: Component folder structure with index.tsx and index.module.scss
 - Styling guidelines with Tailwind CSS and SCSS modules
 - Common code patterns and templates
 
 ### 🏗️ [Project Architecture](./architecture.mdc)
 
 - File organization and directory structure
+- **MANDATORY**: Component folder organization with index.tsx structure
 - Page descriptions and component architecture
 - State management patterns
 - Authentication and API structure
@@ -73,6 +75,7 @@ The project rules are organized into focused instruction files for better readab
 
 ### 🚀 [Cursor Quick Reference](./cursor-quick-reference.mdc)
 
+- **MANDATORY**: Component creation workflow and folder structure
 - Page and component templates for rapid development
 - Common class combinations and implementation patterns
 - Troubleshooting guides and solutions
@@ -115,6 +118,41 @@ src/messages/
 │   └── results.json      # Results display
 ├── de/                    # German translations (same structure)
 └── uk/                    # Ukrainian translations (same structure)
+```
+
+## Component Creation Approach
+
+### **MANDATORY COMPONENT STRUCTURE**
+
+All new components must follow this structure:
+
+1. **Component Folder**: Each component must have its own folder named after the component (PascalCase)
+2. **Implementation File**: Component code goes in `index.tsx` within the component folder
+3. **Styles File**: Component-specific styles go in `index.module.scss` (if needed)
+4. **Component Naming**: Component name in code must match folder name
+
+**Example Structure:**
+
+```
+src/components/
+  AuthForm/
+    index.tsx              # const AuthForm = () => {}
+    index.module.scss      # Component styles (optional)
+  Navigation/
+    index.tsx              # const Navigation = () => {}
+    index.module.scss      # Component styles (optional)
+  Button/
+    index.tsx              # const Button = () => {}
+    index.module.scss      # Component styles (optional)
+```
+
+**Import Pattern:**
+
+```typescript
+// Import from component folder
+import { AuthForm } from '@/components/AuthForm';
+import { Navigation } from '@/components/Navigation';
+import { Button } from '@/components/Button';
 ```
 
 ## Frontend Development Requirements
