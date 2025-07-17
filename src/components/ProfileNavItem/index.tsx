@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import styles from './index.module.scss';
+
 interface ProfileNavItemProps {
   dict: Dictionary;
   isMobile?: boolean;
@@ -22,9 +24,7 @@ export const ProfileNavItem = ({ dict, isMobile = false, onItemClick }: ProfileN
     <Link
       href={profilePath}
       onClick={handleClick}
-      className={`block px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
-        isMobile ? 'border-b border-gray-700' : ''
-      }`}
+      className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
     >
       {dict.nav.profile}
     </Link>

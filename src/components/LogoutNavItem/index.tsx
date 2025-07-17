@@ -1,5 +1,6 @@
 import { Dictionary } from '@/app/[lang]/dictionaries';
 import { LogOut } from 'lucide-react';
+import styles from './index.module.scss';
 
 interface LogoutNavItemProps {
   dict: Dictionary;
@@ -22,12 +23,7 @@ export const LogoutNavItem = ({
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      className={`flex w-full items-center px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
-        isMobile ? 'border-b border-gray-700' : ''
-      }`}
-    >
+    <button onClick={handleLogout} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
       <LogOut className="mr-2 h-4 w-4" />
       {dict.nav.logout}
     </button>

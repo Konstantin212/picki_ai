@@ -1,9 +1,9 @@
 'use client';
 
 import { Session } from '@supabase/supabase-js';
-import { Logo } from './Logo';
-import { NavItems } from './NavItems';
-import { LanguageSwitcher } from './LanguageSwitcher';
+import { Logo } from '@/components/Logo';
+import { NavItems } from '@/components/NavItems';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface NavbarProps {

@@ -1,6 +1,7 @@
 import { LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import styles from './index.module.scss';
 
 interface LoginNavItemProps {
   dict: Dictionary;
@@ -20,9 +21,7 @@ export const LoginNavItem = ({ dict, isMobile = false, onItemClick, lang }: Logi
     <Link
       href={`/${lang}/login`}
       onClick={handleClick}
-      className={`flex w-full items-center px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
-        isMobile ? 'border-b border-gray-700' : ''
-      }`}
+      className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
     >
       <LogIn className="mr-2 h-4 w-4" />
       {dict.nav.loginSignup}

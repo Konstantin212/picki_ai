@@ -198,22 +198,12 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
           )}
         </Button>
 
-        {/* Divider */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-600" />
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="bg-gray-800 px-4 text-gray-400">or</span>
-          </div>
-        </div>
-
         {/* Switch Mode Link */}
         <div className="text-center">
           <Typography variant="body2" className="text-gray-400">
             {isLogin ? dict.auth.login.noAccount : dict.auth.signup.haveAccount}{' '}
             <Link
-              href={isLogin ? `/${currentLocale}/signup` : `/${currentLocale}/login`}
+              href={`/${currentLocale}/${isLogin ? 'signup' : 'login'}`}
               className="font-medium text-blue-400 transition-colors hover:text-blue-300"
             >
               {isLogin ? dict.auth.login.signUp : dict.auth.signup.signIn}

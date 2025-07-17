@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import classes from './LinkFormButton.module.scss';
+import styles from './index.module.scss';
 
 interface LinkFormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
@@ -7,7 +7,7 @@ interface LinkFormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
 
 export const LinkFormButton = ({ children, className, ...props }: LinkFormButtonProps) => {
   return (
-    <button className={cn(classes.linkButton, className)} {...props}>
+    <button className={cn(styles.linkButton, className)} {...props}>
       {children}
     </button>
   );

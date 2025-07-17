@@ -1,0 +1,7 @@
+.navItem {
+  @apply block px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white;
+}
+
+.mobile {
+  @apply border-b border-gray-700;
+}

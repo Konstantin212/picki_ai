@@ -1,5 +1,5 @@
 import { Session } from '@supabase/supabase-js';
-import { NavItems } from './NavItems';
+import { NavItems } from '@/components/NavItems';
 import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface MobileMenuProps {

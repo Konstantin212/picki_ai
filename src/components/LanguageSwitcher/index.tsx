@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import classes from './LanguageSwitcher.module.scss';
+import styles from './index.module.scss';
 import { SupportedLang } from '@/lib/translations';
 
 interface LanguageSwitcherProps {
@@ -37,7 +37,7 @@ export const LanguageSwitcher = ({ isMobile = false }: LanguageSwitcherProps) =>
   return (
     <Select value={currentLocale} onValueChange={handleValueChange}>
       <SelectTrigger
-        className={cn('w-[140px]', isMobile ? classes.mobile : classes.desktop)}
+        className={cn('w-[140px]', isMobile ? styles.mobile : styles.desktop)}
         aria-label="Select language"
       >
         <SelectValue placeholder="Language" />

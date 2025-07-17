@@ -1,6 +1,6 @@
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { AuthForm } from '@/components/auth/AuthForm';
-import { Navbar } from '@/components/navigation/Navbar';
+import { AuthForm } from '@/components/AuthForm';
+import { Navbar } from '@/components/Navbar';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { SupportedLang } from '@/lib/translations';

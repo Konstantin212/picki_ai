@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import classes from './PrimaryFormButton.module.scss';
+import styles from './index.module.scss';
 
 interface PrimaryFormButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
@@ -12,7 +12,7 @@ export const PrimaryFormButton = ({
   ...props
 }: PrimaryFormButtonProps) => {
   return (
-    <button className={cn(classes.primaryButton, className)} disabled={isLoading} {...props}>
+    <button className={cn(styles.primaryButton, className)} disabled={isLoading} {...props}>
       {isLoading && (
         <svg
           className="mr-2 h-4 w-4 animate-spin"

@@ -1,7 +1,7 @@
 import { Session } from '@supabase/supabase-js';
-import { ProfileNavItem } from './ProfileNavItem';
-import { LogoutNavItem } from './LogoutNavItem';
-import { LoginNavItem } from './LoginNavItem';
+import { ProfileNavItem } from '@/components/ProfileNavItem';
+import { LogoutNavItem } from '@/components/LogoutNavItem';
+import { LoginNavItem } from '@/components/LoginNavItem';
 import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface NavItemsProps {
