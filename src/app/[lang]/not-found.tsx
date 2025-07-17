@@ -2,11 +2,12 @@ import { getDictionary } from '@/app/[lang]/dictionaries';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { SupportedLang } from '@/lib/translations';
 
 export default async function NotFoundPage({
   params,
 }: {
-  params?: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params?: Promise<{ lang: SupportedLang }>;
 }) {
   // Handle case where params might be undefined (when not-found is called outside locale context)
   const lang = params ? (await params).lang : 'en';

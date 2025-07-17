@@ -1,28 +1,15 @@
+import { LogIn } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface LoginNavItemProps {
-  dict: {
-    nav: {
-      loginSignup: string;
-      profile: string;
-      logout: string;
-      settings: string;
-      dashboard: string;
-      menu: string;
-      closeMenu: string;
-      openMenu: string;
-    };
-  };
+  dict: Dictionary;
   isMobile?: boolean;
-  onItemClick?: () => void;
+  onItemClick?: (() => void) | undefined;
+  lang: string;
 }
 
-export const LoginNavItem = ({ dict, isMobile = false, onItemClick }: LoginNavItemProps) => {
-  const pathname = usePathname();
-  const currentLocale = pathname.split('/')[1];
-  const loginPath = `/${currentLocale}/login`;
-
+export const LoginNavItem = ({ dict, isMobile = false, onItemClick, lang }: LoginNavItemProps) => {
   const handleClick = () => {
     if (onItemClick) {
       onItemClick();
@@ -31,12 +18,13 @@ export const LoginNavItem = ({ dict, isMobile = false, onItemClick }: LoginNavIt
 
   return (
     <Link
-      href={loginPath}
+      href={`/${lang}/login`}
       onClick={handleClick}
-      className={`block px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
+      className={`flex w-full items-center px-3 py-2 text-sm font-medium text-gray-300 transition-colors hover:text-white ${
         isMobile ? 'border-b border-gray-700' : ''
       }`}
     >
+      <LogIn className="mr-2 h-4 w-4" />
       {dict.nav.loginSignup}
     </Link>
   );

@@ -1,22 +1,13 @@
 import { Session } from '@supabase/supabase-js';
-import { LanguageSwitcher } from './LanguageSwitcher';
 import { ProfileNavItem } from './ProfileNavItem';
 import { LogoutNavItem } from './LogoutNavItem';
+import { LoginNavItem } from './LoginNavItem';
+import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface NavItemsProps {
-  dict: {
-    nav: {
-      loginSignup: string;
-      profile: string;
-      logout: string;
-      settings: string;
-      dashboard: string;
-      menu: string;
-      closeMenu: string;
-      openMenu: string;
-    };
-  };
+  dict: Dictionary;
   session: Session | null;
+  lang: string;
   isMobile?: boolean;
   onItemClick?: () => void;
   onLogout?: () => Promise<void>;
@@ -25,13 +16,13 @@ interface NavItemsProps {
 export const NavItems = ({
   dict,
   session,
+  lang,
   isMobile = false,
   onItemClick,
   onLogout,
 }: NavItemsProps) => {
   return (
     <>
-      <LanguageSwitcher />
       <ProfileNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} />
       {session && onLogout ? (
         <LogoutNavItem
@@ -40,7 +31,9 @@ export const NavItems = ({
           onItemClick={onItemClick}
           onLogout={onLogout}
         />
-      ) : null}
+      ) : (
+        <LoginNavItem dict={dict} isMobile={isMobile} onItemClick={onItemClick} lang={lang} />
+      )}
     </>
   );
 };

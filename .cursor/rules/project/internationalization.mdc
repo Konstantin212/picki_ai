@@ -1,3 +1,9 @@
+---
+description: Internationalization rules for Next.js 15 i18n implementation with server-side translations and locale-aware routing
+globs: src/app/[lang]/**/*.tsx, src/components/**/*.tsx, src/messages/**/*.json
+alwaysApply: false
+---
+
 # Internationalization (i18n) Rules
 
 > **Rule Chain:**
@@ -29,6 +35,24 @@ This project uses Next.js 15's built-in internationalization with server-side tr
 - Client components receive translations as props
 - Use descriptive, hierarchical translation keys (e.g., `auth.login.title`)
 - Use TypeScript interfaces for translation dictionaries
+
+## Dictionary Prop Typing
+
+- **MANDATORY**: When server components pass `dict` as a prop to client components, the prop type must be imported from `@/app/[lang]/dictionaries`
+- Use the `Dictionary` type for full dictionary objects
+- Use specific dictionary types (e.g., `AuthDict`, `HomeDict`) for partial dictionaries
+- Example:
+
+  ```typescript
+  import { Dictionary } from '@/app/[lang]/dictionaries';
+
+  interface ComponentProps {
+    dict: Dictionary;
+  }
+  ```
+
+- Never use `any` or generic object types for dictionary props
+- Ensure type safety across all locale variations
 
 ## Best Practices
 

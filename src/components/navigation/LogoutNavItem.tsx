@@ -1,18 +1,8 @@
+import { Dictionary } from '@/app/[lang]/dictionaries';
 import { LogOut } from 'lucide-react';
 
 interface LogoutNavItemProps {
-  dict: {
-    nav: {
-      loginSignup: string;
-      profile: string;
-      logout: string;
-      settings: string;
-      dashboard: string;
-      menu: string;
-      closeMenu: string;
-      openMenu: string;
-    };
-  };
+  dict: Dictionary;
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
   onLogout: () => Promise<void>;

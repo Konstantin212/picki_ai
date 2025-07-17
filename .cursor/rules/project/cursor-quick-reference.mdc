@@ -16,11 +16,12 @@ import { getDictionary } from '@/app/[lang]/dictionaries';
 import { Navbar } from '@/components/navigation/Navbar';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { SupportedLang } from '@/lib/translations';
 
 export default async function PageName({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
@@ -305,11 +306,13 @@ router.push(`/${currentLocale}/destination`);
 ### TypeScript Errors
 
 ```typescript
+import { SupportedLang } from '@/lib/translations';
+
 // Fix window not defined error
 const currentLocale = typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'en';
 
 // Fix async component props
-params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+params: Promise<{ lang: SupportedLang }>;
 const { lang } = await params;
 ```
 

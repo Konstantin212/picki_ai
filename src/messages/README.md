@@ -123,24 +123,26 @@ Translations are loaded server-side using the `getDictionary` function:
 // src/app/[lang]/dictionaries.ts
 import enCommon from '@/messages/en/common.json';
 import enHome from '@/messages/en/home.json';
+import { SupportedLang } from '@/lib/translations';
 // ... other imports
 
 const dictionaries = {
-  en: () => Promise.resolve({
-    ...enCommon,
-    home: enHome,
-    nav: enNavigation,
-    auth: enAuth,
-    profile: enProfile,
-    errors: enErrors,
-    start: enStart,
-    recommend: enRecommend,
-    results: enResults,
-  }),
+  en: () =>
+    Promise.resolve({
+      ...enCommon,
+      home: enHome,
+      nav: enNavigation,
+      auth: enAuth,
+      profile: enProfile,
+      errors: enErrors,
+      start: enStart,
+      recommend: enRecommend,
+      results: enResults,
+    }),
   // ... other languages
 };
 
-export const getDictionary = async (locale: 'en' | 'de' | 'uk') => {
+export const getDictionary = async (locale: SupportedLang) => {
   return dictionaries[locale]();
 };
 ```
@@ -152,7 +154,7 @@ export const getDictionary = async (locale: 'en' | 'de' | 'uk') => {
 export default async function HomePage({
   params
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+  params: Promise<{ lang: SupportedLang }>
 }) {
   const { lang } = await params; // Next.js 15 requires awaiting params
   const dict = await getDictionary(lang);
@@ -246,10 +248,11 @@ When adding a new feature or page:
    import ukNewFeature from '@/messages/uk/new-feature.json';
 
    const dictionaries = {
-     en: () => Promise.resolve({
-       // ... existing translations
-       newFeature: enNewFeature,
-     }),
+     en: () =>
+       Promise.resolve({
+         // ... existing translations
+         newFeature: enNewFeature,
+       }),
      // ... other languages
    };
    ```

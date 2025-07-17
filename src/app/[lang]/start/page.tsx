@@ -1,4 +1,4 @@
-import { getDictionary, type StartDict } from '@/app/[lang]/dictionaries';
+import { Dictionary, getDictionary } from '@/app/[lang]/dictionaries';
 import { TranslationParams, Langs } from '@/lib/translations';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,7 @@ export default async function StartPage({
   params: Promise<TranslationParams> | undefined;
 }) {
   const { lang } = params ? await params : { lang: Langs.en };
-  const dict = (await getDictionary(lang)).start as StartDict;
+  const dict = (await getDictionary(lang)).start as Dictionary['start'];
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-900 px-6">

@@ -2,37 +2,18 @@ import { createClient } from '@/lib/supabase';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
 import { redirect } from 'next/navigation';
-import { getDictionary } from '@/app/[lang]/dictionaries';
-
-interface ResultsItem {
-  title: string;
-  description: string;
-  score: string;
-  price: string;
-}
-
-interface ResultsDict {
-  title: string;
-  description: string;
-  score: string;
-  price: string;
-  details: string;
-  select: string;
-  newRecommendation: string;
-  item1?: ResultsItem;
-  item2?: ResultsItem;
-  item3?: ResultsItem;
-}
+import { Dictionary, getDictionary } from '@/app/[lang]/dictionaries';
+import { SupportedLang } from '@/lib/translations';
 
 export default async function ResultsPage({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   const supabase = await createClient();
   const dict = await getDictionary(lang);
-  const resultsDict = dict.results as ResultsDict;
+  const resultsDict = dict.results as Dictionary['results'];
 
   // Get session for auth state
   const {
@@ -59,8 +40,8 @@ export default async function ResultsPage({
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Sample recommendation cards */}
           {[1, 2, 3].map((item) => {
-            const itemData = resultsDict[`item${item}` as keyof ResultsDict] as
-              | ResultsItem
+            const itemData = resultsDict[`item${item}` as keyof Dictionary['results']] as
+              | Dictionary['results']
               | undefined;
             return (
               <div key={item} className="rounded-lg bg-gray-800 p-6 shadow-lg">

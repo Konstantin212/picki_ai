@@ -1,11 +1,12 @@
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
+import { SupportedLang } from '@/lib/translations';
 
 export default async function ProfilePage({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);

@@ -1,26 +1,24 @@
 import { Session } from '@supabase/supabase-js';
 import { NavItems } from './NavItems';
+import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface MobileMenuProps {
   isOpen: boolean;
-  dict: {
-    nav: {
-      loginSignup: string;
-      profile: string;
-      logout: string;
-      settings: string;
-      dashboard: string;
-      menu: string;
-      closeMenu: string;
-      openMenu: string;
-    };
-  };
+  dict: Dictionary;
   session: Session | null;
+  lang: string;
   onToggle: () => void;
   onLogout: () => Promise<void>;
 }
 
-export const MobileMenu = ({ isOpen, dict, session, onToggle, onLogout }: MobileMenuProps) => {
+export const MobileMenu = ({
+  isOpen,
+  dict,
+  session,
+  lang,
+  onToggle,
+  onLogout,
+}: MobileMenuProps) => {
   if (!isOpen) return null;
 
   return (
@@ -29,6 +27,7 @@ export const MobileMenu = ({ isOpen, dict, session, onToggle, onLogout }: Mobile
         <NavItems
           dict={dict}
           session={session}
+          lang={lang}
           isMobile={true}
           onItemClick={onToggle}
           onLogout={onLogout}

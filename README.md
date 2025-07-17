@@ -133,10 +133,13 @@ src/messages/
 
 ```tsx
 // src/app/[lang]/page.tsx
+
+import { SupportedLang } from '@/lib/translations';
+
 export default async function HomePage({
   params
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>
+  params: Promise<{ lang: SupportedLang }>
 }) {
   const { lang } = await params; // Next.js 15 requires awaiting params
   const dict = await getDictionary(lang);

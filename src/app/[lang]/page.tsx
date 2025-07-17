@@ -3,18 +3,15 @@ import { Navbar } from '@/components/navigation/Navbar';
 import { Typography } from '@/components/ui/typography';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { SupportedLang } from '@/lib/translations';
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
-}) {
+export default async function HomePage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
   return (
     <>
-      <Navbar dict={dict} />
+      <Navbar dict={dict} lang={lang} />
       <main className="flex min-h-screen flex-col">
         {/* Hero Section */}
         <section className="flex flex-col items-center justify-center bg-gray-900 px-6 py-24 text-center">

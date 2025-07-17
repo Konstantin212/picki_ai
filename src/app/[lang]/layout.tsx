@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { Providers } from '@/providers/providers';
+import { SupportedLang } from '@/lib/translations';
 import '../globals.css';
 
 export default async function RootLayout({
@@ -7,7 +8,7 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   return (

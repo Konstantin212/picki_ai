@@ -1,19 +1,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
+import { Dictionary } from '@/app/[lang]/dictionaries';
 interface ProfileNavItemProps {
-  dict: {
-    nav: {
-      loginSignup: string;
-      profile: string;
-      logout: string;
-      settings: string;
-      dashboard: string;
-      menu: string;
-      closeMenu: string;
-      openMenu: string;
-    };
-  };
+  dict: Dictionary;
   isMobile?: boolean;
   onItemClick?: (() => void) | undefined;
 }

@@ -10,12 +10,13 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import classes from './LanguageSwitcher.module.scss';
+import { SupportedLang } from '@/lib/translations';
 
 interface LanguageSwitcherProps {
   isMobile?: boolean;
 }
 
-const languages = [
+const languages: Array<{ value: SupportedLang; label: string }> = [
   { value: 'en', label: 'English' },
   { value: 'de', label: 'Deutsch' },
   { value: 'uk', label: 'Українська' },

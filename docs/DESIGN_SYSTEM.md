@@ -117,10 +117,12 @@ import { Typography } from '@/components/ui/typography';
 ### Page Structure Template
 
 ```typescript
+import { SupportedLang } from '@/lib/translations';
+
 export default async function PageName({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
@@ -482,11 +484,12 @@ import { Component } from '@/components/Component';
 import { Navbar } from '@/components/navigation/Navbar';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { SupportedLang } from '@/lib/translations';
 
 export default async function PageName({
   params,
 }: {
-  params: Promise<{ lang: 'en' | 'de' | 'uk' }>;
+  params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
