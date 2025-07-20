@@ -24,6 +24,8 @@ export const NavItems = ({
   // If we have event handlers, we need to render client components
   const hasEventHandlers = onItemClick || onLogout;
 
+  console.log('session', session);
+
   if (hasEventHandlers) {
     return (
       <>

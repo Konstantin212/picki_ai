@@ -51,7 +51,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
       });
 
       if (response.ok) {
-        router.push(`/${currentLocale}/profile`);
+        router.push(`/${currentLocale}`);
       } else {
         const error = await response.json();
         toast({
@@ -183,7 +183,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-12 w-full bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex h-12 w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? (
             <div className="flex items-center gap-2">
@@ -199,17 +199,15 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
         </Button>
 
         {/* Switch Mode Link */}
-        <div className="text-center">
-          <Typography variant="body2" className="text-gray-400">
-            {isLogin ? dict.auth.login.noAccount : dict.auth.signup.haveAccount}{' '}
-            <Link
-              href={`/${currentLocale}/${isLogin ? 'signup' : 'login'}`}
-              className="font-medium text-blue-400 transition-colors hover:text-blue-300"
-            >
-              {isLogin ? dict.auth.login.signUp : dict.auth.signup.signIn}
-            </Link>
-          </Typography>
-        </div>
+        <Typography variant="body2" className="text-center text-gray-400">
+          {isLogin ? dict.auth.login.noAccount : dict.auth.signup.haveAccount}{' '}
+          <Link
+            href={`/${currentLocale}/${isLogin ? 'signup' : 'login'}`}
+            className="font-medium text-blue-400 transition-colors hover:text-blue-300"
+          >
+            {isLogin ? dict.auth.login.signUp : dict.auth.signup.signIn}
+          </Link>
+        </Typography>
       </form>
     </div>
   );

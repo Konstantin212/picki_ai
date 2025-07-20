@@ -11,14 +11,14 @@ export default async function LoginPage({ params }: { params: Promise<{ lang: Su
 
   return (
     <>
-      <Navbar dict={dict} lang={lang} />
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      <Navbar dict={dict} lang={lang} showNavItems={false} />
+      <main className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-40">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(156,146,172,0.15)_1px,transparent_0)] bg-[length:20px_20px]" />
         </div>
 
-        <div className="relative flex min-h-screen items-center justify-center px-4 py-12">
+        <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center px-4 py-12">
           {/* Back to Home Link */}
           <Link
             href={`/${lang}`}

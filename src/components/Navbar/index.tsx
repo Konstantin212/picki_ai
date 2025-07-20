@@ -10,14 +10,15 @@ interface NavbarProps {
   dict: Dictionary;
   session?: Session | null;
   lang: string;
+  showNavItems?: boolean;
 }
 
-export const Navbar = ({ dict, session, lang }: NavbarProps) => {
+export const Navbar = ({ dict, session, lang, showNavItems = true }: NavbarProps) => {
   return (
-    <nav className="flex h-16 items-center justify-between bg-gray-900 px-6 shadow-lg">
+    <nav className="relative z-50 flex h-16 items-center justify-between bg-gray-900 px-6 shadow-lg">
       <Logo />
       <div className="flex items-center gap-4">
-        <NavItems dict={dict} session={session ?? null} lang={lang} />
+        {showNavItems && <NavItems dict={dict} session={session ?? null} lang={lang} />}
         <LanguageSwitcher />
       </div>
     </nav>
