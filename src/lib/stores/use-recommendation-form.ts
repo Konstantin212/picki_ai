@@ -115,7 +115,7 @@ export const useRecommendationForm = create<RecommendationFormState>()(
             break;
 
           case 3: // Parameters
-            if (state.parameters.length === 0) {
+            if (!state.parameters || state.parameters.length === 0) {
               errors.parameters = 'minParameters';
             }
             break;
@@ -136,7 +136,7 @@ export const useRecommendationForm = create<RecommendationFormState>()(
           case 2:
             return !!(state.budget && state.budget > 0);
           case 3:
-            return state.parameters.length > 0;
+            return !!(state.parameters && state.parameters.length > 0);
           default:
             return false;
         }

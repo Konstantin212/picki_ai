@@ -19,7 +19,13 @@
 }
 
 .grid {
-  @apply grid grid-cols-2 gap-4 md:grid-cols-4;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .parameter {
