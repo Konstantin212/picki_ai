@@ -1,14 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { User, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Typography } from '@/components/ui/Typography';
-import { useToast } from '@/hooks/use-toast';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import { useSignIn, useSignUp } from '@/hooks/use-auth';
+import { useToast } from '@/hooks/use-toast';
 
 interface AuthFormProps {
   dict: Dictionary;
@@ -16,21 +16,38 @@ interface AuthFormProps {
 }
 
 interface FieldErrors {
+  fullName?: string;
   email?: string;
   password?: string;
   confirmPassword?: string;
 }
 
 export const AuthForm = ({ dict, mode }: AuthFormProps) => {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const router = useRouter();
+
+  // React Query hooks
+  const signInMutation = useSignIn();
+  const signUpMutation = useSignUp();
   const { toast } = useToast();
+
+  // Handle field errors from mutations
+  useEffect(() => {
+    if (signInMutation.data && !signInMutation.data.success && signInMutation.data.fieldErrors) {
+      setFieldErrors(signInMutation.data.fieldErrors);
+    }
+  }, [signInMutation.data]);
+
+  useEffect(() => {
+    if (signUpMutation.data && !signUpMutation.data.success && signUpMutation.data.fieldErrors) {
+      setFieldErrors(signUpMutation.data.fieldErrors);
+    }
+  }, [signUpMutation.data]);
 
   const isLogin = mode === 'login';
   const authDict = isLogin ? dict.auth.login : dict.auth.signup;
@@ -39,6 +56,15 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
 
   const validateFields = (): boolean => {
     const errors: FieldErrors = {};
+
+    // Full name validation (signup only)
+    if (!isLogin) {
+      if (!fullName.trim()) {
+        errors.fullName = 'Full name is required';
+      } else if (fullName.trim().length < 2) {
+        errors.fullName = 'Full name must be at least 2 characters long';
+      }
+    }
 
     // Email validation
     if (!email.trim()) {
@@ -85,53 +111,11 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
       return;
     }
 
-    setIsLoading(true);
-
-    try {
-      const endpoint = isLogin ? '/api/auth/sign-in' : '/api/auth/sign-up';
-      const body = isLogin ? { email, password } : { email, password, confirmPassword };
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        // Success - redirect to home page
-        toast({
-          title: 'Success',
-          description: isLogin ? 'Successfully signed in!' : 'Account created successfully!',
-          variant: 'default',
-        });
-
-        // Refresh the page to update session state
-        router.refresh();
-        router.push(`/${currentLocale}`);
-      } else {
-        // Handle specific field errors
-        if (data.fieldErrors) {
-          setFieldErrors(data.fieldErrors);
-        }
-
-        // Show error toast
-        toast({
-          title: 'Error',
-          description: data.error || 'Authentication failed',
-          variant: 'destructive',
-        });
-      }
-    } catch (error) {
-      console.error('Authentication error:', error);
-      toast({
-        title: 'Error',
-        description: 'An unexpected error occurred. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
+    // Use the appropriate mutation based on mode
+    if (isLogin) {
+      signInMutation.mutate({ email, password });
+    } else {
+      signUpMutation.mutate({ fullName, email, password, confirmPassword });
     }
   };
 
@@ -162,6 +146,34 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Full Name Field (Signup only) */}
+        {!isLogin && (
+          <div className="space-y-2">
+            <label htmlFor="fullName" className="text-sm font-medium text-gray-300">
+              {dict.auth.signup.fullName || 'Full Name'}
+            </label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+              <Input
+                id="fullName"
+                type="text"
+                value={fullName}
+                onChange={(e) => {
+                  setFullName(e.target.value);
+                  if (fieldErrors.fullName) clearFieldErrors();
+                }}
+                className={getInputClassName('fullName')}
+                placeholder="Enter your full name"
+              />
+            </div>
+            {fieldErrors.fullName && (
+              <Typography variant="body2" className="text-sm text-red-400">
+                {fieldErrors.fullName}
+              </Typography>
+            )}
+          </div>
+        )}
+
         {/* Email Field */}
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-medium text-gray-300">
@@ -269,8 +281,14 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
         )}
 
         {/* Submit Button */}
-        <Button type="submit" disabled={isLoading} variant="gradient" size="xl" className="w-full">
-          {isLoading ? (
+        <Button
+          type="submit"
+          disabled={signInMutation.isPending || signUpMutation.isPending}
+          variant="gradient"
+          size="xl"
+          className="w-full"
+        >
+          {signInMutation.isPending || signUpMutation.isPending ? (
             <div className="flex items-center gap-2">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
               Loading...

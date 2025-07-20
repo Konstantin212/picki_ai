@@ -4,7 +4,7 @@ import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { SupportedLang } from '@/lib/translations';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-server';
 import { ArrowRight, BarChart3, Brain, Target } from 'lucide-react';
 
 export default async function HomePage({ params }: { params: Promise<{ lang: SupportedLang }> }) {

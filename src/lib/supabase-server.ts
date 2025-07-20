@@ -13,11 +13,11 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
  *
  * @example
  * ```typescript
- * const supabase = await createClient();
+ * const supabase = await createServerSupabaseClient();
  * const { data } = await supabase.from('users').select('*');
  * ```
  */
-export const createClient = async (): Promise<SupabaseClient> => {
+export const createServerSupabaseClient = async (): Promise<SupabaseClient> => {
   const cookieStore = await cookies();
 
   if (!supabaseUrl || !supabaseAnonKey) {
@@ -41,3 +41,9 @@ export const createClient = async (): Promise<SupabaseClient> => {
     },
   });
 };
+
+// Legacy export for backward compatibility (server-side only)
+export const createClient = createServerSupabaseClient;
+
+// Export types for better TypeScript support
+export type { SupabaseClient } from '@supabase/supabase-js';

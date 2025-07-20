@@ -4,7 +4,7 @@ import { Navbar } from '@/components/Navbar';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { SupportedLang } from '@/lib/translations';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-server';
 
 export default async function LoginPage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params;

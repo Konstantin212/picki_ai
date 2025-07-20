@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase-server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password, confirmPassword } = await request.json();
+    const { email, password, confirmPassword, fullName } = await request.json();
 
     // Validate inputs
-    if (!email || !password || !confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword) {
       return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+    }
+
+    // Validate full name
+    if (fullName.trim().length < 2) {
+      return NextResponse.json(
+        { error: 'Full name must be at least 2 characters long' },
+        { status: 400 }
+      );
     }
 
     // Validate email format
@@ -33,6 +41,11 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+      },
     });
 
     if (error) {
@@ -43,8 +56,11 @@ export async function POST(request: NextRequest) {
         errorMessage = 'An account with this email already exists';
       } else if (error.message.includes('Password should be at least')) {
         errorMessage = 'Password is too weak. Please choose a stronger password';
-      } else if (error.message.includes('Invalid email')) {
-        errorMessage = 'Please enter a valid email address';
+      } else if (
+        error.message.includes('Invalid email') ||
+        error.code === 'email_address_invalid'
+      ) {
+        errorMessage = 'Please enter a valid email address. Make sure to use a real email domain.';
       }
 
       return NextResponse.json({ error: errorMessage }, { status: 400 });
