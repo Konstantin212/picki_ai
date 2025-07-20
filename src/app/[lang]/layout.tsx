@@ -11,6 +11,7 @@ export default async function RootLayout({
   params: Promise<{ lang: SupportedLang }>;
 }) {
   const { lang } = await params;
+
   return (
     <html lang={lang} suppressHydrationWarning>
       <body>

@@ -3,16 +3,22 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { User, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Typography } from '@/components/ui/Typography';
 import { useToast } from '@/hooks/use-toast';
-import { Eye, EyeOff, Mail, Lock, User, ArrowRight } from 'lucide-react';
 import { Dictionary } from '@/app/[lang]/dictionaries';
 
 interface AuthFormProps {
   dict: Dictionary;
   mode: 'login' | 'signup';
+}
+
+interface FieldErrors {
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 
 export const AuthForm = ({ dict, mode }: AuthFormProps) => {
@@ -22,6 +28,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const router = useRouter();
   const { toast } = useToast();
 
@@ -30,45 +37,110 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
   const currentLocale =
     typeof window !== 'undefined' ? window.location.pathname.split('/')[1] : 'en';
 
+  const validateFields = (): boolean => {
+    const errors: FieldErrors = {};
+
+    // Email validation
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (password.length < 6) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
+
+    // Confirm password validation (signup only)
+    if (!isLogin) {
+      if (!confirmPassword) {
+        errors.confirmPassword = 'Please confirm your password';
+      } else if (password !== confirmPassword) {
+        errors.confirmPassword = 'Passwords do not match';
+      }
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const clearFieldErrors = () => {
+    setFieldErrors({});
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    clearFieldErrors();
+
+    // Validate fields before submission
+    if (!validateFields()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fix the errors in the form',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      if (!isLogin && password !== confirmPassword) {
-        toast({
-          title: 'Error',
-          description: 'Passwords do not match',
-          variant: 'destructive',
-        });
-        return;
-      }
+      const endpoint = isLogin ? '/api/auth/sign-in' : '/api/auth/sign-up';
+      const body = isLogin ? { email, password } : { email, password, confirmPassword };
 
-      const response = await fetch(`/auth/${isLogin ? 'sign-in' : 'sign-up'}`, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(body),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // Success - redirect to home page
+        toast({
+          title: 'Success',
+          description: isLogin ? 'Successfully signed in!' : 'Account created successfully!',
+          variant: 'default',
+        });
+
+        // Refresh the page to update session state
+        router.refresh();
         router.push(`/${currentLocale}`);
       } else {
-        const error = await response.json();
+        // Handle specific field errors
+        if (data.fieldErrors) {
+          setFieldErrors(data.fieldErrors);
+        }
+
+        // Show error toast
         toast({
           title: 'Error',
-          description: error.message || 'Authentication failed',
+          description: data.error || 'Authentication failed',
           variant: 'destructive',
         });
       }
-    } catch {
+    } catch (error) {
+      console.error('Authentication error:', error);
       toast({
         title: 'Error',
-        description: 'An unexpected error occurred',
+        description: 'An unexpected error occurred. Please try again.',
         variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getInputClassName = (fieldName: keyof FieldErrors) => {
+    const baseClasses =
+      'h-12 border-gray-600 bg-gray-700/50 pl-10 pr-12 text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20';
+    const errorClasses = 'border-red-500 focus:border-red-500 focus:ring-red-500/20';
+
+    return fieldErrors[fieldName] ? `${baseClasses} ${errorClasses}` : baseClasses;
   };
 
   return (
@@ -77,11 +149,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
       <div className="mb-8 text-center">
         <div className="mb-4 flex justify-center">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
-            {isLogin ? (
-              <User className="h-6 w-6 text-white" />
-            ) : (
-              <User className="h-6 w-6 text-white" />
-            )}
+            <User className="h-6 w-6 text-white" />
           </div>
         </div>
         <Typography variant="h1" className="mb-2 text-2xl font-bold text-white">
@@ -105,12 +173,19 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
               id="email"
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="h-12 border-gray-600 bg-gray-700/50 pl-10 pr-4 text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (fieldErrors.email) clearFieldErrors();
+              }}
+              className={getInputClassName('email')}
               placeholder="Enter your email"
             />
           </div>
+          {fieldErrors.email && (
+            <Typography variant="body2" className="text-sm text-red-400">
+              {fieldErrors.email}
+            </Typography>
+          )}
         </div>
 
         {/* Password Field */}
@@ -124,9 +199,11 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
               id="password"
               type={showPassword ? 'text' : 'password'}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="h-12 border-gray-600 bg-gray-700/50 pl-10 pr-12 text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (fieldErrors.password) clearFieldErrors();
+              }}
+              className={getInputClassName('password')}
               placeholder="Enter your password"
             />
             <button
@@ -137,6 +214,11 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
           </div>
+          {fieldErrors.password && (
+            <Typography variant="body2" className="text-sm text-red-400">
+              {fieldErrors.password}
+            </Typography>
+          )}
         </div>
 
         {/* Confirm Password Field (Signup only) */}
@@ -151,9 +233,11 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
                 id="confirmPassword"
                 type={showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="h-12 border-gray-600 bg-gray-700/50 pl-10 pr-12 text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20"
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (fieldErrors.confirmPassword) clearFieldErrors();
+                }}
+                className={getInputClassName('confirmPassword')}
                 placeholder="Confirm your password"
               />
               <button
@@ -164,6 +248,11 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
                 {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
+            {fieldErrors.confirmPassword && (
+              <Typography variant="body2" className="text-sm text-red-400">
+                {fieldErrors.confirmPassword}
+              </Typography>
+            )}
           </div>
         )}
 
@@ -180,11 +269,7 @@ export const AuthForm = ({ dict, mode }: AuthFormProps) => {
         )}
 
         {/* Submit Button */}
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="flex h-12 w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50"
-        >
+        <Button type="submit" disabled={isLoading} variant="gradient" size="xl" className="w-full">
           {isLoading ? (
             <div className="flex items-center gap-2">
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />

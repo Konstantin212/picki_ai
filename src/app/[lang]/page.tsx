@@ -4,15 +4,22 @@ import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { SupportedLang } from '@/lib/translations';
+import { createClient } from '@/lib/supabase';
 import { ArrowRight, BarChart3, Brain, Target } from 'lucide-react';
 
 export default async function HomePage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
+  // Get session for authentication state
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <>
-      <Navbar dict={dict} lang={lang} />
+      <Navbar dict={dict} lang={lang} session={session} />
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         {/* Background Pattern */}
         <div className="inset-0 opacity-40">

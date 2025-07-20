@@ -4,14 +4,21 @@ import { Navbar } from '@/components/Navbar';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { SupportedLang } from '@/lib/translations';
+import { createClient } from '@/lib/supabase';
 
 export default async function SignupPage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params;
   const dict = await getDictionary(lang);
 
+  // Get session for authentication state
+  const supabase = await createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <>
-      <Navbar dict={dict} lang={lang} showNavItems={false} />
+      <Navbar dict={dict} lang={lang} session={session} showNavItems={false} />
       <main className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-40">
