@@ -14,17 +14,21 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const baseClasses = 'rounded-lg font-medium transition-all duration-200';
+  const baseClasses =
+    'rounded-lg font-medium transition-all duration-300 ease-out transform hover:scale-105 active:scale-95';
 
   const variantClasses = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg',
-    secondary: 'bg-gray-700 text-white hover:bg-gray-800 shadow-md hover:shadow-lg',
-    ghost: 'bg-transparent text-blue-600 hover:bg-blue-50',
-    outline: 'border border-gray-600 bg-transparent text-white hover:bg-gray-700 hover:text-white',
+    primary:
+      'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg hover:shadow-blue-500/25',
+    secondary:
+      'bg-gray-700 text-white hover:bg-gray-800 shadow-md hover:shadow-lg hover:shadow-gray-500/25',
+    ghost: 'bg-transparent text-blue-600 hover:bg-blue-50 hover:scale-105',
+    outline:
+      'border border-gray-600 bg-transparent text-white hover:bg-gray-700 hover:text-white hover:border-gray-500 hover:shadow-md',
     gradient:
-      'bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl',
+      'bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/30 hover:shadow-purple-500/30 hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-0',
     'gradient-outline':
-      'border border-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-border text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl',
+      'border border-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-border text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/30 hover:shadow-purple-500/30 hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-0',
   };
 
   const sizeClasses = {
