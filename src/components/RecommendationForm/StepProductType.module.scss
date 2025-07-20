@@ -1,0 +1,59 @@
+.container {
+  @apply space-y-8;
+}
+
+.header {
+  @apply space-y-4 text-center;
+}
+
+.title {
+  @apply font-bold text-white;
+}
+
+.subtitle {
+  @apply text-gray-400;
+}
+
+.grid {
+  @apply grid grid-cols-2 gap-4 md:grid-cols-3;
+}
+
+.card {
+  @apply flex flex-col items-center space-y-4 rounded-xl border border-gray-700/50 bg-gray-800/50 p-6 text-center transition-all duration-200 hover:border-gray-600/50;
+
+  &:hover {
+    @apply scale-105 transform bg-gray-800/70;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-blue-500/50;
+  }
+}
+
+.selected {
+  @apply border-blue-500/50 bg-gradient-to-br from-blue-600/20 to-purple-600/20 ring-2 ring-blue-500/30;
+}
+
+.iconContainer {
+  @apply flex h-12 w-12 items-center justify-center rounded-lg bg-gray-700/50;
+}
+
+.icon {
+  @apply h-6 w-6 text-gray-300;
+}
+
+.selected .icon {
+  @apply text-blue-400;
+}
+
+.label {
+  @apply font-medium text-gray-300;
+}
+
+.selected .label {
+  @apply text-white;
+}
+
+.error {
+  @apply text-center text-red-400;
+}

@@ -3,5 +3,71 @@
   "description": "Tell us about your preferences and criteria, and we'll provide personalized recommendations just for you.",
   "preferences": "Your Preferences",
   "criteria": "Important Criteria",
-  "getRecommendations": "Get Recommendations"
-} 
+  "getRecommendations": "Get Recommendations",
+  "steps": {
+    "productType": {
+      "title": "What are you looking for?",
+      "subtitle": "Select the type of product you want recommendations for"
+    },
+    "purpose": {
+      "title": "What will you use it for?",
+      "subtitle": "Choose the primary purpose or write your own"
+    },
+    "budget": {
+      "title": "What is your budget?",
+      "subtitle": "Enter your budget in USD",
+      "placeholder": "Enter amount (e.g., 500)"
+    },
+    "parameters": {
+      "title": "What's most important for you?",
+      "subtitle": "Select up to 3 parameters that matter most"
+    }
+  },
+  "productTypes": {
+    "smartphone": "Smartphone",
+    "laptop": "Laptop",
+    "tablet": "Tablet",
+    "headphones": "Headphones",
+    "camera": "Camera",
+    "other": "Other"
+  },
+  "purposes": {
+    "work": "Work",
+    "gaming": "Gaming",
+    "travel": "Travel",
+    "study": "Study",
+    "photography": "Photography",
+    "music": "Music",
+    "other": "Other"
+  },
+  "parameters": {
+    "performance": "Performance",
+    "battery": "Battery Life",
+    "screen": "Screen Quality",
+    "camera": "Camera Quality",
+    "brand": "Brand",
+    "price": "Price",
+    "portability": "Portability",
+    "storage": "Storage"
+  },
+  "navigation": {
+    "back": "Back",
+    "next": "Next",
+    "submit": "Get Recommendations"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidBudget": "Please enter a valid amount",
+    "minParameters": "Please select at least one parameter",
+    "maxParameters": "You can select up to 3 parameters"
+  },
+  "loading": {
+    "title": "Finding the best options for you...",
+    "subtitle": "This may take a few moments"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "subtitle": "Please try again",
+    "retry": "Try Again"
+  }
+}

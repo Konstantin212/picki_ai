@@ -1,7 +1,73 @@
 {
   "title": "KI-Empfehlungen erhalten",
-  "description": "Erzähle uns von deinen Präferenzen und Kriterien, und wir geben dir personalisierte Empfehlungen.",
-  "preferences": "Deine Präferenzen",
+  "description": "Erzählen Sie uns von Ihren Präferenzen und Kriterien, und wir geben Ihnen personalisierte Empfehlungen.",
+  "preferences": "Ihre Präferenzen",
   "criteria": "Wichtige Kriterien",
-  "getRecommendations": "Empfehlungen erhalten"
-} 
+  "getRecommendations": "Empfehlungen erhalten",
+  "steps": {
+    "productType": {
+      "title": "Was suchen Sie?",
+      "subtitle": "Wählen Sie die Art des Produkts, für das Sie Empfehlungen möchten"
+    },
+    "purpose": {
+      "title": "Wofür werden Sie es verwenden?",
+      "subtitle": "Wählen Sie den Hauptzweck oder schreiben Sie Ihren eigenen"
+    },
+    "budget": {
+      "title": "Was ist Ihr Budget?",
+      "subtitle": "Geben Sie Ihr Budget in USD ein",
+      "placeholder": "Betrag eingeben (z.B. 500)"
+    },
+    "parameters": {
+      "title": "Was ist Ihnen am wichtigsten?",
+      "subtitle": "Wählen Sie bis zu 3 Parameter aus, die am wichtigsten sind"
+    }
+  },
+  "productTypes": {
+    "smartphone": "Smartphone",
+    "laptop": "Laptop",
+    "tablet": "Tablet",
+    "headphones": "Kopfhörer",
+    "camera": "Kamera",
+    "other": "Andere"
+  },
+  "purposes": {
+    "work": "Arbeit",
+    "gaming": "Gaming",
+    "travel": "Reisen",
+    "study": "Studium",
+    "photography": "Fotografie",
+    "music": "Musik",
+    "other": "Andere"
+  },
+  "parameters": {
+    "performance": "Leistung",
+    "battery": "Akku-Laufzeit",
+    "screen": "Bildschirmqualität",
+    "camera": "Kameragüte",
+    "brand": "Marke",
+    "price": "Preis",
+    "portability": "Tragbarkeit",
+    "storage": "Speicher"
+  },
+  "navigation": {
+    "back": "Zurück",
+    "next": "Weiter",
+    "submit": "Empfehlungen erhalten"
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidBudget": "Bitte geben Sie einen gültigen Betrag ein",
+    "minParameters": "Bitte wählen Sie mindestens einen Parameter",
+    "maxParameters": "Sie können bis zu 3 Parameter auswählen"
+  },
+  "loading": {
+    "title": "Suche die besten Optionen für Sie...",
+    "subtitle": "Dies kann einen Moment dauern"
+  },
+  "error": {
+    "title": "Etwas ist schiefgelaufen",
+    "subtitle": "Bitte versuchen Sie es erneut",
+    "retry": "Erneut versuchen"
+  }
+}

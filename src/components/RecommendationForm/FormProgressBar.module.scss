@@ -1,0 +1,69 @@
+.container {
+  @apply space-y-6 pb-8;
+}
+
+.header {
+  @apply space-y-2 text-center;
+}
+
+.title {
+  @apply font-semibold text-white;
+}
+
+.subtitle {
+  @apply text-gray-400;
+}
+
+.progressContainer {
+  @apply w-full;
+}
+
+.progressBar {
+  @apply h-2 w-full overflow-hidden rounded-full bg-gray-700;
+}
+
+.progressFill {
+  @apply h-full bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-500 ease-out;
+}
+
+.steps {
+  @apply flex items-center justify-between;
+}
+
+.step {
+  @apply flex flex-col items-center space-y-2;
+}
+
+.stepIndicator {
+  @apply flex h-10 w-10 items-center justify-center rounded-full transition-all duration-200;
+}
+
+.stepNumber {
+  @apply text-sm font-medium;
+}
+
+.completed {
+  .stepIndicator {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600;
+  }
+}
+
+.current {
+  .stepIndicator {
+    @apply bg-blue-500 ring-2 ring-blue-500/20;
+  }
+
+  .stepNumber {
+    @apply text-white;
+  }
+}
+
+.upcoming {
+  .stepIndicator {
+    @apply border border-gray-600 bg-gray-700;
+  }
+
+  .stepNumber {
+    @apply text-gray-400;
+  }
+}

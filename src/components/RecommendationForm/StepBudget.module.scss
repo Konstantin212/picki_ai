@@ -1,0 +1,63 @@
+.container {
+  @apply space-y-8;
+}
+
+.header {
+  @apply space-y-4 text-center;
+}
+
+.title {
+  @apply font-bold text-white;
+}
+
+.subtitle {
+  @apply text-gray-400;
+}
+
+.inputContainer {
+  @apply mx-auto max-w-md space-y-6;
+}
+
+.inputWrapper {
+  @apply relative;
+}
+
+.currencyIcon {
+  @apply absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500;
+}
+
+.input {
+  @apply h-14 border-gray-600 bg-gray-700/50 pl-10 pr-4 text-lg font-medium text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20;
+}
+
+.suggestions {
+  @apply space-y-3;
+}
+
+.suggestionsLabel {
+  @apply text-center;
+}
+
+.suggestionButtons {
+  @apply flex flex-wrap justify-center gap-2;
+}
+
+.suggestionButton {
+  @apply rounded-lg border border-gray-700/50 bg-gray-800/50 px-4 py-2 text-sm font-medium text-gray-300 transition-all duration-200 hover:border-gray-600/50 hover:text-white;
+
+  &:hover {
+    @apply scale-105 transform bg-gray-800/70;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-blue-500/50;
+  }
+}
+
+.selected {
+  @apply border-blue-500/50 bg-gradient-to-r from-blue-600/20 to-purple-600/20 text-white ring-2 ring-blue-500/30;
+}
+
+.error {
+  @apply text-center text-red-400;
+}

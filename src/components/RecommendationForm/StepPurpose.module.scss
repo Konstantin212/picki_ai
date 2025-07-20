@@ -1,0 +1,67 @@
+.container {
+  @apply space-y-8;
+}
+
+.header {
+  @apply space-y-4 text-center;
+}
+
+.title {
+  @apply font-bold text-white;
+}
+
+.subtitle {
+  @apply text-gray-400;
+}
+
+.pills {
+  @apply flex flex-wrap justify-center gap-3;
+}
+
+.pill {
+  @apply flex items-center space-x-2 rounded-full border border-gray-700/50 bg-gray-800/50 px-4 py-3 transition-all duration-200 hover:border-gray-600/50;
+
+  &:hover {
+    @apply scale-105 transform bg-gray-800/70;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-blue-500/50;
+  }
+}
+
+.selected {
+  @apply border-blue-500/50 bg-gradient-to-r from-blue-600/20 to-purple-600/20 ring-2 ring-blue-500/30;
+}
+
+.icon {
+  @apply h-4 w-4 text-gray-400;
+}
+
+.selected .icon {
+  @apply text-blue-400;
+}
+
+.label {
+  @apply text-sm font-medium text-gray-300;
+}
+
+.selected .label {
+  @apply text-white;
+}
+
+.customInput {
+  @apply mx-auto max-w-md space-y-3;
+}
+
+.inputLabel {
+  @apply text-center;
+}
+
+.input {
+  @apply h-12 border-gray-600 bg-gray-700/50 text-white transition-all duration-200 placeholder:text-gray-400 focus:border-blue-500 focus:ring-blue-500/20;
+}
+
+.error {
+  @apply text-center text-red-400;
+}

@@ -1,0 +1,27 @@
+.container {
+  @apply mx-auto w-full max-w-2xl;
+}
+
+.content {
+  @apply space-y-8 py-8;
+}
+
+.navigation {
+  @apply flex items-center justify-between border-t border-gray-700/50 pt-6;
+}
+
+.backButton {
+  @apply text-gray-400 transition-colors duration-200 hover:text-white;
+}
+
+.nextButton {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl;
+}
+
+.loadingOverlay {
+  @apply fixed inset-0 z-50 flex items-center justify-center bg-gray-900/80 backdrop-blur-sm;
+}
+
+.loadingContent {
+  @apply rounded-2xl bg-gray-800/90 p-8 text-center shadow-2xl ring-1 ring-gray-700/50;
+}
