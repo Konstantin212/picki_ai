@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/Button';
 import { Dictionary, getDictionary } from '@/app/[lang]/dictionaries';
 import { SupportedLang } from '@/lib/translations';
 import Link from 'next/link';
-import ResultsViewer from '@/components/ResultsViewer';
+import ResultsLayout from '@/components/Results/ResultsLayout';
 
 export default async function ResultsPage({
   params,
@@ -30,9 +30,7 @@ export default async function ResultsPage({
             </Typography>
           </div>
 
-          <div className="rounded-2xl bg-gray-800/50 p-6 ring-1 ring-gray-700/50">
-            <ResultsViewer />
-          </div>
+          <ResultsLayout />
 
           <div className="mt-8 text-center">
             <Link href={`/${lang}/start`}>
