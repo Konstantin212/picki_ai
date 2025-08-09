@@ -6,6 +6,8 @@ import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import { useToast } from '@/hooks/use-toast';
+import { useRecommendMutation } from '@/hooks/use-recommendation';
+import { useRecommendationResultsStore } from '@/lib/stores/use-recommendation-results';
 import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { StepProductType } from './StepProductType';
 import { StepPurpose } from './StepPurpose';
@@ -25,8 +27,18 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { currentStep, isLoading, setStep, validateStep, canProceed, setLoading, reset } =
-    useRecommendationForm();
+  const {
+    currentStep,
+    isLoading,
+    setStep,
+    validateStep,
+    setLoading,
+    reset,
+    productType,
+    purpose,
+    budget,
+    parameters,
+  } = useRecommendationForm();
 
   const TOTAL_STEPS = 4;
 
@@ -44,7 +56,11 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
     }
   };
 
+  const { mutateAsync } = useRecommendMutation();
+  const saveResults = useRecommendationResultsStore((s) => s.save);
+
   const handleSubmit = async () => {
+    if (isSubmitting || mutateAsync === undefined) return;
     if (!validateStep(currentStep)) {
       return;
     }
@@ -54,28 +70,22 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
 
     try {
       const formData = useRecommendationForm.getState();
-      const response = await fetch('/api/recommend', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productType: formData.productType,
-          purpose: formData.purpose,
-          budget: formData.budget,
-          parameters: formData.parameters,
-          customPurpose: formData.customPurpose,
-        }),
+      const result = await mutateAsync({
+        productType: formData.productType!,
+        purpose: formData.purpose!,
+        budget: formData.budget!,
+        parameters: formData.parameters!,
+        customPurpose: formData.customPurpose,
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to get recommendations');
-      }
-
-      const result = await response.json();
 
       // Reset form and navigate to results
       reset();
+      // Optionally cache results to display on the results page
+      // Shape comes from API: { id: string, recommendations: RecommendationJSON }
+      const recs = (result as { id?: string; recommendations?: unknown }).recommendations;
+      if (result?.id && recs) {
+        saveResults(result.id, recs as unknown as Record<string, unknown>);
+      }
       router.push(`/${lang}/results?recommendationId=${result.id}`);
     } catch (error) {
       console.error('Recommendation error:', error);
@@ -106,7 +116,21 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
   };
 
   const isLastStep = currentStep === TOTAL_STEPS - 1;
-  const canGoNext = canProceed(currentStep);
+  // Re-compute next-state using reactive fields to avoid stale function refs
+  const canGoNext = (() => {
+    switch (currentStep) {
+      case 0:
+        return !!productType;
+      case 1:
+        return !!purpose;
+      case 2:
+        return !!(budget && budget > 0);
+      case 3:
+        return !!(parameters && parameters.length > 0);
+      default:
+        return false;
+    }
+  })();
 
   return (
     <div className={styles.container}>
@@ -129,6 +153,7 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
         </Button>
 
         <Button
+          type="button"
           onClick={isLastStep ? handleSubmit : handleNext}
           disabled={!canGoNext || isSubmitting}
           className={styles.nextButton}

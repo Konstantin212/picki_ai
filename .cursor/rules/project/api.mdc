@@ -1,0 +1,121 @@
+---
+description: API architecture & conventions for server routes, services, error handling, and OpenAI integration
+globs: src/app/api/**, src/lib/services/**, src/lib/api/**
+alwaysApply: true
+---
+
+## REST Structure
+
+### Endpoints (current)
+
+- POST `/api/recommend`
+  - Purpose: Generate device recommendations via OpenAI or mock mode.
+  - Auth: Optional. If a Supabase session exists, results are saved; otherwise only returned.
+  - Request JSON:
+    ```json
+    {
+      "productType": "laptop|smartphone|smartwatch|camera",
+      "purpose": "string",
+      "budget": 1500,
+      "parameters": ["screen", "portability", "battery"],
+      "customPurpose": "string|null"
+    }
+    ```
+  - Response JSON (success):
+    ```json
+    {
+      "id": "ai-generated|db-id",
+      "recommendations": {
+        /* strict JSON produced by OpenAI (or mock) */
+      },
+      "message": "Recommendations generated successfully"
+    }
+    ```
+  - Response JSON (error):
+    ```json
+    { "error": "AI generation failed", "message": "..." }
+    ```
+
+### Endpoints (planned)
+
+- POST `/api/recommendations`
+  - Same payload/behavior as `/api/recommend` but under plural resource naming.
+  - Returns `201 Created` with resource location in `Location: /api/recommendations/{id}` when a session exists and DB persistence succeeds.
+
+- GET `/api/recommendations/{id}`
+  - Purpose: Fetch persisted recommendation JSON for the current authenticated user.
+  - Auth: Required (Supabase session).
+  - Response JSON: `{ "id": "...", "recommendations": { ... }, "created_at": "ISO-8601" }`
+  - Errors: `404` if not found or not owned by the user.
+
+## Service Layer
+
+- Use `src/lib/services/recommendation-service.ts`
+  - Function: `generateRecommendations(input)`
+  - Responsibilities:
+    - Validate input (productType, purpose, budget, parameters)
+    - Build strict prompt for OpenAI
+    - Switch to mock when `NEXT_PUBLIC_MOCK_OPENAI=true` or `NEXT_PUBLIC_OPEN_AI=mock`
+    - Call OpenAI SDK and normalize invalid numeric `unknown` to `null`
+    - Return parsed JSON object
+
+## Error Handling
+
+- Use `src/lib/api/errors.ts`
+  - `ApiError(status, message, code?)` for domain errors
+  - `errorResponse(error)` to convert exceptions into consistent JSON
+  - Error payload shape:
+    ```json
+    { "error": "string", "code": "optional", "message": "optional" }
+    ```
+
+## OpenAI Integration
+
+- Client: `src/lib/openai.ts` using `openai` SDK (`openai` npm package)
+- Env:
+  - `NEXT_PUBLIC_OPEN_AI`: API key (server-side usage only)
+  - `NEXT_PUBLIC_MOCK_OPENAI`: `true|false` to enable mock mode
+- Model: `gpt-4o-mini` (changeable). Use low `temperature` for determinism.
+
+## Mocking
+
+- Mock mode is enabled by either:
+  - `NEXT_PUBLIC_MOCK_OPENAI=true`, or
+  - `NEXT_PUBLIC_OPEN_AI=mock`
+- Camera-specific mock and generic laptop mock provided in `recommendation-service.ts`.
+
+## Request/Response Examples
+
+### curl
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "productType": "laptop",
+    "purpose": "gaming",
+    "budget": 2000,
+    "parameters": ["screen","portability","battery"]
+  }' \
+  http://localhost:3000/api/recommend | jq
+```
+
+### fetch (client)
+
+```ts
+const res = await fetch('/api/recommend', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ productType, purpose, budget, parameters }),
+});
+if (!res.ok) throw new Error(await res.text());
+const data = await res.json();
+```
+
+## Design Principles
+
+- Resource-oriented routes; prefer plural nouns (`/api/recommendations`) for new endpoints.
+- Server-only integration with providers (OpenAI) via service layer; no secret keys in client.
+- Consistent error envelopes and HTTP status codes.
+- Input validation at the edge; fail fast with `400`.
+- Deterministic prompts; normalize/validate AI output before returning.
