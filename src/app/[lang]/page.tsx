@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { SupportedLang } from '@/lib/translations';
 import { createClient } from '@/lib/supabase-server';
 import { ArrowRight, BarChart3, Brain, Target } from 'lucide-react';
+import TiltedCard from '@/components/TiltedCard';
+import DarkVeil from '@/components/backgrounds/DarkVeil';
 
 export default async function HomePage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params;
@@ -24,15 +26,14 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
       </head>
       <Navbar dict={dict} lang={lang} session={session} />
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        {/* Background Pattern */}
-        <div className="inset-0 opacity-40">
-          <div className="inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(156,146,172,0.15)_1px,transparent_0)] bg-[length:20px_20px]" />
-        </div>
-
         <div className="relative">
           {/* Hero Section */}
           <section className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
-            <div className="mx-auto max-w-4xl">
+            {/* Dark Veil WebGL background (slightly transparent so base gradient tints it) */}
+            <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+              <DarkVeil className="h-full w-full opacity-80" speed={0.5} hueShift={10} />
+            </div>
+            <div className="relative z-10 mx-auto max-w-4xl">
               <Typography
                 variant="h1"
                 className="mb-6 text-4xl font-bold text-white md:text-5xl lg:text-6xl"
@@ -70,7 +71,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
           <section className="relative border-t border-gray-700/50 bg-gray-900/80 px-6 py-24 backdrop-blur-sm">
             <div className="mx-auto max-w-7xl">
               <div className="mb-16 text-center">
-                <Typography variant="h2" className="mb-6 text-3xl font-bold text-white md:text-4xl">
+                <Typography
+                  variant="h2"
+                  className="mb-6 text-center text-3xl font-bold text-white md:text-4xl"
+                >
                   {dict.home.featuresTitle}
                 </Typography>
                 <Typography
@@ -84,7 +88,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
 
               <div className="grid gap-8 md:grid-cols-3">
                 {/* Feature 1 */}
-                <div className="hover:shadow-3xl group overflow-hidden rounded-2xl bg-gray-800/50 p-8 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/70 hover:ring-gray-600/50">
+                <TiltedCard minHeight={280}>
                   <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 text-blue-400 transition-all duration-300 group-hover:scale-110">
                     <BarChart3 className="h-8 w-8" />
                   </div>
@@ -94,10 +98,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
                   <Typography variant="body2" color="secondary" className="text-gray-300">
                     {dict.home.feature1Description}
                   </Typography>
-                </div>
+                </TiltedCard>
 
                 {/* Feature 2 */}
-                <div className="hover:shadow-3xl group overflow-hidden rounded-2xl bg-gray-800/50 p-8 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/70 hover:ring-gray-600/50">
+                <TiltedCard minHeight={280}>
                   <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-600/20 to-blue-600/20 text-purple-400 transition-all duration-300 group-hover:scale-110">
                     <Brain className="h-8 w-8" />
                   </div>
@@ -107,10 +111,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
                   <Typography variant="body2" color="secondary" className="text-gray-300">
                     {dict.home.feature2Description}
                   </Typography>
-                </div>
+                </TiltedCard>
 
                 {/* Feature 3 */}
-                <div className="hover:shadow-3xl group overflow-hidden rounded-2xl bg-gray-800/50 p-8 shadow-2xl ring-1 ring-gray-700/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/70 hover:ring-gray-600/50">
+                <TiltedCard minHeight={280}>
                   <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 text-blue-400 transition-all duration-300 group-hover:scale-110">
                     <Target className="h-8 w-8" />
                   </div>
@@ -120,7 +124,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
                   <Typography variant="body2" color="secondary" className="text-gray-300">
                     {dict.home.feature3Description}
                   </Typography>
-                </div>
+                </TiltedCard>
               </div>
             </div>
           </section>
