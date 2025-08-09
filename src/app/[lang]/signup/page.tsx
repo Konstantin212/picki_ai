@@ -18,6 +18,9 @@ export default async function SignupPage({ params }: { params: Promise<{ lang: S
 
   return (
     <>
+      <head>
+        <title>Picki AI — Signup</title>
+      </head>
       <Navbar dict={dict} lang={lang} session={session} showNavItems={false} />
       <main className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         {/* Background Pattern */}

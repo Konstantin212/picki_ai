@@ -2,6 +2,7 @@ import { getDictionary, type RecommendDict } from '@/app/[lang]/dictionaries';
 import { TranslationParams, Langs } from '@/lib/translations';
 import { Navbar } from '@/components/Navbar';
 import { RecommendationForm } from '@/components/RecommendationForm';
+import { RecommendationTitle } from '@/components/RecommendationForm/RecommendationTitle';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
@@ -18,6 +19,7 @@ export default async function RecommendPage({
     <>
       <Navbar dict={fullDict} lang={lang} />
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+        <RecommendationTitle dict={dict} />
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-40">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(156,146,172,0.15)_1px,transparent_0)] bg-[length:20px_20px]" />
