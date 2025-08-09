@@ -1,3 +1,9 @@
+---
+description: Design System — mandatory frontend guidelines, structured palette and interaction states based on current implementation
+globs: src/**/*.{tsx,ts,scss,css}
+alwaysApply: true
+---
+
 # Design System - MANDATORY FRONTEND GUIDELINES
 
 > **Rule Chain:**
@@ -13,6 +19,89 @@
 ## Design Philosophy
 
 - Modern Minimalism, Dark-First, Glass Morphism, Gradient Accents, Consistent Spacing (8px grid)
+
+## Color System
+
+### Core Backgrounds & Surfaces (Dark-first)
+
+- **Backgrounds**:
+  - `bg-gray-900` (primary page background)
+  - `bg-gray-800/50`, `bg-gray-800/60`, `bg-gray-800/70`, `bg-gray-800/90` (cards, overlays)
+  - Gradients: `bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900`
+- **Surfaces & Borders**:
+  - Borders: `border-gray-700/50`, `border-gray-600`, `ring-1 ring-gray-700/50`
+  - Muted fills: `bg-gray-700/50`, `bg-gray-700`
+- **Text**:
+  - Default: `text-white`
+  - Secondary: `text-gray-400`
+  - Muted: `text-gray-500`
+  - Subtle labels: `text-gray-300`
+
+### Accent Palette
+
+- **Indigo (Primary accent)**:
+  - Solids: `indigo-600` (default), `indigo-700` (hover)
+  - Text: `text-indigo-500` (primary typographic and icon accent)
+  - Focus/selection: prefer `ring-indigo-500/20`, `ring-indigo-500/30`, `ring-indigo-500/50`, `border-indigo-500/50`
+- **Blue (Secondary/legacy accent, gradients, links)**:
+  - Solids: `blue-600` (default), `blue-700` (hover)
+  - Text: `text-blue-400` (links, minor accents)
+  - Focus/selection: `ring-blue-500/20`, `ring-blue-500/30`, `ring-blue-500/50`, `border-blue-500/50`
+- **Purple (Secondary gradient accent)**:
+  - Solids: `purple-600` (paired in gradients), `purple-700` (hover)
+  - Text: `text-purple-400` (secondary accent text)
+
+### Feedback & Status Colors
+
+- **Error/Destructive**: `red-400`, `red-500`, `red-600`, `red-700`
+  - Inputs: `border-red-500`, `focus:ring-red-500/20`
+  - Toasts: `bg-red-600 text-white`
+- **Success**: `text-green-500` (Typography only; no dedicated success components found)
+
+### Gradients
+
+- **Primary gradient**: `from-blue-600 to-purple-600`
+  - Buttons, progress fills, primary CTAs
+- **Soft accent backgrounds**: `from-blue-600/20 to-purple-600/20`
+  - Accent cards, selected states, icon tiles
+
+## Interaction States
+
+### Buttons (`src/components/ui/Button`)
+
+- **Primary**: `bg-indigo-600 text-white` → hover `bg-indigo-700`; shadows may use subtle indigo glow
+- **Secondary**: `bg-gray-700 text-white` → hover `bg-gray-800`
+- **Outline**: `border-gray-600 text-white` → hover `bg-gray-700`
+- **Ghost**: `text-blue-600` → hover `bg-blue-500/10` (dark-friendly hover)
+- **Gradient**: `bg-gradient-to-r from-blue-600 to-purple-600` → hover `from-blue-700 to-purple-700`
+- **Focus**: prefer `focus:ring-2 focus:ring-blue-500/50` where applicable
+- **Active**: scale down `active:scale-95`
+- **Disabled**: `disabled:opacity-50 disabled:cursor-not-allowed`
+
+### Inputs (`src/components/ui/Input` and form fields)
+
+- Base: `border-gray-600 bg-gray-700/50 text-white`
+- Placeholder: `placeholder:text-gray-400`
+- **Focus**: `focus:border-blue-500 focus:ring-blue-500/20`
+- **Error**: `border-red-500 focus:border-red-500 focus:ring-red-500/20`
+
+### Selectable Pills/Cards (recommendation steps)
+
+- Base: `border-gray-700/50 bg-gray-800/50`
+- Hover: `hover:border-gray-600/50`
+- Focus: `ring-2 ring-blue-500/50`
+- Selected: `border-blue-500/50 ring-blue-500/30 bg-gradient-to-br from-blue-600/20 to-purple-600/20`
+
+### Progress & Indicators
+
+- Progress bar fill: `bg-gradient-to-r from-blue-600 to-purple-600`
+- Active step: `bg-blue-500 ring-2 ring-blue-500/20`
+
+### Toasts
+
+- Default: `bg-white text-gray-700 border-gray-300`
+- Destructive: `bg-red-600 text-white`
+- Actions: focus rings `focus:ring-gray-400`; destructive variants `focus:ring-red-400`
 
 ## Color Palette - STRICTLY ENFORCED
 
@@ -75,3 +164,5 @@
 **REMEMBER**: This design system is MANDATORY for all frontend development. Non-compliance will result in code rejection.
 
 **REMEMBER**: This design system is MANDATORY for all frontend development. Non-compliance will result in code rejection.
+
+ 
