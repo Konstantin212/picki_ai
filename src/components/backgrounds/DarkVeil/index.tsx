@@ -72,6 +72,9 @@ void main(){
     float scanline_val=sin(gl_FragCoord.y*uScanFreq)*0.5+0.5;
     col.rgb*=1.-(scanline_val*scanline_val)*uScan;
     col.rgb+=(rand(gl_FragCoord.xy+uTime)-0.5)*uNoise;
+    // Blend toward slate tone rgb(31,41,55) at 60% to soften background
+    vec3 base = vec3(31.0/255.0, 41.0/255.0, 55.0/255.0);
+    col.rgb = mix(col.rgb, base, 0.6);
     gl_FragColor=vec4(clamp(col.rgb,0.0,1.0),1.0);
 }
 `;
@@ -91,7 +94,7 @@ export default function DarkVeil({
   hueShift = 0,
   noiseIntensity = 0,
   scanlineIntensity = 0,
-  speed = 0.5,
+  speed = 0.8,
   scanlineFrequency = 0,
   warpAmount = 0,
   resolutionScale = 1,

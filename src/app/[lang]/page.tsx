@@ -31,7 +31,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Sup
           <section className="relative flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
             {/* Dark Veil WebGL background (slightly transparent so base gradient tints it) */}
             <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
-              <DarkVeil className="h-full w-full opacity-80" speed={0.5} hueShift={10} />
+              <DarkVeil className="h-full w-full opacity-80" speed={0.8} hueShift={350} />
             </div>
             <div className="relative z-10 mx-auto max-w-4xl">
               <Typography
