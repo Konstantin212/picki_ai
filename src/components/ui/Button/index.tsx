@@ -15,14 +15,13 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    'rounded-lg font-medium transition-all duration-300 ease-out transform hover:scale-105 active:scale-95';
+    'rounded-lg font-medium transition-all duration-300 ease-out transform hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variantClasses = {
-    primary:
-      'bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg hover:shadow-blue-500/25',
+    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg',
     secondary:
       'bg-gray-700 text-white hover:bg-gray-800 shadow-md hover:shadow-lg hover:shadow-gray-500/25',
-    ghost: 'bg-transparent text-blue-600 hover:bg-blue-50 hover:scale-105',
+    ghost: 'bg-transparent text-blue-600 hover:bg-blue-500/10 hover:scale-105',
     outline:
       'border border-gray-600 bg-transparent text-white hover:bg-gray-700 hover:text-white hover:border-gray-500 hover:shadow-md',
     gradient:
