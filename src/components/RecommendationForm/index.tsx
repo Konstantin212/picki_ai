@@ -13,63 +13,10 @@ import { StepBudget } from './StepBudget';
 import { StepParameters } from './StepParameters';
 import { FormProgressBar } from './FormProgressBar';
 import styles from './index.module.scss';
+import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
 interface RecommendationFormProps {
-  dict: {
-    steps: {
-      productType: { title: string; subtitle: string };
-      purpose: { title: string; subtitle: string };
-      budget: { title: string; subtitle: string; placeholder: string };
-      parameters: { title: string; subtitle: string };
-    };
-    productTypes: {
-      smartphone: string;
-      laptop: string;
-      tablet: string;
-      headphones: string;
-      camera: string;
-      other: string;
-    };
-    purposes: {
-      work: string;
-      gaming: string;
-      travel: string;
-      study: string;
-      photography: string;
-      music: string;
-      other: string;
-    };
-    parameters: {
-      performance: string;
-      battery: string;
-      screen: string;
-      camera: string;
-      brand: string;
-      price: string;
-      portability: string;
-      storage: string;
-    };
-    navigation: {
-      back: string;
-      next: string;
-      submit: string;
-    };
-    validation: {
-      required: string;
-      invalidBudget: string;
-      minParameters: string;
-      maxParameters: string;
-    };
-    loading: {
-      title: string;
-      subtitle: string;
-    };
-    error: {
-      title: string;
-      subtitle: string;
-      retry: string;
-    };
-  };
+  dict: RecommendDict;
   lang: string;
 }
 

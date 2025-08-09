@@ -5,17 +5,10 @@ import { Typography } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/Input';
 import { DollarSign } from 'lucide-react';
 import styles from './StepBudget.module.scss';
+import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
 interface StepBudgetProps {
-  dict: {
-    steps: {
-      budget: { title: string; subtitle: string; placeholder: string };
-    };
-    validation: {
-      required: string;
-      invalidBudget: string;
-    };
-  };
+  dict: RecommendDict;
 }
 
 export const StepBudget = ({ dict }: StepBudgetProps) => {

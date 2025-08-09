@@ -1,7 +1,7 @@
 ---
-description: Internationalization rules for Next.js 15 i18n implementation with server-side translations and locale-aware routing
+description: Internationalization rules for Next.js 15 i18n implementation with server-side translations and locale-aware routing. Enforces dictionary prop typing using shared types.
 globs: src/app/[lang]/**/*.tsx, src/components/**/*.tsx, src/messages/**/*.json
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Internationalization (i18n) Rules
@@ -36,22 +36,23 @@ This project uses Next.js 15's built-in internationalization with server-side tr
 - Use descriptive, hierarchical translation keys (e.g., `auth.login.title`)
 - Use TypeScript interfaces for translation dictionaries
 
-## Dictionary Prop Typing
+## REQUIRED: Dictionary Prop Typing
 
-- **MANDATORY**: When server components pass `dict` as a prop to client components, the prop type must be imported from `@/app/[lang]/dictionaries`
+- **MANDATORY**: When server components pass `dict` as a prop to client components, the prop type must be imported from `@/app/[lang]/dictionaries`.
 - Use the `Dictionary` type for full dictionary objects
-- Use specific dictionary types (e.g., `AuthDict`, `HomeDict`) for partial dictionaries
+- Use specific dictionary types (e.g., `AuthDict`, `HomeDict`, `RecommendDict`, `ResultsDict`) for partial dictionaries
 - Example:
 
   ```typescript
-  import { Dictionary } from '@/app/[lang]/dictionaries';
+  import { type Dictionary } from '@/app/[lang]/dictionaries';
 
-  interface ComponentProps {
+  interface NavbarProps {
     dict: Dictionary;
+    lang: string;
   }
   ```
 
-- Never use `any` or generic object types for dictionary props
+- Never use `any` or generic object types for dictionary props.
 - Ensure type safety across all locale variations
 
 ## Best Practices
@@ -65,8 +66,3 @@ This project uses Next.js 15's built-in internationalization with server-side tr
 ---
 
 **For all structure, code, and workflow rules, see the referenced rule files.**
-
-globs:
-alwaysApply: false
-
----

@@ -6,25 +6,10 @@ import { Typography } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/Input';
 import { Briefcase, Gamepad2, Plane, BookOpen, Camera, Music, Plus } from 'lucide-react';
 import styles from './StepPurpose.module.scss';
+import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
 interface StepPurposeProps {
-  dict: {
-    steps: {
-      purpose: { title: string; subtitle: string };
-    };
-    purposes: {
-      work: string;
-      gaming: string;
-      travel: string;
-      study: string;
-      photography: string;
-      music: string;
-      other: string;
-    };
-    validation: {
-      required: string;
-    };
-  };
+  dict: RecommendDict;
 }
 
 const PURPOSES = [

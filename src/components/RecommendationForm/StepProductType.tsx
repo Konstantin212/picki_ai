@@ -4,24 +4,10 @@ import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Smartphone, Laptop, Tablet, Headphones, Camera, Plus } from 'lucide-react';
 import styles from './StepProductType.module.scss';
+import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
 interface StepProductTypeProps {
-  dict: {
-    steps: {
-      productType: { title: string; subtitle: string };
-    };
-    productTypes: {
-      smartphone: string;
-      laptop: string;
-      tablet: string;
-      headphones: string;
-      camera: string;
-      other: string;
-    };
-    validation: {
-      required: string;
-    };
-  };
+  dict: RecommendDict;
 }
 
 const PRODUCT_TYPES = [

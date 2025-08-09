@@ -4,27 +4,10 @@ import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Zap, Battery, Monitor, Camera, Star, DollarSign, Move, HardDrive } from 'lucide-react';
 import styles from './StepParameters.module.scss';
+import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
 interface StepParametersProps {
-  dict: {
-    steps: {
-      parameters: { title: string; subtitle: string };
-    };
-    parameters: {
-      performance: string;
-      battery: string;
-      screen: string;
-      camera: string;
-      brand: string;
-      price: string;
-      portability: string;
-      storage: string;
-    };
-    validation: {
-      minParameters: string;
-      maxParameters: string;
-    };
-  };
+  dict: RecommendDict;
 }
 
 const PARAMETERS = [
