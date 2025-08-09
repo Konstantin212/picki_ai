@@ -75,6 +75,13 @@ The project rules are organized into focused instruction files for better readab
 
 ### 🚀 [Cursor Quick Reference](./cursor-quick-reference.mdc)
 
+- ### 🔌 [API](./api.mdc)
+  - Current endpoints and payloads
+  - Planned REST resources (`/api/recommendations`, `GET /api/recommendations/{id}`)
+  - Service-layer contract and OpenAI integration
+  - Error handling conventions and examples
+  - Mocking instructions and usage examples
+
 - **MANDATORY**: Component creation workflow and folder structure
 - Page and component templates for rapid development
 - Common class combinations and implementation patterns
@@ -91,6 +98,7 @@ The project rules are organized into focused instruction files for better readab
 6. Use [Custom Hooks](./hooks.mdc) for common functionality
 7. Follow [Development Workflow](./development-workflow.mdc) for best practices
 8. Adhere to [Committing](./committing.mdc) standards for version control
+9. Review the [API](./api.mdc) rules before building or changing server routes
 
 ## Key Features
 
