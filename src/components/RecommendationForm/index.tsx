@@ -4,11 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
-import { Button } from '@/components/ui/Button';
 import { useToast } from '@/hooks/use-toast';
 import { useRecommendMutation } from '@/hooks/use-recommendation';
 import { useRecommendationResultsStore } from '@/lib/stores/use-recommendation-results';
-import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { StepProductType } from './StepProductType';
 import { StepPurpose } from './StepPurpose';
 import { StepBudget } from './StepBudget';
@@ -16,6 +15,7 @@ import { StepParameters } from './StepParameters';
 import { FormProgressBar } from './FormProgressBar';
 import styles from './index.module.scss';
 import { type RecommendDict } from '@/app/[lang]/dictionaries';
+import { Stepper } from '@/components/Stepper';
 
 interface RecommendationFormProps {
   dict: RecommendDict;
@@ -42,28 +42,13 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
 
   const TOTAL_STEPS = 4;
 
-  const handleNext = () => {
-    if (validateStep(currentStep)) {
-      if (currentStep < TOTAL_STEPS - 1) {
-        setStep(currentStep + 1);
-      }
-    }
-  };
-
-  const handleBack = () => {
-    if (currentStep > 0) {
-      setStep(currentStep - 1);
-    }
-  };
-
   const { mutateAsync } = useRecommendMutation();
   const saveResults = useRecommendationResultsStore((s) => s.save);
 
   const handleSubmit = async () => {
     if (isSubmitting || mutateAsync === undefined) return;
-    if (!validateStep(currentStep)) {
-      return;
-    }
+    // ensure last step valid
+    if (!validateStep(TOTAL_STEPS - 1)) return;
 
     setIsSubmitting(true);
     setLoading(true);
@@ -78,10 +63,7 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
         customPurpose: formData.customPurpose,
       });
 
-      // Reset form and navigate to results
       reset();
-      // Optionally cache results to display on the results page
-      // Shape comes from API: { id: string, recommendations: RecommendationJSON }
       const recs = (result as { id?: string; recommendations?: unknown }).recommendations;
       if (result?.id && recs) {
         saveResults(result.id, recs as unknown as Record<string, unknown>);
@@ -100,25 +82,9 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
     }
   };
 
-  const renderStep = () => {
-    switch (currentStep) {
-      case 0:
-        return <StepProductType dict={dict} />;
-      case 1:
-        return <StepPurpose dict={dict} />;
-      case 2:
-        return <StepBudget dict={dict} />;
-      case 3:
-        return <StepParameters dict={dict} />;
-      default:
-        return null;
-    }
-  };
-
-  const isLastStep = currentStep === TOTAL_STEPS - 1;
-  // Re-compute next-state using reactive fields to avoid stale function refs
-  const canGoNext = (() => {
-    switch (currentStep) {
+  // Compute ability to proceed based on current form state
+  const canProceedFromStep = (stepIndexZeroBased: number) => {
+    switch (stepIndexZeroBased) {
       case 0:
         return !!productType;
       case 1:
@@ -130,47 +96,63 @@ export const RecommendationForm = ({ dict, lang }: RecommendationFormProps) => {
       default:
         return false;
     }
-  })();
+  };
+
+  const nextDisabled = !canProceedFromStep(currentStep) || isSubmitting;
+  const backDisabled = currentStep === 0 || isSubmitting;
 
   return (
     <div className={styles.container}>
       {/* Progress Bar */}
       <FormProgressBar currentStep={currentStep} totalSteps={TOTAL_STEPS} />
 
-      {/* Step Content */}
-      <div className={styles.content}>{renderStep()}</div>
-
-      {/* Navigation */}
-      <div className={styles.navigation}>
-        <Button
-          variant="ghost"
-          onClick={handleBack}
-          disabled={currentStep === 0 || isSubmitting}
-          className={styles.backButton}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {dict.navigation.back}
-        </Button>
-
-        <Button
-          type="button"
-          onClick={isLastStep ? handleSubmit : handleNext}
-          disabled={!canGoNext || isSubmitting}
-          className={styles.nextButton}
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              {dict.loading.title}
-            </>
-          ) : (
-            <>
-              {isLastStep ? dict.navigation.submit : dict.navigation.next}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </>
-          )}
-        </Button>
-      </div>
+      {/* Stepper with smooth transitions; hide built-in indicators */}
+      <Stepper
+        initialStep={currentStep + 1}
+        onStepChange={(step) => setStep(step - 1)}
+        onFinalStepCompleted={handleSubmit}
+        stepContainerClassName="hidden"
+        contentClassName="!px-0"
+        backButtonText={dict.navigation.back}
+        nextButtonText={dict.navigation.next}
+        finalButtonText={dict.navigation.submit}
+        backButtonProps={{
+          disabled: backDisabled,
+          className:
+            'rounded-lg border border-gray-600 bg-transparent px-4 py-2 text-white hover:bg-gray-700 disabled:opacity-50',
+        }}
+        nextButtonProps={{
+          disabled: nextDisabled,
+          className:
+            'rounded-full bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-white hover:from-blue-700 hover:to-purple-700 disabled:opacity-50',
+        }}
+        disableStepIndicators
+      >
+        <div className="flex min-h-[420px] w-full flex-1 flex-col">
+          <div className="flex-1">
+            <StepProductType dict={dict} />
+          </div>
+          <div className="pt-6" />
+        </div>
+        <div className="flex min-h-[420px] w-full flex-1 flex-col">
+          <div className="flex-1">
+            <StepPurpose dict={dict} />
+          </div>
+          <div className="pt-6" />
+        </div>
+        <div className="flex min-h-[420px] w-full flex-1 flex-col">
+          <div className="flex-1">
+            <StepBudget dict={dict} />
+          </div>
+          <div className="pt-6" />
+        </div>
+        <div className="flex min-h-[420px] w-full flex-1 flex-col">
+          <div className="flex-1">
+            <StepParameters dict={dict} />
+          </div>
+          <div className="pt-6" />
+        </div>
+      </Stepper>
 
       {/* Loading Overlay */}
       {isLoading && (

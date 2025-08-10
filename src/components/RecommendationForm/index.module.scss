@@ -1,9 +1,9 @@
 .container {
-  @apply mx-auto w-full max-w-2xl;
+  @apply mx-auto w-full max-w-3xl px-4;
 }
 
 .content {
-  @apply space-y-8 py-8;
+  @apply space-y-8 py-6;
 }
 
 .navigation {
@@ -15,7 +15,7 @@
 }
 
 .nextButton {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white shadow-lg transition-all duration-200 hover:from-blue-700 hover:to-purple-700 hover:shadow-xl;
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 font-medium text-white transition-all duration-200 hover:from-blue-700 hover:to-purple-700;
 }
 
 .loadingOverlay {
@@ -23,5 +23,5 @@
 }
 
 .loadingContent {
-  @apply rounded-2xl bg-gray-800/90 p-8 text-center shadow-2xl ring-1 ring-gray-700/50;
+  @apply rounded-2xl bg-gray-800/90 p-8 text-center ring-1 ring-gray-700/50;
 }

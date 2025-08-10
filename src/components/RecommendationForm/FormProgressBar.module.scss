@@ -1,5 +1,5 @@
 .container {
-  @apply space-y-6 pb-8;
+  @apply space-y-6 pb-6;
 }
 
 .header {
@@ -27,11 +27,11 @@
 }
 
 .steps {
-  @apply flex items-center justify-between;
+  @apply z-0 flex items-center justify-between;
 }
 
 .step {
-  @apply flex flex-col items-center space-y-2;
+  @apply relative flex flex-col items-center space-y-2;
 }
 
 .stepIndicator {
