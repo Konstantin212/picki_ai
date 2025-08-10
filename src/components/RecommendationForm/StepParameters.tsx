@@ -3,6 +3,7 @@
 import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Zap, Battery, Monitor, Camera, Star, DollarSign, Move, HardDrive } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import styles from './StepParameters.module.scss';
 import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
@@ -79,7 +80,11 @@ export const StepParameters = ({ dict }: StepParametersProps) => {
               key={key}
               onClick={() => handleToggle(key)}
               disabled={disabled}
-              className={`${styles.parameter} ${selected ? styles.selected : ''} ${disabled ? styles.disabled : ''}`}
+              className={cn(
+                styles.parameter,
+                selected && styles.selected,
+                disabled && styles.disabled
+              )}
               type="button"
             >
               <div className={styles.iconContainer}>

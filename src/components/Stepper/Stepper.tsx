@@ -4,6 +4,7 @@ import { StepContentWrapper } from '@/components/Stepper/StepContentWrapper';
 import { StepIndicator } from '@/components/Stepper/StepIndicator';
 import { StepperProps } from './types';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 export default function Stepper({
   children,
@@ -60,9 +61,9 @@ export default function Stepper({
 
   return (
     <div className="mt-6 w-full" {...(rest as HTMLAttributes<HTMLDivElement>)}>
-      <div className={`mx-auto w-full max-w-2xl ${stepCircleContainerClassName}`}>
+      <div className={cn('mx-auto w-full max-w-2xl', stepCircleContainerClassName)}>
         {/* Step indicators row */}
-        <div className={`${stepContainerClassName} flex w-full items-center`}>
+        <div className={cn(stepContainerClassName, 'flex w-full items-center')}>
           {stepsArray.map((_, index) => {
             const stepNumber = index + 1;
             const isNotLastStep = index < totalSteps - 1;
@@ -95,7 +96,7 @@ export default function Stepper({
         </div>
 
         {/* Content + footer container with footer pinned to bottom */}
-        <div className={`flex min-h-[420px] flex-col ${contentClassName}`}>
+        <div className={cn('flex min-h-[420px] flex-col', contentClassName)}>
           {/* Animated content only */}
           <StepContentWrapper
             isCompleted={isCompleted}
@@ -110,8 +111,10 @@ export default function Stepper({
 
           {/* Static footer controls (using internal Button) */}
           {!isCompleted && (
-            <div className={`${footerClassName}`}>
-              <div className={`mt-6 flex ${currentStep !== 1 ? 'justify-between' : 'justify-end'}`}>
+            <div className={footerClassName}>
+              <div
+                className={cn('mt-6 flex', currentStep !== 1 ? 'justify-between' : 'justify-end')}
+              >
                 {currentStep !== 1 && (
                   <Button
                     variant="outline"

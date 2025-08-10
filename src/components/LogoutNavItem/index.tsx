@@ -1,5 +1,6 @@
 import { Dictionary } from '@/app/[lang]/dictionaries';
 import { LogOut } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import styles from './index.module.scss';
 
 interface LogoutNavItemProps {
@@ -27,10 +28,7 @@ export const LogoutNavItem = ({
   // If we have event handlers, render with them
   if (onItemClick || onLogout) {
     return (
-      <button
-        onClick={handleLogout}
-        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
-      >
+      <button onClick={handleLogout} className={cn(styles.navItem, isMobile && styles.mobile)}>
         <LogOut className="mr-2 h-4 w-4" />
         {dict.nav.logout}
       </button>
@@ -39,7 +37,7 @@ export const LogoutNavItem = ({
 
   // Otherwise, render without onClick handler for server-side rendering
   return (
-    <button className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
+    <button className={cn(styles.navItem, isMobile && styles.mobile)}>
       <LogOut className="mr-2 h-4 w-4" />
       {dict.nav.logout}
     </button>

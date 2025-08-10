@@ -4,6 +4,7 @@ import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/Input';
 import { DollarSign } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import styles from './StepBudget.module.scss';
 import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
@@ -68,7 +69,7 @@ export const StepBudget = ({ dict }: StepBudgetProps) => {
               <button
                 key={amount}
                 onClick={() => setField('budget', amount)}
-                className={`${styles.suggestionButton} ${budget === amount ? styles.selected : ''}`}
+                className={cn(styles.suggestionButton, budget === amount && styles.selected)}
                 type="button"
               >
                 ${amount}

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import { cn } from '@/lib/utils';
 import styles from './index.module.scss';
 
 interface ProfileNavItemProps {
@@ -28,7 +29,7 @@ export const ProfileNavItem = ({ dict, isMobile = false, onItemClick }: ProfileN
       <Link
         href={profilePath}
         onClick={handleClick}
-        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
+        className={cn(styles.navItem, isMobile && styles.mobile)}
       >
         {dict.nav.profile}
       </Link>
@@ -37,7 +38,7 @@ export const ProfileNavItem = ({ dict, isMobile = false, onItemClick }: ProfileN
 
   // Otherwise, render without onClick handler for server-side rendering
   return (
-    <Link href={profilePath} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
+    <Link href={profilePath} className={cn(styles.navItem, isMobile && styles.mobile)}>
       {dict.nav.profile}
     </Link>
   );

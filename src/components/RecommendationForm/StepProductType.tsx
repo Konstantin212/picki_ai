@@ -3,6 +3,7 @@
 import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Smartphone, Laptop, Tablet, Headphones, Camera, Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import styles from './StepProductType.module.scss';
 import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
@@ -47,7 +48,7 @@ export const StepProductType = ({ dict }: StepProductTypeProps) => {
             <button
               key={key}
               onClick={() => handleSelect(key)}
-              className={`${styles.card} ${isSelected ? styles.selected : ''}`}
+              className={cn(styles.card, isSelected && styles.selected)}
               type="button"
             >
               <div className={styles.iconContainer}>

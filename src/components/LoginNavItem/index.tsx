@@ -1,6 +1,7 @@
 import { LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { Dictionary } from '@/app/[lang]/dictionaries';
+import { cn } from '@/lib/utils';
 import styles from './index.module.scss';
 
 interface LoginNavItemProps {
@@ -23,7 +24,7 @@ export const LoginNavItem = ({ dict, isMobile = false, onItemClick, lang }: Logi
       <Link
         href={`/${lang}/login`}
         onClick={handleClick}
-        className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}
+        className={cn(styles.navItem, isMobile && styles.mobile)}
       >
         <LogIn className="mr-2 h-4 w-4" />
         {dict.nav.loginSignup}
@@ -33,7 +34,7 @@ export const LoginNavItem = ({ dict, isMobile = false, onItemClick, lang }: Logi
 
   // Otherwise, render without onClick handler for server-side rendering
   return (
-    <Link href={`/${lang}/login`} className={`${styles.navItem} ${isMobile ? styles.mobile : ''}`}>
+    <Link href={`/${lang}/login`} className={cn(styles.navItem, isMobile && styles.mobile)}>
       <LogIn className="mr-2 h-4 w-4" />
       {dict.nav.loginSignup}
     </Link>

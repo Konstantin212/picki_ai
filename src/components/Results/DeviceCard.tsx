@@ -3,6 +3,7 @@
 import React from 'react';
 import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 
 export type DevicePrice = { amount: number | null; currency: string; price_note: string };
 
@@ -81,9 +82,10 @@ export const DeviceCard = ({
 
   return (
     <div
-      className={`group rounded-2xl bg-gray-800/50 p-5 ring-1 ring-gray-700/50 ${
-        highlight ? 'bg-gray-800/70 shadow-2xl' : ''
-      }`}
+      className={cn(
+        'group rounded-2xl bg-gray-800/50 p-5 ring-1 ring-gray-700/50',
+        highlight && 'bg-gray-800/70 shadow-2xl'
+      )}
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
       onClick={() => setExpanded((v) => !v)}
@@ -174,7 +176,7 @@ function CollapsedSection({
         {chips.map(({ name, check }) => (
           <span
             key={name}
-            className={`rounded-full border px-2 py-1 text-xs ${badge(check?.exists)}`}
+            className={cn('rounded-full border px-2 py-1 text-xs', badge(check?.exists))}
           >
             {renderChip(name, check)}
           </span>

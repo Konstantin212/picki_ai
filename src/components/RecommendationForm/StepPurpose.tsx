@@ -5,6 +5,7 @@ import { useRecommendationForm } from '@/lib/stores/use-recommendation-form';
 import { Typography } from '@/components/ui/Typography';
 import { Input } from '@/components/ui/Input';
 import { Briefcase, Gamepad2, Plane, BookOpen, Camera, Music, Plus } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import styles from './StepPurpose.module.scss';
 import { type RecommendDict } from '@/app/[lang]/dictionaries';
 
@@ -65,7 +66,7 @@ export const StepPurpose = ({ dict }: StepPurposeProps) => {
             <button
               key={key}
               onClick={() => handleSelect(key)}
-              className={`${styles.pill} ${isSelected ? styles.selected : ''}`}
+              className={cn(styles.pill, isSelected && styles.selected)}
               type="button"
             >
               <Icon className={styles.icon} />
