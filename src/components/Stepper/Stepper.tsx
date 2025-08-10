@@ -1,7 +1,7 @@
 import React, { Children, HTMLAttributes, ReactNode, useState } from 'react';
-import { StepConnector } from './StepConnector';
-import { StepContentWrapper } from './StepContentWrapper';
-import { StepIndicator } from './StepIndicator';
+import { StepConnector } from '@/components/Stepper/StepConnector';
+import { StepContentWrapper } from '@/components/Stepper/StepContentWrapper';
+import { StepIndicator } from '@/components/Stepper/StepIndicator';
 import { StepperProps } from './types';
 import { Button } from '@/components/ui/Button';
 
@@ -72,7 +72,7 @@ export default function Stepper({
                   renderStepIndicator({
                     step: stepNumber,
                     currentStep,
-                    onStepClick: (clicked) => {
+                    onStepClick: (clicked: number) => {
                       setDirection(clicked > currentStep ? 1 : -1);
                       updateStep(clicked);
                     },
@@ -82,7 +82,7 @@ export default function Stepper({
                     step={stepNumber}
                     disableStepIndicators={disableStepIndicators}
                     currentStep={currentStep}
-                    onClickStep={(clicked) => {
+                    onClickStep={(clicked: number) => {
                       setDirection(clicked > currentStep ? 1 : -1);
                       updateStep(clicked);
                     }}
