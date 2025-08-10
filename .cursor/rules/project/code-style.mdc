@@ -72,7 +72,10 @@ src/components/
 
 - Use Tailwind CSS utility classes
 - For all color, spacing, and visual rules, see [design-system.mdc]
-- Use `clsx` or `tailwind-merge` for conditional classes
+- **MANDATORY**: Use the `cn` utility function from `@/lib/utils` for all conditional and computed classNames
+- **NEVER** use template literals with computed values like `` `${styles.base} ${condition ? styles.active : ''}` ``
+- **ALWAYS** use: `cn(styles.base, condition && styles.active)` for conditional classes
+- The `cn` function combines `clsx` and `tailwind-merge` for optimal class merging and deduplication
 - Prefer Tailwind classes over custom CSS when possible
 - For complex UI, import from shadcn/ui and adjust to project rules
 - For long className strings, use SCSS modules with `@apply` directive to organize Tailwind classes
@@ -128,7 +131,7 @@ export const ComponentName = ({ className, ...props }: ComponentNameProps) => {
 // ComponentName/index.module.scss
 .container {
   @apply base-tailwind-classes;
-  
+
   // Custom styles if needed
 }
 ```
