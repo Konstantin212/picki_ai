@@ -136,11 +136,7 @@ src/messages/
 
 import { SupportedLang } from '@/lib/translations';
 
-export default async function HomePage({
-  params
-}: {
-  params: Promise<{ lang: SupportedLang }>
-}) {
+export default async function HomePage({ params }: { params: Promise<{ lang: SupportedLang }> }) {
   const { lang } = await params; // Next.js 15 requires awaiting params
   const dict = await getDictionary(lang);
 
@@ -277,7 +273,7 @@ cp .env.example .env.local
 
 ```env
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+SUPABASE_URL=your_supabase_url
 SUPABASE_ANON_KEY=your_supabase_anon_key
 NEXT_PUBLIC_API_URL=your_api_url
 ```

@@ -4,9 +4,6 @@ export async function SupabaseConnection() {
   try {
     const supabaseClient = await createClient();
 
-    console.log('Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-    console.log("Attempting to query 'test' table...");
-
     const { data, error } = await supabaseClient.from('test_data_table').select('*');
 
     if (error) {
