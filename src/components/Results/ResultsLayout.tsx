@@ -62,7 +62,15 @@ export const ResultsLayout = () => {
       <section className="space-y-6 lg:col-span-2">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <div className="md:col-span-2">
-            {best ? <DeviceCard device={best} rank={1} highlight /> : null}
+            {best ? (
+              <DeviceCard
+                device={best}
+                rank={1}
+                highlight
+                deviceTypeGuess={data.query?.device_type ?? ''}
+                priorities={data.query?.important_params || []}
+              />
+            ) : null}
           </div>
           <div className="rounded-2xl bg-gray-800/50 p-5 ring-1 ring-gray-700/50">
             <Typography variant="h3" className="mb-2">
@@ -77,7 +85,13 @@ export const ResultsLayout = () => {
         {/* Other picks */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {rest.map((d, i) => (
-            <DeviceCard key={`${d.device_name}-${i}`} device={d} rank={i + 2} />
+            <DeviceCard
+              key={`${d.device_name}-${i}`}
+              device={d}
+              rank={i + 2}
+              deviceTypeGuess={data.query?.device_type ?? ''}
+              priorities={data.query?.important_params || []}
+            />
           ))}
         </div>
       </section>

@@ -1,7 +1,16 @@
 import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'ghost' | 'outline' | 'gradient' | 'gradient-outline';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'ghost'
+    | 'outline'
+    | 'gradient'
+    | 'gradient-outline'
+    | 'filter-pill'
+    | 'filter-pill-active'
+    | 'filter-button';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   isLoading?: boolean;
 }
@@ -28,6 +37,12 @@ export const Button = ({
       'bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/30 hover:shadow-purple-500/30 hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-0',
     'gradient-outline':
       'border border-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-border text-white font-semibold shadow-lg hover:from-blue-700 hover:to-purple-700 hover:shadow-xl hover:shadow-blue-500/30 hover:shadow-purple-500/30 hover:scale-105 hover:-translate-y-1 active:scale-95 active:translate-y-0',
+    'filter-pill':
+      'rounded-full border border-gray-700/50 bg-gray-800/50 text-white ring-1 ring-gray-700/50 hover:border-gray-600/50 hover:bg-gray-800/70',
+    'filter-pill-active':
+      'rounded-full border border-blue-500/50 bg-gradient-to-br from-blue-600/20 to-purple-600/20 text-white ring-1 ring-blue-500/30',
+    'filter-button':
+      'rounded-lg border border-gray-700/50 bg-gray-800/50 text-white ring-1 ring-gray-700/50 hover:border-gray-600/50 hover:bg-gray-800/70',
   };
 
   const sizeClasses = {

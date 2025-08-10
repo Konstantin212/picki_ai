@@ -4,3 +4,5 @@ export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 export { Typography } from './Typography';
 export { Toaster } from './Toaster';
 export { Toast } from './Toast';
+export { PageHeader } from './PageHeader';
+export { ControlsRow } from './ControlsRow';

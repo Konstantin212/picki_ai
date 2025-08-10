@@ -1,6 +1,6 @@
 ---
 description: Main instruction file with explanation of all modules and code principles
-globs:
+globs: **/*.tsx, **/*.ts, **/*.scss
 alwaysApply: true
 ---
 
