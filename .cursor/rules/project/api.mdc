@@ -55,7 +55,7 @@ alwaysApply: true
   - Responsibilities:
     - Validate input (productType, purpose, budget, parameters)
     - Build strict prompt for OpenAI
-    - Switch to mock when `NEXT_PUBLIC_MOCK_OPENAI=true` or `NEXT_PUBLIC_OPEN_AI=mock`
+    - Switch to mock when `NEXT_PUBLIC_MOCK_OPENAI=true` or `OPEN_AI_KEY=mock`
     - Call OpenAI SDK and normalize invalid numeric `unknown` to `null`
     - Return parsed JSON object
 
@@ -73,7 +73,7 @@ alwaysApply: true
 
 - Client: `src/lib/openai.ts` using `openai` SDK (`openai` npm package)
 - Env:
-  - `NEXT_PUBLIC_OPEN_AI`: API key (server-side usage only)
+  - `OPEN_AI_KEY`: API key (server-side usage only)
   - `NEXT_PUBLIC_MOCK_OPENAI`: `true|false` to enable mock mode
 - Model: `gpt-4o-mini` (changeable). Use low `temperature` for determinism.
 
@@ -81,7 +81,7 @@ alwaysApply: true
 
 - Mock mode is enabled by either:
   - `NEXT_PUBLIC_MOCK_OPENAI=true`, or
-  - `NEXT_PUBLIC_OPEN_AI=mock`
+  - `OPEN_AI_KEY=mock`
 - Camera-specific mock and generic laptop mock provided in `recommendation-service.ts`.
 
 ## Request/Response Examples

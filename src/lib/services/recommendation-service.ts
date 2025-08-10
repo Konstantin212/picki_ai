@@ -30,13 +30,13 @@ export async function generateRecommendations(input: RecommendInput) {
   });
 
   const useMock =
-    process.env.NEXT_PUBLIC_MOCK_OPENAI === 'true' || process.env.NEXT_PUBLIC_OPEN_AI === 'mock';
+    process.env.NEXT_PUBLIC_MOCK_OPENAI === 'true' || process.env.OPEN_AI_KEY === 'mock';
 
   if (useMock) {
     return buildMockResponse(input);
   }
 
-  if (!process.env.NEXT_PUBLIC_OPEN_AI) {
+  if (!process.env.OPEN_AI_KEY) {
     throw new ApiError(500, 'Missing OpenAI API key');
   }
 

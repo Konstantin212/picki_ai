@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
 
     // Decide whether to mock OpenAI response
     const useMock =
-      process.env.NEXT_PUBLIC_MOCK_OPENAI === 'true' || process.env.NEXT_PUBLIC_OPEN_AI === 'mock';
+      process.env.NEXT_PUBLIC_MOCK_OPENAI === 'true' || process.env.OPEN_AI_KEY === 'mock';
 
     let parsed: unknown;
     if (useMock) {
@@ -330,7 +330,7 @@ export async function POST(request: NextRequest) {
       }
     } else {
       // Call OpenAI (Responses are JSON only per prompt)
-      const apiKey = process.env.NEXT_PUBLIC_OPEN_AI;
+      const apiKey = process.env.OPEN_AI_KEY;
       if (!apiKey) {
         return NextResponse.json({ error: 'Missing OpenAI API key' }, { status: 500 });
       }
