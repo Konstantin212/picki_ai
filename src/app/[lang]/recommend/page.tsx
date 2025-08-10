@@ -1,17 +1,13 @@
 import { getDictionary, type RecommendDict } from '@/app/[lang]/dictionaries';
-import { TranslationParams, Langs } from '@/lib/translations';
+import { TranslationParams } from '@/lib/translations';
 import { Navbar } from '@/components/Navbar';
 import { RecommendationForm } from '@/components/RecommendationForm';
 import { RecommendationTitle } from '@/components/RecommendationForm/RecommendationTitle';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
-export default async function RecommendPage({
-  params,
-}: {
-  params: Promise<TranslationParams> | undefined;
-}) {
-  const { lang } = params ? await params : { lang: Langs.en };
+export default async function RecommendPage({ params }: { params: Promise<TranslationParams> }) {
+  const { lang } = await params;
   const fullDict = await getDictionary(lang);
   const dict = fullDict.recommend as RecommendDict;
 

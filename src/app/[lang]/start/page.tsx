@@ -1,15 +1,11 @@
 import { Dictionary, getDictionary } from '@/app/[lang]/dictionaries';
-import { TranslationParams, Langs } from '@/lib/translations';
+import { TranslationParams } from '@/lib/translations';
 import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
-export default async function StartPage({
-  params,
-}: {
-  params: Promise<TranslationParams> | undefined;
-}) {
-  const { lang } = params ? await params : { lang: Langs.en };
+export default async function StartPage({ params }: { params: Promise<TranslationParams> }) {
+  const { lang } = await params;
   const dict = (await getDictionary(lang)).start as Dictionary['start'];
 
   return (
